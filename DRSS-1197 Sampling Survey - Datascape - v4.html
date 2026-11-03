@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>DRSS-1197 Sampling Survey - Datascape - v4</title>
+	<style>
+		:root { --purple:#7827ff; --purple-light:#f3eaff; --navy:#123b73; --teal:#007b91; --ink:#24282d; --muted:#66717c; --line:#d6d8da; --field:#fafafa; --yellow:#fff45b; --orange:#fff0e6; --red:#9f2631; --red-bg:#fff0f1; --green:#19a76f; font-family:Arial,Helvetica,sans-serif; color:var(--ink); }
+		* { box-sizing:border-box; }
+		body { margin:0; background:#fff; font-size:12px; }
+		button,input,select,textarea { font:inherit; }
+		.prototype-bar { min-height:30px; display:flex; align-items:center; gap:8px 16px; padding:4px 10px; background:#fff8e1; border-bottom:1px solid #e8d69c; color:#514719; font-size:10px; }
+		.prototype-bar strong { font-size:10px; }
+		.prototype-bar a { color:#514719; font-weight:700; }
+		.prototype-bar .bar-links { margin-left:auto; display:flex; gap:12px; }
+		.spec-switch { display:flex; align-items:center; gap:5px; font-weight:700; cursor:pointer; }
+		.spec-switch input { width:14px; height:14px; margin:0; accent-color:#5c4b00; }
+		.prototype-note { flex-basis:100%; margin:0; padding-top:7px; border-top:1px solid #e8d69c; line-height:1.45; }
+		.prototype-note strong { color:#873518; }
+		.appbar { min-height:58px; display:flex; align-items:center; gap:14px; padding:7px 14px; border-bottom:2px solid var(--purple); white-space:nowrap; }
+		.app-grid { color:var(--purple); font-size:19px; line-height:1; }
+		.brand { display:flex; align-items:center; gap:8px; color:var(--purple); font-weight:700; }
+		.brand-mark { width:22px; height:22px; background:radial-gradient(circle at 66% 40%,#d4c2ff 0 29%,#8d5cff 31% 57%,#5f29cd 59%); border-radius:50%; }
+		.tenant { font-weight:700; max-width:142px; white-space:normal; line-height:1.1; color:#282c32; }
+		.tenant small { display:block; font-size:10px; font-weight:400; color:#6b7076; }
+		.open-tabs { display:flex; gap:5px; }
+		.open-tabs span { padding:6px 9px; border:1px solid var(--purple); border-radius:3px; color:var(--purple); white-space:nowrap; }
+		.open-tabs .active { background:var(--purple); color:#fff; }
+		.goto { flex:1; min-width:150px; padding:8px 10px; border:1px solid #cfc7dd; border-radius:14px; color:#756f80; }
+		.app-tools { color:var(--purple); font-weight:700; font-size:15px; }
+		.avatar { display:grid; place-items:center; width:28px; height:28px; border-radius:50%; color:#fff; background:var(--purple); font-weight:700; }
+		.workspace { display:flex; min-height:calc(100vh - 94px); }
+		.rail { width:48px; flex:0 0 48px; padding-top:12px; background:#f4f4f5; border-right:1px solid var(--line); color:#686d75; }
+		.rail span { display:grid; place-items:center; height:42px; font-size:17px; }
+		.rail .selected { color:var(--purple); background:#e9ddff; border-left:4px solid var(--purple); }
+		main { min-width:0; flex:1; }
+		.record-actions { display:flex; justify-content:flex-end; align-items:center; gap:16px; height:40px; padding:0 18px; color:#123b73; }
+		.record-actions button { background:none; border:0; color:inherit; padding:2px; cursor:pointer; }
+		.record-actions svg { width:19px; height:19px; vertical-align:middle; }
+		.record-title { display:flex; align-items:center; gap:10px; padding:4px 20px 10px; }
+		.record-title h1 { margin:0; color:var(--navy); font-size:20px; }
+		.info { color:var(--teal); border:1px solid var(--teal); border-radius:50%; width:17px; height:17px; display:inline-grid; place-items:center; font-style:italic; font-weight:700; font-size:11px; }
+		.identity { display:flex; flex-wrap:wrap; align-items:flex-end; gap:26px; padding:10px 20px; background:#f0fbfe; }
+		.identity label { display:flex; flex-direction:column; gap:4px; color:#4b5056; font-weight:700; }
+		.identity input { width:150px; height:29px; padding:4px 8px; border:1px solid #b8c5ce; border-radius:3px; background:#fff; color:#262a2e; }
+		.identity-meta { margin-left:auto; text-align:right; color:#687580; }
+		.identity-meta strong { color:#202d38; }
+		.status { padding:6px 12px; border-radius:14px; background:#40b55c; color:#fff; font-weight:700; }
+		.form { width:100%; padding:0 22px 40px; }
+		.group-heading { display:flex; align-items:center; gap:9px; margin:0; padding:16px 0 9px; border-bottom:1px solid #dedfe1; color:var(--navy); font-size:15px; text-align:left; }
+		.hide { margin-left:auto; padding:0; border:0; background:transparent; color:var(--navy); font-size:12px; font-weight:700; white-space:nowrap; cursor:pointer; }
+		.group-content { padding:0 14px; }
+		.group-content.hidden { display:none; }
+		.subheading { margin:20px 0 9px; padding-bottom:7px; border-bottom:1px solid #d6d8da; color:#123b73; font-size:13px; text-align:left; }
+		.item-label { margin:16px 0 8px; color:#173d69; font-weight:700; font-size:12px; text-align:left; }
+		.sample-card { margin:6px 0 10px; padding:12px 14px 14px; border:1px solid #d6d8da; border-radius:3px; background:#f7f7f7; }
+		.sample-card h3 { margin:0 0 15px; display:flex; align-items:center; gap:12px; padding-bottom:10px; border-bottom:2px solid #d3d5d7; color:var(--navy); font-size:14px; text-align:left; }
+		.sample-card h3 button { margin-left:auto; border:0; color:var(--teal); background:none; font-weight:700; cursor:pointer; }
+		.form-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; }
+		.field { min-width:0; margin-bottom:9px; }
+		.field.wide { grid-column:1 / -1; }
+		.field label { display:block; margin-bottom:4px; color:#404a54; font-weight:700; }
+		.field input,.field select,.field textarea { display:block; width:100%; min-height:29px; padding:5px 8px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; border-radius:2px; background:#fff; color:#26292c; }
+		.field textarea { min-height:58px; resize:vertical; }
+		.field select { appearance:none; padding-right:28px; background-image:linear-gradient(45deg,transparent 50%,#425a70 50%),linear-gradient(135deg,#425a70 50%,transparent 50%); background-position:calc(100% - 14px) 12px,calc(100% - 9px) 12px; background-size:5px 5px,5px 5px; background-repeat:no-repeat; }
+		.map-card { display:grid; grid-template-columns:120px 1fr; min-height:86px; border:1px solid #c9d2d8; background:#fff; }
+		.map { position:relative; min-height:86px; background:linear-gradient(25deg,#dcece0 0 35%,#edf1e8 36% 60%,#d5e5e9 61%), repeating-linear-gradient(90deg,transparent 0 17px,#fff8 18px 19px); border-right:1px solid #c9d2d8; }
+		.pin { position:absolute; left:54px; top:25px; width:14px; height:14px; border:3px solid #fff; border-radius:50% 50% 50% 0; background:#dc493b; transform:rotate(-45deg); box-shadow:0 1px 3px #3338; }
+		.map-meta { padding:9px 11px; line-height:1.45; }
+		.map-meta strong { color:var(--navy); }
+		.map-meta small { display:block; color:#687580; }
+		.spec { margin:4px 0 0; padding:5px 7px; background:#eef4fa; color:#29435c; font-size:10px; line-height:1.4; }
+		.spec.warn { background:var(--orange); border-left:3px solid #d97835; color:#793a10; }
+		.spec.blocked { background:var(--red-bg); border-left:3px solid var(--red); color:#7e2029; }
+		.field-tag { display:inline-block; margin-left:5px; padding:1px 5px; border-radius:8px; background:#e9e9eb; color:#515a64; font-size:9px; vertical-align:1px; }
+		.multiple { display:flex; flex-wrap:wrap; gap:4px; min-height:29px; padding:4px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; background:#fff; }
+		.parameter-dropdown { position:relative; }
+		.parameter-trigger { min-height:29px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 8px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; background:#fff; cursor:pointer; list-style:none; }
+		.parameter-trigger::-webkit-details-marker { display:none; }
+		.parameter-menu { max-height:260px; overflow:auto; padding:8px; border:1px solid #c7ccd7; background:#fff; }
+		.parameter-menu label { display:flex; align-items:center; gap:8px; min-height:30px; }
+		.parameter-menu input { width:14px; min-height:14px; margin:0; accent-color:var(--purple); }
+		.parameter-menu .add { margin:2px 0 8px; }
+		.parameter-dropdown > .multiple { border:0; border-top:1px solid #e3e3e3; }
+		.chip { padding:3px 7px; border-radius:10px; background:#e8e4f4; color:#43306c; font-size:10px; }
+		.subtle { color:var(--muted); font-size:10px; line-height:1.45; }
+		.add-row { display:flex; gap:8px; padding:4px 0 12px; }
+		.add-row button { min-height:29px; border:1px solid var(--teal); border-radius:3px; background:#fff; color:var(--teal); padding:0 12px; font-weight:700; cursor:pointer; }
+		.location-audit { margin:12px 0 0; padding:9px 11px; border-left:3px solid #b75447; background:#fff1ef; line-height:1.45; }
+		.location-audit strong { color:#76251f; }
+		.details { border-top:1px solid #dedfe1; padding-top:10px; margin-top:14px; }
+		.details summary { color:var(--teal); font-weight:700; cursor:pointer; }
+		.details p { margin:8px 0 0; line-height:1.45; color:#515c67; }
+		.mapping-table { width:100%; margin-top:9px; border-collapse:collapse; }
+		.mapping-table th,.mapping-table td { padding:7px 8px; border:1px solid #d6d8da; text-align:left; vertical-align:top; line-height:1.4; }
+		.mapping-table th { background:#f0fbfe; color:var(--navy); }
+		.mapping-issue { margin:10px 0 0; padding:9px 10px; border-left:3px solid #b75447; background:#fff1ef; line-height:1.45; }
+		.hidden { display:none !important; }
+		@media(max-width:700px) {
+			.prototype-bar { min-height:34px; }
+			.appbar { display:grid; grid-template-columns:30px minmax(75px,auto) minmax(0,1fr) 30px; grid-template-areas:"grid brand tenant avatar" "tools tools tools tools" "tabs tabs tabs tabs" "goto goto goto goto"; gap:8px; padding:8px; white-space:normal; }
+			.app-grid { grid-area:grid; }
+			.brand { grid-area:brand; }
+			.tenant { grid-area:tenant; max-width:none; text-align:center; }
+			.avatar { grid-area:avatar; }
+			.app-tools { grid-area:tools; display:flex; justify-content:space-around; padding:4px 10px; }
+			.open-tabs { grid-area:tabs; min-width:0; }
+			.open-tabs span { min-width:0; max-width:50%; overflow:hidden; text-overflow:ellipsis; }
+			.goto { grid-area:goto; min-width:0; }
+			.identity { display:flex; flex-direction:column; align-items:stretch; gap:8px; padding:10px 12px; }
+			.identity label { width:100%; }
+			.identity input { width:150px; max-width:100%; }
+			.identity-meta { margin-left:0; text-align:left; }
+			.status { align-self:flex-start; }
+			.field.wide { grid-column:auto; }
+			.form { padding:0 12px 30px; }
+			.map-card { grid-template-columns:85px 1fr; }
+			.group-heading { flex-wrap:nowrap; }
+			.prototype-bar { flex-wrap:nowrap; white-space:nowrap; }
+			.prototype-bar strong { overflow:hidden; text-overflow:ellipsis; }
+		}
+		body.spec-off .spec,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details { display:none !important; }
+		@media print { .prototype-bar,.appbar,.rail,.record-actions,.details,.add-row,.hide { display:none !important; } .workspace { min-height:0; } .form { max-width:none; } .sample-card { break-inside:avoid; } }
+	</style>
+</head>
+<body>
+	<div class="prototype-bar">
+		<strong data-doc-title>DRSS-1197 | Datascape v4</strong>
+		<nav class="bar-links" aria-label="Related prototypes">
+			<a href="DRSS-1197%20Sampling%20Survey%20-%20Fieldwork%20-%20v4.html">Fieldwork</a>
+		</nav>
+		<label class="spec-switch"><input type="checkbox" id="spec-toggle" checked /> Spec notes</label>
+	</div>
+	<header class="appbar">
+		<span class="app-grid" aria-hidden="true">▦</span>
+		<div class="brand"><i class="brand-mark"></i><span>Datascape</span></div>
+		<div class="tenant">Regional Software Holdings Ltd<small>ACCEPT</small></div>
+		<div class="open-tabs"><span>All Surveys: Survey</span><span class="active">Survey: SMPLNG.8469</span></div>
+		<div class="goto">Go to ...</div>
+		<div class="app-tools" aria-label="Search, alerts and menu">⌕　♟1　⋮</div>
+		<div class="avatar" aria-label="Andrea Pickens">AP</div>
+	</header>
+	<div class="workspace">
+		<aside class="rail" aria-label="Application navigation"><span>››</span><span class="selected">✎</span><span>⌁</span><span>●</span><span>◷</span><span>▤</span></aside>
+		<main>
+			<div class="record-actions" aria-label="Record actions">
+				<button type="button" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13"/></svg></button>
+				<button type="button" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>⌄</button>
+				<button type="button" aria-label="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h11l3 3v15H5zM8 3v6h8V3M8 21v-6h8v6"/></svg>⌄</button>
+				<button type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+			</div>
+			<div class="record-title"><h1>Sampling - 8469</h1><span class="info" title="About this record">i</span></div>
+			<div class="identity">
+				<label>Survey Type*<input value="SMPLNG" readonly /></label>
+				<label>Number<input value="8469" readonly /></label>
+				<div class="identity-meta">Last Modified<br /><strong>4 days ago by Byron Pretorius</strong></div>
+				<span class="status">Completed</span>
+			</div>
+			<div class="form">
+				<h2 class="group-heading"><span>Survey Detail</span><button class="hide" type="button" data-collapse="survey-detail">◉ hide Survey Detail</button></h2>
+				<div id="survey-detail" class="group-content">
+					<h3 class="subheading">Timesheet Start Date</h3>
+					<div class="form-grid"><div class="field"><label>Actual Start Date</label><input type="date" value="2026-09-28" /></div><div class="field"><label>Actual Start Time</label><input type="time" value="08:20" /></div></div>
+					<h3 class="subheading">Assets and Inventory</h3>
+					<div class="action-row"><button type="button" class="add">Add Asset</button><button type="button" class="add">Add Inventory</button></div>
+					<h3 class="subheading">General Visual Evidence</h3>
+					<div class="form-grid"><div class="field"><label>Photos</label><input type="file" accept="image/*" multiple /></div><div class="field"><label>Videos</label><input type="file" accept="video/*" multiple /></div><div class="field wide"><label>Track Log</label><div class="map-card"><div class="map" aria-label="Track log preview"></div><div class="map-meta"><strong>Capture path</strong><small>Track Log</small></div></div></div></div>
+					<h3 class="subheading">Sampling · Officer</h3>
+					<div class="field"><label for="in-attendance">In Attendance</label><input id="in-attendance" type="search" placeholder="Search contacts" /><p class="spec">RSHL answered on 8 Oct 2026: choose one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
+					<p class="item-label">Sampling Details</p>
+					<section class="sample-card" data-sample>
+						<h3><span>Sampling Item</span><span class="field-tag">location-backed repeater</span><button type="button" data-remove-sample aria-label="Remove sample">Remove</button></h3>
+						<h4 class="subheading">Sample Detail</h4>
+						<div class="form-grid">
+							<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
+							<div class="field conditional-other"><label>Other Sample Type</label><input placeholder="Enter sample type" /><p class="subtle">Shown when Sample Type is Other.</p></div>
+							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Use an existing sample site or create one point location</small><small>A new location needs a site name (Label).</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div><p class="spec blocked">The workbook wants a point sample site with a required site name. The current configuration uses a different location type and does not send it to the phone. The team needs to align the location setup before building the survey.</p></div>
+							<div class="field"><label>Sample ID</label><input value="SMPL-001" /></div>
+							<div class="field"><label>Sample Time</label><input type="time" value="08:45" /></div>
+							<div class="field"><label>Sample Date</label><input type="date" value="2026-09-28" /></div>
+							<div class="field conditional-general"><label>Method of Collection</label><select><option selected>Grab</option><option>Composite</option><option>Other</option></select></div>
+							<div class="field conditional-general"><label>Method of Collection Other</label><input placeholder="Describe method" /></div>
+							<div class="field conditional-general"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Other</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Odourless</option><option>Odour</option><option>Aerated</option></select></div>
+							<div class="field conditional-general"><label>Odour</label><select><option>Odour</option><option>Odourless</option></select></div>
+							<div class="field conditional-general"><label>Odour Type</label><select><option>Metallic</option><option>Sulphuric</option><option>Effluent</option><option>Sewage</option><option>Other</option></select></div>
+							<div class="field conditional-general"><label>Rain Affect on Sample</label><select><option>Yes</option><option>No</option></select><p class="subtle">Is rain likely to have affected the sample?</p></div>
+							<div class="field"><label>Sample Photos</label><input type="file" accept="image/*" /></div>
+							<div class="field wide"><label>Sample Comments</label><input placeholder="Sample Comments" /></div>
+						</div>
+						<h4 class="subheading">Field Measurement</h4>
+						<p class="spec warn">Open question: the workbook comment says Field Measurement cannot be a repeating block inside Add Sample. Should readings be captured once per visit or once per sample? Meter Number is not crossed out, but the workbook also asks whether it is redundant because its type is marked alpha-numeric.</p>
+						<div class="form-grid">
+							<div class="field"><label>Meter Number</label><input type="text" placeholder="Alpha-numeric meter ID" /></div>
+							<div class="field"><label>Temperature</label><input type="number" placeholder="Number" /></div>
+							<div class="field"><label>pH</label><input type="number" min="0" max="14" step="0.01" placeholder="0-14" /></div>
+							<div class="field"><label>Dissolved Oxygen % Sat</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Dissolved Oxygen mg/l</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Conductivity</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Turbidity</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Black disk</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Secchi disk</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Other</label><input placeholder="Other" /></div>
+						</div>
+						<h4 class="subheading">Sample Tests</h4>
+						<div class="form-grid">
+							<div class="field"><label>Parameter Set Name</label><select data-parameter-set><option value="" selected>[Not Entered]</option><option>Animal effluent discharge</option><option>Biological wastewater discharge</option><option>Sediment discharge</option><option>Concrete discharge</option><option>Hydrocarbon discharge</option><option>Paint discharge</option><option>Milk discharge</option><option>Chemical discharge</option><option>Pesticide or herbicide discharge / runoff</option><option>Mass avian (bird) death</option></select><p class="spec">Choose one of the ten named sets. Each set has its own test list on the Parameter Set worksheet.</p></div>
+							<div class="field wide"><label>Parameter Type</label><details class="parameter-dropdown"><summary class="parameter-trigger"><span data-parameter-summary>Choose test types</span><span aria-hidden="true">⌄</span></summary><div class="parameter-menu"><button type="button" class="add" data-select-all>Select All</button><div class="choice-list"><label><input type="checkbox" data-parameter-type /> Biochemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Total Suspended Solids</label><label><input type="checkbox" data-parameter-type /> pH</label><label><input type="checkbox" data-parameter-type /> Total Ammoniacal Nitrogen</label><label><input type="checkbox" data-parameter-type /> Nitrate Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Dissolved Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Phosphorus</label><label><input type="checkbox" data-parameter-type /> Dissolved Reactive Phosphorus</label><label><input type="checkbox" data-parameter-type /> Total Kjeldahl Nitrogen</label><label><input type="checkbox" data-parameter-type /> Escherichia coli</label><label><input type="checkbox" data-parameter-type /> Chemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Grease and Oil</label><label><input type="checkbox" data-parameter-type /> Combined Metals</label><label><input type="checkbox" data-parameter-type /> Turbidity</label><label><input type="checkbox" data-parameter-type /> Total Hardness</label><label><input type="checkbox" data-parameter-type /> Total Petroleum Hydrocarbons</label><label><input type="checkbox" data-parameter-type /> Polycyclic Aromatic Hydrocarbon</label><label><input type="checkbox" data-parameter-type /> BTEX</label><label><input type="checkbox" data-parameter-type /> Semi volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Total Alkalinity</label><label><input type="checkbox" data-parameter-type /> Organochlorine Pesticides</label><label><input type="checkbox" data-parameter-type /> Organophosphorus Phosphatases</label></div></div><div class="multiple" data-selected-tests></div></details><p class="spec">Choose one or more test types from the workbook list. Consent-condition test auto-fill was moved to a separate Change Request.</p></div>
+						</div>
+						<h4 class="subheading">Chain of Custody</h4>
+						<div class="form-grid"><div class="field wide"><label>Name of Sampler</label><div class="multiple"><span class="chip">H. Giles · primary booking officer</span><button type="button" class="add">Change or add sampler</button></div><p class="spec">Rachel answered on DRSS-1197 (19 Nov 2025): start with the booking’s primary officer, but let staff change or add the person who took the samples. The sheet and current survey use text; an officer picker with this default needs configuration work.</p></div></div>
+						<h4 class="subheading">Groundwater</h4>
+						<div class="form-grid">
+							<div class="field conditional-groundwater"><label>Sample type</label><select><option>Groundwater bore</option><option>Geothermal</option><option>Spring</option><option>Salt water intrusion bore</option></select></div>
+							<div class="field conditional-groundwater"><label>Sampled from</label><select><option>Tap</option><option>Outlet tap</option><option>From tank</option><option>After filter</option><option>Through hose</option><option>Spring</option><option>Other</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample collection method</label><select><option>Pumped bore</option><option>Bailed</option><option>Grab</option><option>Bucket</option><option>Free flowing artesian</option><option>Bilge pump</option></select></div>
+							<div class="field conditional-groundwater"><label>Bore purge volume (L)</label><input type="number" step="0.01" /></div>
+							<div class="field conditional-groundwater"><label>Sample filtered</label><select><option>Yes</option><option>No</option></select></div>
+						</div>
+					</section>
+					<div class="add-row"><button type="button" id="add-sample">+ Add Sampling Item</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
+				</div>
+
+				<h2 class="group-heading"><span>Custom Inputs</span><button class="hide" type="button" data-collapse="custom-inputs">◉ hide Custom Inputs</button></h2>
+				<div id="custom-inputs" class="group-content">
+					<h3 class="subheading">General</h3>
+					<div class="form-grid">
+						<div class="field"><label>Analysis Request Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec warn">The future lab form calls this “Lab Name.” This is a mapping check for the report team, not an open requirement for RSHL. Ask RSHL only if the survey label itself should change.</p></div>
+						<div class="field"><label>Purchase Order Number</label><input value="PO-Example" /><p class="spec">Present on the current survey. Required by the lab; entered manually because PO is not available in Datascape Financials for every council.</p></div>
+						<div class="field"><label>Work Order Number</label><input placeholder="Work Order Number" /><p class="spec">Already present on the current survey.</p></div>
+					</div>
+					<h3 class="subheading">Weather</h3>
+					<div class="field"><label>Capture Weather?</label><select id="capture-weather"><option>Yes</option><option selected>No</option></select></div>
+					<div id="weather-details" class="weather-details hidden">
+						<div class="field"><label>Air Temperature</label><input placeholder="Air Temperature" /></div>
+						<div class="field"><label>Cloud Cover</label><input placeholder="Cloud Cover" /></div>
+						<div class="field"><label>Rainfall</label><input placeholder="Rainfall" /></div>
+						<div class="field"><label>Wind Direction</label><input placeholder="Wind Direction" /></div>
+						<div class="field wide"><label>Other Weather Conditions</label><textarea rows="2" placeholder="Other weather conditions"></textarea></div>
+					</div>
+				</div>
+				<h3 class="subheading">Reinspection</h3>
+				<div class="field"><label>Reinspection Required</label><select id="reinspection-required"><option>No</option><option>Yes</option></select></div>
+				<div class="field hidden" id="reinspection-date"><label>Reinspection Date</label><input type="date" /></div>
+				<h3 class="subheading">Notice of Inspection</h3>
+				<div class="field"><label>Notice of Inspection Left?</label><select id="notice-left"><option>No</option><option>Yes</option></select></div>
+				<div class="field hidden" id="notice-image"><label>Image of Inspection Notice Left</label><input type="file" accept="image/*" /></div>
+				<h3 class="subheading">Timesheet End Date</h3>
+				<div class="form-grid">
+					<div class="field"><label>Actual End Date</label><input type="date" value="2026-09-28" /></div>
+					<div class="field"><label>Actual End Time</label><input type="time" value="12:05" /></div>
+					<div class="field"><label>Reason</label><input placeholder="Reason" /></div>
+					<div class="field"><label>Completion Behaviour</label><select><option>Pending Completion</option><option>Complete</option></select></div>
+				</div>
+				<div class="location-audit"><strong>Location setup to resolve:</strong> The workbook wants a point sample site with a required site name. It says the name is saved on the location, not copied from a survey field. Current exported setup uses a different name and does not send this location type to the phone.</div>
+				<details class="details">
+					<summary>Future lab submission mapping guide</summary>
+					<table class="mapping-table" aria-label="Sampling survey to lab submission field mapping">
+						<thead><tr><th>Lab form destination</th><th>Survey source</th><th>Mapping note</th></tr></thead>
+						<tbody>
+							<tr><td>Lab Name</td><td>General: Analysis Request</td><td>Ticket says same-named field; current Acceptance label is Analysis Request. Confirm field ID or rename.</td></tr>
+							<tr><td>PO Number</td><td>General: Purchase Order Number</td><td>Entered by the officer; available at survey level.</td></tr>
+							<tr><td>Full name</td><td>Sampling Item: Name of Sampler</td><td>Rachel answered on 19 Nov 2025: start with the booking’s primary officer, but let staff change or add the person who collected samples.</td></tr>
+							<tr><td>Signature</td><td>Primary officer profile</td><td>Use the profile signature if available; otherwise the ticket says the officer completes it manually.</td></tr>
+							<tr><td>Sample Date, Sample Type, Collection Method, Sample Appearance, Odour, Rain Affected, Sample Comments</td><td>Fields inside each Sampling Item</td><td>These values repeat for every sample, but the lab form shows them once in its header.</td></tr>
+							<tr><td>Sample ID, Sample Time</td><td>Sampling Item: Sample ID, Sample Time</td><td>One output row per Sampling Item.</td></tr>
+							<tr><td>Site Name</td><td>Sample Location Label</td><td>The workbook requires a name on the location. The future report cannot read location attributes, so its team needs another supported source.</td></tr>
+							<tr><td>Site GPS Coordinates (NZTM)</td><td>Sample Location point geometry</td><td>Coordinate mapping into the template is unverified. Keep as an explicit build-time check.</td></tr>
+							<tr><td>Test Names</td><td>Parameter Set Name or selected Parameter Types</td><td>Expand a selected set using the workbook’s Parameter Set sheet, then join the resulting test names with commas.</td></tr>
+							<tr><td>Quote number, Tamper tag ID, Tracking number</td><td>No current Sampling survey field</td><td>DRSS-1727 says the officer fills these in after generating the report.</td></tr>
+						</tbody>
+					</table>
+					<p class="mapping-issue"><strong>Needs a decision:</strong> The lab form’s single-value header fields are mapped from a repeating Sampling Item. For multiple samples, which item supplies the header, or should those values move into each repeated output row? The current ticket confirms one line per sample for the table, but does not settle the header behavior.</p>
+					<p class="mapping-issue"><strong>New setup versus new app feature:</strong> The workbook adds survey fields/options and requests a Sample site - Point type with a required name. Those are configuration changes. It also asks for the booked location to reach Fieldwork and for Name of Sampler to default to an officer and be changeable; verify these with the platform team, but the workbook does not establish that new app functionality is required. Automatic test selection from consent conditions was split into separate Change Request work.</p>
+				</details>
+				<details class="details">
+					<summary>Review notes and crossed-out content</summary>
+					<p>The workbook crosses out Incident Record Number, Wastewater, Bottle ID, old test values, four Tap/Tag questions, Other Lab, and Signatures. Those are omitted here. “Sample Site ID” becomes “Sample Location,” and “Comments” becomes “Sample Comments.”</p>
+					<p><strong>New fields versus new capability:</strong> Most additions are survey setup using existing field types: text, date/time, select, multi-select, photos and map locations. The workbook does request a new shared “Sample site - Point” type with a required Label, and the current export does not send its sample-location type to Fieldwork; configuration and phone availability need checking. Name of Sampler needs a default officer and an editable officer selection, while the sheet still calls it Text; confirm whether existing officer lookup support is enough. Nothing in the workbook proves a new app feature is required. Automatic test selection from consent conditions was explicitly split into a separate Change Request.</p>
+				</details>
+			</div>
+		</main>
+	</div>
+	<script>
+		document.querySelectorAll("[data-collapse]").forEach((button) => button.addEventListener("click", () => {
+			const panel = document.getElementById(button.dataset.collapse);
+			panel.classList.toggle("hidden");
+			button.textContent = panel.classList.contains("hidden") ? "◉ show " + button.dataset.collapse.replace("-", " ") : "◉ hide " + button.dataset.collapse.replace("-", " ");
+		}));
+		function updateSampleType(sample) {
+			const type = sample.querySelector("[data-sample-type]").value;
+			const groundwater = type === "Groundwater";
+			sample.querySelectorAll(".conditional-general").forEach((field) => field.classList.toggle("hidden", groundwater));
+			sample.querySelectorAll(".conditional-groundwater").forEach((field) => field.classList.toggle("hidden", !groundwater));
+			sample.querySelector(".conditional-other").classList.toggle("hidden", type !== "Other");
+		}
+		function bindSampleType(sample) {
+			const select = sample.querySelector("[data-sample-type]");
+			select.addEventListener("change", () => updateSampleType(sample));
+			updateSampleType(sample);
+		}
+		function bindParameterSelection(sample) {
+			const parameterSet = sample.querySelector("[data-parameter-set]");
+			const parameterTypes = [...sample.querySelectorAll("[data-parameter-type]")];
+			const selected = sample.querySelector("[data-selected-tests]");
+			const summary = sample.querySelector("[data-parameter-summary]");
+			const selectAll = sample.querySelector("[data-select-all]");
+			const refresh = () => {
+				const chosen = parameterTypes.filter((input) => input.checked);
+				selected.innerHTML = "";
+				chosen.forEach((input) => {
+					const chip = document.createElement("span");
+					chip.className = "chip";
+					chip.textContent = input.parentElement.textContent.trim();
+					selected.appendChild(chip);
+				});
+				parameterSet.disabled = chosen.length > 0;
+				parameterTypes.forEach((input) => { input.disabled = !!parameterSet.value; });
+				summary.textContent = parameterSet.value ? `Parameter set: ${parameterSet.value}` : chosen.length ? `${chosen.length} selected` : "Choose test types";
+				selectAll.disabled = !!parameterSet.value;
+			};
+			parameterSet.addEventListener("change", () => {
+				if (parameterSet.value) parameterTypes.forEach((input) => { input.checked = false; });
+				refresh();
+			});
+			parameterTypes.forEach((input) => input.addEventListener("change", () => {
+				if (input.checked) parameterSet.value = "";
+				refresh();
+			}));
+			selectAll.addEventListener("click", () => {
+				parameterSet.value = "";
+				parameterTypes.forEach((input) => { input.checked = true; });
+				refresh();
+			});
+			refresh();
+		}
+		document.querySelectorAll("[data-sample]").forEach(bindSampleType);
+		document.querySelectorAll("[data-sample]").forEach(bindParameterSelection);
+		document.getElementById("add-sample").addEventListener("click", () => {
+			const sample = document.querySelector("[data-sample]").cloneNode(true);
+			sample.querySelectorAll("input,textarea").forEach((field) => { field.value = ""; });
+			sample.querySelectorAll("select").forEach((field) => { field.selectedIndex = 0; });
+			sample.querySelectorAll("select[multiple]").forEach((field) => [...field.options].forEach((option) => { option.selected = false; }));
+			sample.querySelector("h3 span").textContent = "Sampling Item " + (document.querySelectorAll("[data-sample]").length + 1);
+			bindSampleType(sample);
+			bindParameterSelection(sample);
+			const addRow = document.getElementById("add-sample").parentElement;
+			addRow.parentElement.insertBefore(sample, addRow);
+			sample.querySelector("[data-remove-sample]").addEventListener("click", () => sample.remove());
+		});
+		document.querySelectorAll("[data-remove-sample]").forEach((button) => button.addEventListener("click", () => {
+			if (document.querySelectorAll("[data-sample]").length > 1) button.closest("[data-sample]").remove();
+		}));
+		document.getElementById("capture-weather").addEventListener("change", (event) => {
+			document.getElementById("weather-details").classList.toggle("hidden", event.target.value !== "Yes");
+		});
+		document.getElementById("reinspection-required").addEventListener("change", (event) => {
+			document.getElementById("reinspection-date").classList.toggle("hidden", event.target.value !== "Yes");
+		});
+		document.getElementById("notice-left").addEventListener("change", (event) => {
+			document.getElementById("notice-image").classList.toggle("hidden", event.target.value !== "Yes");
+		});
+		document.getElementById("spec-toggle").addEventListener("change", (event) => {
+			document.body.classList.toggle("spec-off", !event.target.checked);
+		});
+	</script>
+</body>
+</html>
