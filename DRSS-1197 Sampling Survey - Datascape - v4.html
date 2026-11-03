@@ -70,6 +70,10 @@
 		.map-meta strong { color:var(--navy); }
 		.map-meta small { display:block; color:#687580; }
 		.spec { margin:4px 0 0; padding:5px 7px; background:#eef4fa; color:#29435c; font-size:10px; line-height:1.4; }
+		.field-spec { display:flex; flex-direction:column; gap:3px; margin:4px 0; }
+		.field-spec-note { margin:0; padding:5px 7px; border-radius:3px; font-size:10px; line-height:1.4; }
+		.field-spec-type { background:#f1f2f5; color:#4a5160; }
+		.field-spec-control { background:#eef6ff; color:#19405e; }
 		.spec.warn { background:var(--orange); border-left:3px solid #d97835; color:#793a10; }
 		.spec.blocked { background:var(--red-bg); border-left:3px solid var(--red); color:#7e2029; }
 		.field-tag { display:inline-block; margin-left:5px; padding:1px 5px; border-radius:8px; background:#e9e9eb; color:#515a64; font-size:9px; vertical-align:1px; }
@@ -126,7 +130,7 @@
 			.prototype-bar { flex-wrap:nowrap; white-space:nowrap; }
 			.prototype-bar strong { overflow:hidden; text-overflow:ellipsis; }
 		}
-		body.spec-off .spec,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details { display:none !important; }
+		body.spec-off .spec,body.spec-off .field-spec,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details { display:none !important; }
 		@media print { .prototype-bar,.appbar,.rail,.record-actions,.details,.add-row,.hide { display:none !important; } .workspace { min-height:0; } .form { max-width:none; } .sample-card { break-inside:avoid; } }
 	</style>
 </head>
@@ -396,16 +400,139 @@
 			"Reinspection Required": "Existing behavior retained: Yes reveals Reinspection Date. DRSS-1197 does not request a change.",
 			"Notice of Inspection Left?": "Existing behavior retained: Yes reveals the notice image. DRSS-1197 does not request a change."
 		};
+		const fieldTypeNotes = {
+			"Actual Start Date": "Workbook type: Date.",
+			"Actual Start Time": "Workbook type: Time.",
+			"Add Asset": "Workbook type not specified: existing action button.",
+			"Add Inventory": "Workbook type not specified: existing action button.",
+			"Photos": "Workbook type: Media (Photo).",
+			"Videos": "Workbook type: Media (Video).",
+			"Track Log": "Workbook type: Spatial (Location).",
+			"In Attendance": "Workbook type: Text. RSHL clarification requests a multi-contact lookup.",
+			"Sample Type": "Workbook type: Select (single).",
+			"Other Sample Type": "Workbook type: Text.",
+			"Sample Location": "Workbook type: Spatial (Single Point); the new location Label is Text.",
+			"Sample ID": "Workbook type: Text.",
+			"Sample Time": "Workbook type: Time.",
+			"Sample Date": "Workbook type: Date.",
+			"Method of Collection": "Workbook type: Select (single).",
+			"Method of Collection Other": "Workbook type: Text.",
+			"Sample Appearance": "Workbook type: Select (single).",
+			"Odour": "Workbook type: Select (single).",
+			"Odour Type": "Workbook type: Select (single).",
+			"Rain Affect on Sample": "Workbook type: Boolean (Yes/No).",
+			"Sample Comments": "Workbook type: Text.",
+			"Sample Photos": "Workbook type: Media.",
+			"Meter Number": "Workbook type: Number Alpha-numeric.",
+			"Temperature": "Workbook type: Number (Decimal 2DP).",
+			"pH": "Workbook type: Number (Decimal 2DP), range 0-14.",
+			"Dissolved Oxygen % Sat": "Workbook type: Number (Decimal 2DP).",
+			"Dissolved Oxygen mg/l": "Workbook type: Number (Decimal 2DP).",
+			"Conductivity": "Workbook type: Number (Decimal 2DP).",
+			"Turbidity": "Workbook type: Number (Decimal 2DP).",
+			"Black disk": "Workbook type: Number (Decimal 2DP).",
+			"Secchi disk": "Workbook type: Number (Decimal 2DP).",
+			"Other": "Workbook type: Text.",
+			"Parameter Set Name": "Workbook type: Select (single).",
+			"Parameter Type": "Workbook type: Look up-select multi.",
+			"Name of Sampler": "Workbook type: Text. RSHL requests a defaultable, changeable collector; the final lookup type needs configuration confirmation.",
+			"Sample type": "Workbook type: Select (single).",
+			"Sampled from": "Workbook type: Select (single).",
+			"Sample collection method": "Workbook type: Select (single).",
+			"Bore purge volume (L)": "Workbook type: Number (2DP).",
+			"Sample filtered": "Workbook type: Boolean (Yes/No).",
+			"Analysis Request Laboratory": "Existing field type: Select (single); DRSS-1197 does not request a type change.",
+			"Purchase Order Number": "Workbook type: Text.",
+			"Work Order Number": "Workbook type: Text.",
+			"Capture Weather?": "Workbook type not specified: retained as Boolean (Yes/No).",
+			"Reinspection Required": "Workbook type: Boolean (Yes/No).",
+			"Reinspection Date": "Workbook type: Date.",
+			"Notice of Inspection Left?": "Workbook type: Boolean (Yes/No).",
+			"Image of Inspection Notice Left": "Workbook type: Media (Photo).",
+			"Actual End Date": "Workbook type: Date.",
+			"Actual End Time": "Workbook type: Time.",
+			"Reason": "Workbook type: Text.",
+			"Completion Behaviour": "Workbook type: Select (single)."
+		};
+		function fieldSpecOptionCount(field, name) {
+			if (name === "Sample Location") return 0;
+			if (field.querySelector(".ds-switch")) return 2;
+			const parameterCount = field.querySelectorAll("[data-parameter-type]").length;
+			if (parameterCount) return parameterCount;
+			const select = field.querySelector("select");
+			if (select) return [...select.options].filter((option) => option.value && option.text.trim() !== "[Not Entered]").length;
+			return field.querySelectorAll(".choice").length;
+		}
+		function fieldSpecTypeText(field, name) {
+			const source = fieldTypeNotes[name] || "";
+			let type;
+			if (name === "In Attendance") type = "Text · RSHL requests multi-contact lookup";
+			else if (name === "Name of Sampler") type = "Text · RSHL requests an officer default and change/add behavior";
+			else if (source.startsWith("Workbook type not specified:")) {
+				type = `Type not specified · ${source.replace(/^Workbook type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
+			} else if (source.startsWith("Existing field type:")) {
+				type = `Existing · ${source.replace(/^Existing field type: /, "").split(";")[0].replace(/\.$/, "")}`;
+			} else {
+				type = source.replace(/^Workbook type: /, "").split(".")[0] || `Type not specified · ${prototypeControlType(field, name)}`;
+			}
+			return type.replace("Select (single)", "Select · single")
+				.replace("Boolean (Yes/No)", "Boolean · Yes/No")
+				.replace("Number (Decimal 2DP)", "Number · Decimal 2DP")
+				.replace("Number (2DP)", "Number · 2DP")
+				.replace("Number Alpha-numeric", "Number · Alpha-numeric")
+				.replace("Media (Photo)", "Media · Photo")
+				.replace("Media (Video)", "Media · Video")
+				.replace("Spatial (Single Point)", "Spatial · Single Point")
+				.replace("Spatial (Location)", "Spatial · Location")
+				.replace("Look up-select multi", "Look up-select · multi")
+				.replace("Number.", "Number");
+		}
+		function prototypeControlType(field, name) {
+			if (name === "Sample Location") return "Spatial capture";
+			if (name === "In Attendance") return "Search input placeholder";
+			if (name === "Name of Sampler") return "Officer chip and change/add action";
+			if (field.querySelector("[data-parameter-type]")) return "Searchable multi-select with selected chips";
+			if (field.querySelector(".ds-switch")) return "Boolean switch — one tap, matching the existing Datascape form";
+			if (field.querySelector(".choice-row")) {
+				const choices = [...field.querySelectorAll(".choice")].map((choice) => choice.textContent.trim());
+				if (choices.length === 2 && choices.includes("Yes") && choices.includes("No")) return "Boolean switch/choices — one tap";
+				return `Choice buttons — ${choices.length} options, one tap per option`;
+			}
+			const select = field.querySelector("select");
+			if (select) return `Dropdown — select one of ${fieldSpecOptionCount(field, name)} options`;
+			const input = field.querySelector("input");
+			if (input) return ({ date: "Date picker", time: "Time picker", number: "Numeric input", file: "Media upload", search: "Search/lookup input", text: "Text input" })[input.type] || "Text input";
+			if (field.querySelector("textarea")) return "Text area";
+			if (field.querySelector("button")) return "Action button";
+			return "No input control identified";
+		}
 		function addMissingFieldSpecNotes(root = document) {
 			root.querySelectorAll(".field").forEach((field) => {
-				if (field.querySelector(".spec")) return;
 				const label = field.querySelector("label");
 				const name = (label?.textContent || field.querySelector("button")?.textContent || "Field")
 					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim();
-				const note = document.createElement("p");
-				note.className = "spec";
-				note.textContent = fieldSpecNotes[name] || `Existing survey field retained; DRSS-1197 does not request a change to ${name}.`;
-				field.appendChild(note);
+				let note = field.querySelector(":scope > .spec");
+				if (!note) {
+					note = document.createElement("p");
+					note.className = "spec";
+					note.textContent = fieldSpecNotes[name] || `Existing survey field retained; DRSS-1197 does not request a change to ${name}.`;
+					field.appendChild(note);
+				}
+				if (field.querySelector(":scope > .field-spec")) return;
+				const fieldSpec = document.createElement("div");
+				fieldSpec.className = "field-spec";
+				const typeParts = [fieldSpecTypeText(field, name)];
+				const options = fieldSpecOptionCount(field, name);
+				if (options) typeParts.push(`${options} options`);
+				if (name === "Method of Collection") typeParts.push("default “Grab”");
+				const typeNote = document.createElement("p");
+				typeNote.className = "field-spec-note field-spec-type";
+				typeNote.textContent = typeParts.join(" · ");
+				const controlNote = document.createElement("p");
+				controlNote.className = "field-spec-note field-spec-control";
+				controlNote.textContent = prototypeControlType(field, name);
+				fieldSpec.append(typeNote, controlNote);
+				field.insertBefore(fieldSpec, note);
 			});
 		}
 		addMissingFieldSpecNotes();
