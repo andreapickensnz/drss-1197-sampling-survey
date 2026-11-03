@@ -53,7 +53,7 @@
 		.group-content.hidden { display:none; }
 		.subheading { margin:20px 0 9px; padding-bottom:7px; border-bottom:1px solid #d6d8da; color:#123b73; font-size:13px; text-align:left; }
 		.item-label { margin:16px 0 8px; color:#173d69; font-weight:700; font-size:12px; text-align:left; }
-		.sample-card { margin:6px 0 10px; padding:12px 14px 14px; border:1px solid #d6d8da; border-radius:3px; background:#f7f7f7; }
+		.sample-card { margin:6px 0 10px; padding:12px 14px 14px; border:1px solid #e6e6e7; border-radius:4px; background:#f8f8f9; }
 		.sample-card h3 { margin:0 0 15px; display:flex; align-items:center; gap:12px; padding-bottom:10px; border-bottom:2px solid #d3d5d7; color:var(--navy); font-size:14px; text-align:left; }
 		.sample-card h3 button { margin-left:auto; border:0; color:var(--teal); background:none; font-weight:700; cursor:pointer; }
 		.form-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; }
@@ -84,8 +84,15 @@
 		.parameter-dropdown > .multiple { border:0; border-top:1px solid #e3e3e3; }
 		.chip { padding:3px 7px; border-radius:10px; background:#e8e4f4; color:#43306c; font-size:10px; }
 		.subtle { color:var(--muted); font-size:10px; line-height:1.45; }
-		.add-row { display:flex; gap:8px; padding:4px 0 12px; }
-		.add-row button { min-height:29px; border:1px solid var(--teal); border-radius:3px; background:#fff; color:var(--teal); padding:0 12px; font-weight:700; cursor:pointer; }
+		.add-row { display:flex; align-items:center; gap:8px; padding:4px 0 12px; }
+		.add,.add-row button { display:inline-flex; align-items:center; gap:7px; min-height:32px; border:1px solid #c9c9c9; border-radius:4px; background:linear-gradient(#fbfbfc,#f0f0f2); color:#5c5f5c; padding:0 12px; font-weight:700; cursor:pointer; }
+		.add-icon { font-size:16px; line-height:1; font-weight:400; }
+		.ds-switch { position:relative; display:block; flex:0 0 44px; width:44px; height:24px; margin:0; padding:0; border:1px solid #bbbcbd; border-radius:2px; background:#fff; color:#1c1c1d; box-shadow:inset 0 -1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.05); cursor:pointer; }
+		.ds-switch i { position:absolute; top:2px; left:2px; width:14px; height:18px; border-radius:2px; background:#00bce2; }
+		.ds-switch.on i { left:auto; right:2px; }
+		.ds-toggle-val { position:absolute; inset:0; display:flex; align-items:center; justify-content:flex-end; padding:0 6px 0 16px; color:#1c1c1d; font-size:10px; line-height:10px; font-weight:400; }
+		.ds-switch.on .ds-toggle-val { justify-content:flex-start; padding:0 16px 0 6px; }
+		.ds-switch:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
 		.location-audit { margin:12px 0 0; padding:9px 11px; border-left:3px solid #b75447; background:#fff1ef; line-height:1.45; }
 		.location-audit strong { color:#76251f; }
 		.details { border-top:1px solid #dedfe1; padding-top:10px; margin-top:14px; }
@@ -184,7 +191,7 @@
 							<div class="field conditional-groundwater"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Odourless</option><option>Odour</option><option>Aerated</option></select></div>
 							<div class="field conditional-general"><label>Odour</label><select><option>Odour</option><option>Odourless</option></select></div>
 							<div class="field conditional-general"><label>Odour Type</label><select><option>Metallic</option><option>Sulphuric</option><option>Effluent</option><option>Sewage</option><option>Other</option></select></div>
-							<div class="field conditional-general"><label>Rain Affect on Sample</label><select><option>Yes</option><option>No</option></select><p class="subtle">Is rain likely to have affected the sample?</p></div>
+							<div class="field conditional-general"><label>Rain Affect on Sample</label><button class="ds-switch on" type="button" role="switch" aria-label="Rain Affect on Sample" aria-checked="true" data-default="Yes"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button><p class="subtle">Is rain likely to have affected the sample?</p></div>
 							<div class="field"><label>Sample Photos</label><input type="file" accept="image/*" /></div>
 							<div class="field wide"><label>Sample Comments</label><input placeholder="Sample Comments" /></div>
 						</div>
@@ -215,10 +222,10 @@
 							<div class="field conditional-groundwater"><label>Sampled from</label><select><option>Tap</option><option>Outlet tap</option><option>From tank</option><option>After filter</option><option>Through hose</option><option>Spring</option><option>Other</option></select></div>
 							<div class="field conditional-groundwater"><label>Sample collection method</label><select><option>Pumped bore</option><option>Bailed</option><option>Grab</option><option>Bucket</option><option>Free flowing artesian</option><option>Bilge pump</option></select></div>
 							<div class="field conditional-groundwater"><label>Bore purge volume (L)</label><input type="number" step="0.01" /></div>
-							<div class="field conditional-groundwater"><label>Sample filtered</label><select><option>Yes</option><option>No</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample filtered</label><button class="ds-switch" type="button" role="switch" aria-label="Sample filtered" aria-checked="false" data-default="No"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
 						</div>
 					</section>
-					<div class="add-row"><button type="button" id="add-sample">+ Add Sampling Item</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
+					<div class="add-row"><button type="button" class="add" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
 				</div>
 
 				<h2 class="group-heading"><span>Custom Inputs</span><button class="hide" type="button" data-collapse="custom-inputs">◉ hide Custom Inputs</button></h2>
@@ -230,7 +237,7 @@
 						<div class="field"><label>Work Order Number</label><input placeholder="Work Order Number" /><p class="spec">Already present on the current survey.</p></div>
 					</div>
 					<h3 class="subheading">Weather</h3>
-					<div class="field"><label>Capture Weather?</label><select id="capture-weather"><option>Yes</option><option selected>No</option></select></div>
+					<div class="field"><label>Capture Weather?</label><button class="ds-switch" type="button" role="switch" aria-label="Capture Weather?" aria-checked="false" data-default="No" data-conditional-toggle="weather-details"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
 					<div id="weather-details" class="weather-details hidden">
 						<div class="field"><label>Air Temperature</label><input placeholder="Air Temperature" /></div>
 						<div class="field"><label>Cloud Cover</label><input placeholder="Cloud Cover" /></div>
@@ -240,10 +247,10 @@
 					</div>
 				</div>
 				<h3 class="subheading">Reinspection</h3>
-				<div class="field"><label>Reinspection Required</label><select id="reinspection-required"><option>No</option><option>Yes</option></select></div>
+				<div class="field"><label>Reinspection Required</label><button class="ds-switch" type="button" role="switch" aria-label="Reinspection Required" aria-checked="false" data-default="No" data-conditional-toggle="reinspection-date"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
 				<div class="field hidden" id="reinspection-date"><label>Reinspection Date</label><input type="date" /></div>
 				<h3 class="subheading">Notice of Inspection</h3>
-				<div class="field"><label>Notice of Inspection Left?</label><select id="notice-left"><option>No</option><option>Yes</option></select></div>
+				<div class="field"><label>Notice of Inspection Left?</label><button class="ds-switch" type="button" role="switch" aria-label="Notice of Inspection Left?" aria-checked="false" data-default="No" data-conditional-toggle="notice-image"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
 				<div class="field hidden" id="notice-image"><label>Image of Inspection Notice Left</label><input type="file" accept="image/*" /></div>
 				<h3 class="subheading">Timesheet End Date</h3>
 				<div class="form-grid">
@@ -334,8 +341,77 @@
 			});
 			refresh();
 		}
+		function bindBooleanSwitches(root) {
+			root.querySelectorAll(".ds-switch").forEach((button) => {
+				const paint = (value) => {
+					const isYes = value === "Yes";
+					button.classList.toggle("on", isYes);
+					button.dataset.value = isYes ? "Yes" : "No";
+					button.setAttribute("aria-checked", String(isYes));
+					button.querySelector(".ds-toggle-val").textContent = button.dataset.value;
+					const targetId = button.dataset.conditionalToggle;
+					if (targetId) document.getElementById(targetId).classList.toggle("hidden", !isYes);
+				};
+				paint(button.dataset.default || "No");
+				button.addEventListener("click", () => paint(button.dataset.value === "Yes" ? "No" : "Yes"));
+			});
+		}
+		const fieldSpecNotes = {
+			"Sample Type": "Workbook options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other.",
+			"Other Sample Type": "Workbook asks for free-text detail when Sample Type is Other.",
+			"Sample Location": "Workbook asks for a Sample site - Point with a required Label. Current configuration uses a different location type and does not send it to Fieldwork; resolve before build.",
+			"Sample ID": "Workbook asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
+			"Sample Time": "Workbook asks for the collection time on each Sampling Detail; include it in that sample's report row.",
+			"Sample Date": "Workbook asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
+			"Method of Collection": "Workbook includes this per-sample field with Grab, Composite and Other choices.",
+			"Method of Collection Other": "Workbook asks for a description when Method of Collection is Other.",
+			"Sample Appearance": "Workbook specifies separate appearance choices for general and groundwater samples; show the list appropriate to Sample Type.",
+			"Odour": "Workbook includes Odour for applicable non-groundwater samples, with Odour or Odourless choices.",
+			"Odour Type": "Workbook includes an Odour Type choice for applicable non-groundwater samples.",
+			"Rain Affect on Sample": "Workbook asks for Yes/No when Sample Type is not Groundwater. Check the exported condition against this rule.",
+			"Sample Comments": "Workbook renames Comments to Sample Comments; capture it per sample and include it in sample information.",
+			"Sample Photos": "Workbook includes photos with each Sampling Detail.",
+			"Meter Number": "Workbook lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
+			"Temperature": "Workbook lists Temperature under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"pH": "Workbook lists pH under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Dissolved Oxygen % Sat": "Workbook retains this Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Dissolved Oxygen mg/l": "Workbook retains this Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Conductivity": "Workbook lists Conductivity under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Turbidity": "Workbook lists Turbidity under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Black disk": "Workbook lists Black disk under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Secchi disk": "Workbook lists Secchi disk under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
+			"Other": "Workbook includes an Other measurement under Field Measurement; its repeat scope follows the open section decision.",
+			"Parameter Set Name": "Workbook supplies ten named Parameter Sets. Do not combine a set with individual Parameter Types.",
+			"Parameter Type": "Workbook supplies 23 Parameter Types. Expand a selected set from the workbook mapping; join report test names with commas.",
+			"Name of Sampler": "RSHL confirmed: default to the booking's primary officer, but let staff change or add the person who collected samples.",
+			"Sample type": "Workbook supplies groundwater-specific sample types; show only for Groundwater.",
+			"Sampled from": "Workbook lists Tap, Outlet tap, From tank, After filter, Through hose, Spring and Other.",
+			"Sample collection method": "Workbook includes this collection method for groundwater samples.",
+			"Bore purge volume (L)": "Workbook includes Bore purge volume (L) for groundwater samples.",
+			"Sample filtered": "Workbook asks for a Yes/No answer for groundwater samples.",
+			"Purchase Order Number": "Enter the PO manually when it is unavailable in Datascape Financials; include it in the lab submission.",
+			"Analysis Request Laboratory": "DRSS-1727 calls the report field Lab Name; map this existing survey source and ask RSHL only if its label should change.",
+			"In Attendance": "RSHL confirmed this is informational and survey-only; it must not update the record's contacts.",
+			"Capture Weather?": "Existing behavior retained: Yes reveals the weather details. DRSS-1197 does not request a change.",
+			"Reinspection Required": "Existing behavior retained: Yes reveals Reinspection Date. DRSS-1197 does not request a change.",
+			"Notice of Inspection Left?": "Existing behavior retained: Yes reveals the notice image. DRSS-1197 does not request a change."
+		};
+		function addMissingFieldSpecNotes(root = document) {
+			root.querySelectorAll(".field").forEach((field) => {
+				if (field.querySelector(".spec")) return;
+				const label = field.querySelector("label");
+				const name = (label?.textContent || field.querySelector("button")?.textContent || "Field")
+					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim();
+				const note = document.createElement("p");
+				note.className = "spec";
+				note.textContent = fieldSpecNotes[name] || `Existing survey field retained; DRSS-1197 does not request a change to ${name}.`;
+				field.appendChild(note);
+			});
+		}
+		addMissingFieldSpecNotes();
 		document.querySelectorAll("[data-sample]").forEach(bindSampleType);
 		document.querySelectorAll("[data-sample]").forEach(bindParameterSelection);
+		bindBooleanSwitches(document);
 		document.getElementById("add-sample").addEventListener("click", () => {
 			const sample = document.querySelector("[data-sample]").cloneNode(true);
 			sample.querySelectorAll("input,textarea").forEach((field) => { field.value = ""; });
@@ -344,6 +420,7 @@
 			sample.querySelector("h3 span").textContent = "Sampling Item " + (document.querySelectorAll("[data-sample]").length + 1);
 			bindSampleType(sample);
 			bindParameterSelection(sample);
+			bindBooleanSwitches(sample);
 			const addRow = document.getElementById("add-sample").parentElement;
 			addRow.parentElement.insertBefore(sample, addRow);
 			sample.querySelector("[data-remove-sample]").addEventListener("click", () => sample.remove());
@@ -351,15 +428,6 @@
 		document.querySelectorAll("[data-remove-sample]").forEach((button) => button.addEventListener("click", () => {
 			if (document.querySelectorAll("[data-sample]").length > 1) button.closest("[data-sample]").remove();
 		}));
-		document.getElementById("capture-weather").addEventListener("change", (event) => {
-			document.getElementById("weather-details").classList.toggle("hidden", event.target.value !== "Yes");
-		});
-		document.getElementById("reinspection-required").addEventListener("change", (event) => {
-			document.getElementById("reinspection-date").classList.toggle("hidden", event.target.value !== "Yes");
-		});
-		document.getElementById("notice-left").addEventListener("change", (event) => {
-			document.getElementById("notice-image").classList.toggle("hidden", event.target.value !== "Yes");
-		});
 		document.getElementById("spec-toggle").addEventListener("change", (event) => {
 			document.body.classList.toggle("spec-off", !event.target.checked);
 		});
