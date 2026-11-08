@@ -18,6 +18,9 @@
 		.spec-key { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; padding:8px 12px; border-bottom:1px solid #d6d8da; background:#fff; color:#3e4744; font-size:11px; line-height:1.45; }
 		.spec-key strong { color:var(--blue); }
 		.spec-key-item { display:inline-flex; align-items:center; gap:5px; }
+		.entry-route { padding:8px 12px; border-bottom:1px solid #c5e6ee; background:#f0fbfe; color:#29435c; font-size:11px; line-height:1.45; }
+		.entry-route p { margin:3px 0 0; }
+		.entry-route-open { padding:5px 8px; border-left:3px solid #b72b39; background:#fdecef; color:#8c1035; }
 		.key-dot { width:8px; height:8px; border-radius:50%; flex:none; }
 		.key-grey { background:#7c828a; } .key-blue { background:#2f6fed; } .key-amber { background:#d97835; } .key-lilac { background:#8d68c5; } .key-green { background:#168452; } .key-red { background:#b72b39; }
 		.prototype-note { margin:12px 0 0; padding:9px 10px; border-left:3px solid #d97835; background:var(--amber); color:#793a10; line-height:1.45; }
@@ -100,7 +103,7 @@
 		.mapping-row strong { display:block; color:var(--blue); }
 		.mapping-issue { margin:10px 0; padding:8px 9px; border-left:3px solid var(--red); background:var(--red-bg); color:#7e2029; font-size:12px; line-height:1.45; }
 		.hidden { display:none !important; }
-		body.spec-off .notice,body.spec-off .blocked,body.spec-off .help,body.spec-off .spec,body.spec-off .field-spec,body.spec-off .mapping-guide { display:none !important; }
+		body.spec-off .notice,body.spec-off .blocked,body.spec-off .help,body.spec-off .spec,body.spec-off .field-spec,body.spec-off .mapping-guide,body.spec-off .entry-route { display:none !important; }
 		@media(max-width:620px) { .prototype-bar { height:30px; min-height:30px; flex-wrap:nowrap; white-space:nowrap; overflow:hidden; } .prototype-bar strong { overflow:hidden; text-overflow:ellipsis; } .prototype-bar .links { margin-left:auto; } .stage { padding:8px 0 24px; } .phone { padding:0; border-radius:0; width:100%; box-shadow:none; background:#fafafa; } .notch { display:none; } .screen { height:calc(100vh - 62px); min-height:520px; border-radius:0; } }
 	</style>
 </head>
@@ -119,6 +122,13 @@
 		<span class="spec-key-item"><i class="key-dot key-green"></i>Green: mapping</span>
 		<span class="spec-key-item"><i class="key-dot key-red"></i>Red: open question</span>
 		<span>Toggle Spec notes to show or hide field annotations.</span>
+	</aside>
+	<aside class="entry-route" aria-label="How to enter Sampling">
+		<strong>How to enter Sampling</strong>
+		<p>Default: SLUS Monitoring / Sampling; Environmental Monitoring / Monitoring / Sampling.</p>
+		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
+		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
+		<p class="entry-route-open">Master list gap: Compliance Monitoring / Site Visit / Sampling has no Survey, Default survey, or Add Part value.</p>
 	</aside>
 	<div class="stage">
 		<div class="phone">
