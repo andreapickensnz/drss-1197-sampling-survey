@@ -258,7 +258,14 @@
 						<h3><span>Sampling Item</span><span class="field-tag">location-backed repeater</span><button type="button" data-remove-sample aria-label="Remove sample">Remove</button></h3>
 						<h4 class="subheading">Sample Detail</h4>
 						<div class="form-grid">
-							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>A new location needs a required site name (Label).</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div><p class="spec blocked">Engineering confirmation pending (Eng 1): the export uses a different location type and does not send it to Fieldwork. RSHL says known sites prefill location, sample type and methods; for a new incident site, create Sample site - Point.</p></div>
+							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>A new location needs a required site name (Label).</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div>
+								<p class="spec blocked"><strong>To confirm with Datacom:</strong><br />
+									<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
+									<strong>New sites:</strong> Can staff put a pin on the map, give the site a name, and save it as a new sampling site (Sample site - Point)?<br />
+									<strong>Fieldwork:</strong> Will the correct site location and saved details appear on the officer's phone after the survey is sent to Fieldwork?<br />
+									<strong>Why check?</strong> The configuration files use a different sampling-site category and do not show Fieldwork enabled for it. These files alone do not prove a fault in the live survey; Datacom needs to confirm the live setup.
+								</p>
+							</div>
 							<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
 							<div class="field conditional-other hidden"><label>Sample Type Other</label><input placeholder="Describe sample type" /><p class="help">Show when Sample Type is Other.</p></div>
 							<div class="field conditional-general"><label>Rain Affect on Sample</label><button class="ds-switch on" type="button" role="switch" aria-label="Rain Affect on Sample" aria-checked="true" data-example-value="Yes"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button><p class="subtle">Is rain likely to have affected the sample?</p></div>
@@ -328,7 +335,7 @@
 					<div class="field"><label>Officer Signature</label><div class="signature-pad" role="img" aria-label="Officer signature capture area">Signature capture</div></div>
 				</div>
 								<p class="spec">Datacom development confirmed Customer Signature can be removed for this survey. Officer Signature remains.</p>
-					<div class="location-audit"><strong>Location setup to verify:</strong> For a known site, Jira says use the location attached to the Activity/Register and prefill Sample Type, collection method, groundwater details, and consent tests as applicable. For a new incident-response site, create Sample site - Point with a required Label. The current export uses a different type and does not send it to Fieldwork; Eng 1/Eng 2 engineering confirmation is pending.</div>
+					<div class="location-audit"><strong>Site checks:</strong> Datacom needs to confirm that saved site details fill in automatically, staff can create a named map pin for a new sampling site, and the correct site details reach the officer in Fieldwork. Separately, confirm whether the required tests from a known site's consent can fill in automatically. The configuration files alone do not establish what the live system does.</div>
 				<details class="details">
 					<summary>Future lab submission mapping guide</summary>
 					<table class="mapping-table" aria-label="Sampling survey to lab submission field mapping">
@@ -443,7 +450,7 @@
 			"Name (if contact not found)": "Workbook requests text entry only when the contact cannot be found.",
 			"Warrant Shown to Relationship": "Workbook requests a text relationship when Warrant Shown is Yes.",
 			"Chain of Custody Declaration": "Workbook asks for a Boolean declaration and does not specify a default.",
-			"Sample Location": "Workbook asks for a Sample site - Point with a required Label. Current configuration uses a different location type and does not send it to Fieldwork; resolve before build.",
+			"Sample Location": "Datacom needs to confirm automatic details for known sites, map-pin and site-name entry for new sites, and that the correct site information reaches Fieldwork.",
 			"Sample ID": "Workbook asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
 			"Sample Time": "Workbook asks for the collection time on each Sampling Detail; include it in that sample's report row.",
 			"Sample Date": "Workbook asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
@@ -697,7 +704,7 @@
 			"Rainfall": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
-			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type and align the location type with Sample site - Point and known-site prefill; engineering confirmation remains pending." },
+			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
 			"Sample Type": { status: "Update required", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
 			"Sample Type Other": { status: "Update required", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
 			"Rain Affect on Sample": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; workbook option wording is struck out." },
