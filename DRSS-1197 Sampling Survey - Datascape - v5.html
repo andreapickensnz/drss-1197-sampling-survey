@@ -233,27 +233,55 @@
 						<div class="field"><label>Name (if contact not found)</label><input type="text" placeholder="Warrant Shown to Name" required /><p class="help">Show when the person cannot be found in Contacts.</p></div>
 						<div class="field"><label>Warrant Shown to Relationship</label><input type="text" placeholder="Relationship" /></div>
 					</div>
-					<p class="spec warn">Open question: the workbook conditions these fields on “Warrant shown to = Yes” but does not define a separate yes/no field. This prototype uses Warrant Shown = Yes; confirm that condition.</p>
-					<p class="item-label">Sampling Details</p>
+					<h3 class="subheading">Weather</h3>
+					<div class="field"><label>Capture Weather?</label><button class="ds-switch" type="button" role="switch" aria-label="Capture Weather?" aria-checked="false" data-default="No" data-conditional-toggle="weather-details"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
+					<div id="weather-details" class="weather-details hidden">
+						<div class="field"><label>Air Temperature</label><input placeholder="Air Temperature" /></div>
+						<div class="field"><label>Cloud Cover</label><input placeholder="Cloud Cover" /></div>
+						<div class="field"><label>Rainfall</label><input placeholder="Rainfall" /></div>
+						<div class="field"><label>Wind Direction</label><input placeholder="Wind Direction" /></div>
+						<div class="field wide"><label>Other Weather Conditions</label><textarea rows="2" placeholder="Other weather conditions"></textarea></div>
+					</div>
+					<section id="sampling-section">
+					<h3 class="subheading">Add Sampling Detail</h3>
 					<section class="sample-card" data-sample>
 						<h3><span>Sampling Item</span><span class="field-tag">location-backed repeater</span><button type="button" data-remove-sample aria-label="Remove sample">Remove</button></h3>
 						<h4 class="subheading">Sample Detail</h4>
 						<div class="form-grid">
+							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>A new location needs a required site name (Label).</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div><p class="spec blocked">Engineering confirmation pending (Eng 1): the export uses a different location type and does not send it to Fieldwork. RSHL says known sites prefill location, sample type and methods; for a new incident site, create Sample site - Point.</p></div>
 							<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
 							<div class="field conditional-other hidden"><label>Sample Type Other</label><input placeholder="Describe sample type" /><p class="help">Show when Sample Type is Other.</p></div>
-							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>A new location needs a required site name (Label).</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div><p class="spec blocked">Engineering confirmation pending (Eng 1): the export uses a different location type and does not send it to Fieldwork. RSHL says known sites prefill location, sample type and methods; for a new incident site, create Sample site - Point.</p></div>
-							<div class="field"><label>Sample ID</label><input value="SMPL-001" /></div>
-							<div class="field"><label>Sample Time</label><input type="time" value="08:45" /></div>
+							<div class="field conditional-general"><label>Rain Affect on Sample</label><button class="ds-switch on" type="button" role="switch" aria-label="Rain Affect on Sample" aria-checked="true" data-example-value="Yes"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button><p class="subtle">Is rain likely to have affected the sample?</p></div>
 							<div class="field"><label>Sample Date</label><input type="date" value="2026-09-28" /></div>
+							<div class="field"><label>Sample Time</label><input type="time" value="08:45" /></div>
+							<div class="field"><label>Sample ID</label><input value="SMPL-001" /></div>
 							<div class="field conditional-general"><label>Method of Collection</label><select><option selected>Grab</option><option>Composite</option><option>Other</option></select></div>
 							<div class="field conditional-general"><label>Method of Collection Other</label><input placeholder="Describe method" /></div>
 							<div class="field conditional-general"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Other</option></select></div>
-							<div class="field conditional-groundwater"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Odourless</option><option>Odour</option><option>Aerated</option></select></div>
 							<div class="field conditional-general"><label>Odour</label><select><option>Odour</option><option>Odourless</option></select></div>
 							<div class="field conditional-general"><label>Odour Type</label><select><option>Metallic</option><option>Sulphuric</option><option>Effluent</option><option>Sewage</option><option>Other</option></select></div>
-							<div class="field conditional-general"><label>Rain Affect on Sample</label><button class="ds-switch on" type="button" role="switch" aria-label="Rain Affect on Sample" aria-checked="true" data-example-value="Yes"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button><p class="subtle">Is rain likely to have affected the sample?</p></div>
-							<div class="field"><label>Sample Photos</label><input type="file" accept="image/*" /></div>
+							<div class="field conditional-groundwater"><label>Sample type</label><select><option>Groundwater bore</option><option>Geothermal</option><option>Spring</option><option>Salt water intrusion bore</option></select></div>
+							<div class="field conditional-groundwater"><label>Sampled from</label><select><option>From tank</option><option>After filter</option><option>Through hose</option><option>Spring</option><option>Other</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample collection method</label><select><option>Pumped bore</option><option>Bailed</option><option>Grab</option><option>Bucket</option><option>Free flowing artesian</option><option>Bilge pump</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Odourless</option><option>Odour</option><option>Aerated</option></select></div>
+							<div class="field conditional-groundwater"><label>Bore purge volume (L)</label><input type="number" step="0.01" /></div>
+							<div class="field conditional-groundwater"><label>Sample filtered</label><button class="ds-switch" type="button" role="switch" aria-label="Sample filtered" aria-checked="false" data-default="No"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
 							<div class="field wide"><label>Sample Comments</label><input placeholder="Sample Comments" /></div>
+							<div class="field"><label>Sample Photos</label><input type="file" accept="image/*" /></div>
+						</div>
+						<h4 class="subheading">Field Measurement</h4>
+						<p class="spec">Capture one set of readings per Sampling Detail, without a nested Field Measurement repeater. The workbook asks whether Meter Number is redundant; confirm before build.</p>
+						<div class="form-grid">
+							<div class="field"><label>Meter Number</label><input type="text" placeholder="Alpha-numeric meter ID" /></div>
+							<div class="field"><label>Dissolved Oxygen % Sat</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Dissolved Oxygen mg/l</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Temperature</label><input type="number" placeholder="Number" /></div>
+							<div class="field"><label>pH</label><input type="number" min="0" max="14" step="0.01" placeholder="0-14" /></div>
+							<div class="field"><label>Conductivity</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Turbidity</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Black disk</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Secchi disk</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Other</label><input placeholder="Other" /></div>
 						</div>
 						<h4 class="subheading">Sample Tests</h4>
 						<div class="form-grid">
@@ -265,46 +293,12 @@
 							<div class="field"><label>Chain of Custody Declaration</label><select><option value="" selected>[Not Entered]</option><option>True</option><option>False</option></select><p class="help">The workbook does not specify a default.</p></div>
 							<div class="field wide"><label>Name of Sampler</label><div class="multiple"><span class="chip">H. Giles · primary booking officer</span><input class="sampler-lookup" type="search" data-lookup-multiple placeholder="Search and add officers" aria-label="Search and add officers" /></div><p class="spec">RSHL confirmed on 8 Oct 2026: configure this as a Lookup + Select multi-contact field, defaulted to the primary officer; additional officers can be added when another person collected the samples.</p></div>
 						</div>
-						<h4 class="subheading">Groundwater</h4>
-						<div class="form-grid">
-							<div class="field conditional-groundwater"><label>Sample type</label><select><option>Groundwater bore</option><option>Geothermal</option><option>Spring</option><option>Salt water intrusion bore</option></select></div>
-							<div class="field conditional-groundwater"><label>Sampled from</label><select><option>From tank</option><option>After filter</option><option>Through hose</option><option>Spring</option><option>Other</option></select></div>
-							<div class="field conditional-groundwater"><label>Sample collection method</label><select><option>Pumped bore</option><option>Bailed</option><option>Grab</option><option>Bucket</option><option>Free flowing artesian</option><option>Bilge pump</option></select></div>
-							<div class="field conditional-groundwater"><label>Bore purge volume (L)</label><input type="number" step="0.01" /></div>
-							<div class="field conditional-groundwater"><label>Sample filtered</label><button class="ds-switch" type="button" role="switch" aria-label="Sample filtered" aria-checked="false" data-default="No"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
-						</div>
 					</section>
 					<div class="add-row"><button type="button" class="add" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
-					<h4 class="subheading">Field Measurement</h4>
-					<p class="spec warn">The workbook says Field Measurement cannot be a repeating block inside Add Sample. Jira comments classify readings as visit-specific; this prototype shows one set per visit. Confirm whether readings are once per visit or linked to an individual sample. Meter Number remains unresolved: the workbook asks whether it is redundant and does not strike it out.</p>
-					<div class="form-grid">
-						<div class="field"><label>Meter Number</label><input type="text" placeholder="Alpha-numeric meter ID" /></div>
-						<div class="field"><label>Temperature</label><input type="number" placeholder="Number" /></div>
-						<div class="field"><label>pH</label><input type="number" min="0" max="14" step="0.01" placeholder="0-14" /></div>
-						<div class="field"><label>Dissolved Oxygen % Sat</label><input type="number" step="0.01" /></div>
-						<div class="field"><label>Dissolved Oxygen mg/l</label><input type="number" step="0.01" /></div>
-						<div class="field"><label>Conductivity</label><input type="number" step="0.01" /></div>
-						<div class="field"><label>Turbidity</label><input type="number" step="0.01" /></div>
-						<div class="field"><label>Black disk</label><input type="number" step="0.01" /></div>
-						<div class="field"><label>Secchi disk</label><input type="number" step="0.01" /></div>
-						<div class="field"><label>Other</label><input placeholder="Other" /></div>
-					</div>
-				</div>
-
-				<h2 class="group-heading"><span>Custom Inputs</span><button class="section-toggle" type="button" aria-expanded="true" aria-controls="custom-inputs" data-collapse="custom-inputs" data-section-label="Custom Inputs" aria-label="Hide Custom Inputs" title="Hide Custom Inputs"><svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg><span>hide Custom Inputs</span></button></h2>
-				<div id="custom-inputs" class="group-content">
 					<h3 class="subheading">General</h3>
 					<div class="form-grid"><div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent, with no default. Configure and extend the list at implementation. The workbook strikes the old “Analysis Request Laboratory” label but leaves these values; Jira refers to this as “General &gt; Laboratory”.</p></div></div>
 					<div class="spec warn">Workbook revision 3 strikes out Purchase Order Number and Work Order Number. Prior Jira review says the officer enters the PO manually; confirm the report workflow entry point. DRSS-1727 calls its output “Lab Name”; confirm the report team maps from General: Laboratory.</div>
-					<h3 class="subheading">Weather</h3>
-					<div class="field"><label>Capture Weather?</label><button class="ds-switch" type="button" role="switch" aria-label="Capture Weather?" aria-checked="false" data-default="No" data-conditional-toggle="weather-details"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
-					<div id="weather-details" class="weather-details hidden">
-						<div class="field"><label>Air Temperature</label><input placeholder="Air Temperature" /></div>
-						<div class="field"><label>Cloud Cover</label><input placeholder="Cloud Cover" /></div>
-						<div class="field"><label>Rainfall</label><input placeholder="Rainfall" /></div>
-						<div class="field"><label>Wind Direction</label><input placeholder="Wind Direction" /></div>
-						<div class="field wide"><label>Other Weather Conditions</label><textarea rows="2" placeholder="Other weather conditions"></textarea></div>
-					</div>
+					</section>
 				</div>
 				<h3 class="subheading">Reinspection</h3>
 				<div class="field"><label>Reinspection Required</label><button class="ds-switch" type="button" role="switch" aria-label="Reinspection Required" aria-checked="false" data-default="No" data-conditional-toggle="reinspection-date"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
@@ -452,15 +446,15 @@
 			"Sample Comments": "Workbook renames Comments to Sample Comments; capture it per sample and include it in sample information.",
 			"Sample Photos": "Workbook includes photos with each Sampling Detail.",
 			"Meter Number": "Workbook lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
-			"Temperature": "Workbook lists Temperature under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"pH": "Workbook lists pH under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Dissolved Oxygen % Sat": "Workbook retains this Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Dissolved Oxygen mg/l": "Workbook retains this Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Conductivity": "Workbook lists Conductivity under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Turbidity": "Workbook lists Turbidity under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Black disk": "Workbook lists Black disk under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Secchi disk": "Workbook lists Secchi disk under Field Measurement; its comment leaves repeat scope per sample or visit unresolved.",
-			"Other": "Workbook includes an Other measurement under Field Measurement; its repeat scope follows the open section decision.",
+			"Temperature": "Capture once per Sampling Detail under Field Measurement.",
+			"pH": "Capture once per Sampling Detail under Field Measurement; range 0-14 with decimals.",
+			"Dissolved Oxygen % Sat": "Capture once per Sampling Detail under Field Measurement.",
+			"Dissolved Oxygen mg/l": "Capture once per Sampling Detail under Field Measurement.",
+			"Conductivity": "Capture once per Sampling Detail under Field Measurement.",
+			"Turbidity": "Capture once per Sampling Detail under Field Measurement.",
+			"Black disk": "Capture once per Sampling Detail under Field Measurement.",
+			"Secchi disk": "Capture once per Sampling Detail under Field Measurement.",
+			"Other": "Capture once per Sampling Detail under Field Measurement.",
 			"Parameter Set Name": "Workbook supplies ten named Parameter Sets. For known sites, Jira says prefill condition tests (Eng 2); engineering support is not confirmed. Do not combine a set with individual Parameter Types.",
 			"Parameter Type": "Workbook supplies 23 Parameter Types. For known sites, Jira says prefill condition tests (Eng 2); for new sites select for the suspected contaminant. Engineering support is not confirmed.",
 			"Name of Sampler": "RSHL confirmed on 8 Oct 2026: Lookup + Select, multiple officers, default primary officer.",
