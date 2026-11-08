@@ -63,6 +63,10 @@
 		.field-spec { display:flex; flex-direction:column; gap:3px; margin:4px 0; }
 		.field-spec-note { margin:0; padding:5px 7px; border-radius:3px; font-size:10px; line-height:1.4; }
 		.field-spec-summary { background:#f1f2f5; color:#4a5160; }
+		.field-spec-status { align-self:flex-start; font-weight:700; }
+		.field-spec-existing { background:#edf0f2; color:#4a5160; }
+		.field-spec-new { background:#e8f2ff; color:#174f8a; }
+		.field-spec-update { background:#fff0d5; color:#795012; }
 		.field-spec-maps { background:#e9f4ed; color:#14603c; }
 		.notice { margin:9px 0; padding:8px 9px; border-left:3px solid #d97835; background:var(--amber); color:#793a10; font-size:11px; line-height:1.4; }
 		.blocked { margin:7px 0 10px; padding:8px 9px; border-left:3px solid var(--red); background:var(--red-bg); color:#7e2029; font-size:11px; line-height:1.4; }
@@ -122,6 +126,12 @@
 		<span class="spec-key-item"><i class="key-dot key-red"></i>Red: open question</span>
 		<span>Toggle Spec notes to show or hide field annotations.</span>
 	</aside>
+	<aside class="spec-key" aria-label="Field change comparison">
+		<strong>Field changes</strong>
+		<span>Existing = retained field; Update required = existing field with a label, type, option, condition or ordering change; New = added to this survey, including standard booking fields absent from the linked form.</span>
+		<span>Compared on 9 Nov 2026 with <a href="https://datascape.cloud/regionalsoftwareholdingsltd-accept/#List+Survey/Form+Survey-8492-1000000" target="_blank" rel="noopener">the existing Sampling survey in Datascape</a> and DRSS-1197 Sampling Survey workbook revision 3, with confirmed Jira clarifications. Current types come from live form metadata unless marked export.</span>
+		<span>Removed from the proposed survey: Bottle ID, legacy Tests, Incident Record Number, Purchase Order Number and Work Order Number, as struck out in the workbook.</span>
+	</aside>
 	<aside class="entry-route" aria-label="How to enter Sampling">
 		<strong>How to enter Sampling</strong>
 		<p>Default: SLUS Monitoring / Sampling; Environmental Monitoring / Monitoring / Sampling.</p>
@@ -173,11 +183,11 @@
 						<h2 class="group-title">Weather</h2>
 						<div class="field"><label>Capture Weather?</label><div class="choice-row" data-choice-group data-conditional-choice="weather-details"><button class="choice" type="button" data-value="Yes" aria-pressed="false">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="true">No</button></div></div>
 						<div id="weather-details" class="hidden">
-							<div class="field"><label>Air Temperature</label><input placeholder="Air Temperature" /></div>
-							<div class="field"><label>Cloud Cover</label><input placeholder="Cloud Cover" /></div>
-							<div class="field"><label>Rainfall</label><input placeholder="Rainfall" /></div>
-							<div class="field"><label>Wind Direction</label><input placeholder="Wind Direction" /></div>
-							<div class="field"><label>Other Weather Conditions</label><textarea rows="2" placeholder="Other weather conditions"></textarea></div>
+							<div class="field"><label>Air Temperature</label><select><option value="">[Not Entered]</option><option>Cold (0-10 degrees)</option><option>Cool (10-15 degrees)</option><option>Freezing (&lt;0 degrees)</option><option>Hot (above 28 degrees)</option><option>Warm (15-28 degrees)</option></select></div>
+							<div class="field"><label>Cloud Cover</label><select><option value="">[Not Entered]</option><option>0/8</option><option>1/8</option><option>2/8</option><option>3/8</option><option>4/8</option><option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option></select></div>
+							<div class="field"><label>Rainfall</label><select><option value="">[Not Entered]</option><option>Heavy</option><option>Light</option><option>Medium</option></select></div>
+							<div class="field"><label>Wind Direction</label><select><option value="">[Not Entered]</option><option>E</option><option>N</option><option>NE</option><option>NW</option><option>S</option><option>SE</option><option>SW</option><option>W</option></select></div>
+							<div class="field"><label>Other Weather Conditions</label><select><option value="">[Not Entered]</option><option>Fog</option><option>High Humidity (&gt;90%)</option><option>Inversion Layer</option></select></div>
 						</div>
 					</section>
 					<section id="sampling-section">
@@ -211,7 +221,7 @@
 								<div class="field"><label>Meter Number</label><input placeholder="Alpha-numeric meter ID" /></div>
 								<div class="field"><label>Dissolved Oxygen % Sat</label><input type="number" step="0.01" /></div>
 								<div class="field"><label>Dissolved Oxygen mg/l</label><input type="number" step="0.01" /></div>
-								<div class="field"><label>Temperature</label><input type="number" /></div>
+								<div class="field"><label>Temperature</label><input type="number" step="0.01" /></div>
 								<div class="field"><label>pH</label><input type="number" min="0" max="14" step="0.01" placeholder="0-14" /></div>
 								<div class="field"><label>Conductivity</label><input type="number" step="0.01" /></div>
 								<div class="field"><label>Turbidity</label><input type="number" step="0.01" /></div>
@@ -358,6 +368,8 @@
 		};
 		const fieldTypeNotes = {
 			"Actual Start Date": "Workbook type: Date.",
+			"Officer Signature": "Existing field type: Signature.",
+			"Other": "Workbook type: Text.",
 			"Actual Start Time": "Workbook type: Time.",
 			"Add Asset": "Workbook type not specified: existing action button.",
 			"Add Inventory": "Workbook type not specified: existing action button.",
@@ -367,7 +379,12 @@
 					"Laboratory": "Jira-confirmed Select (single); council-dependent, no default.",
 			"Purchase Order Number": "Workbook type: Text.",
 			"Work Order Number": "Workbook type: Text.",
-			"Capture Weather?": "Workbook type not specified: retained as Boolean (Yes/No).",
+			"Capture Weather?": "Existing field type: Boolean (Yes/No).",
+			"Air Temperature": "Existing field type: Select (single).",
+			"Cloud Cover": "Existing field type: Select (single).",
+			"Rainfall": "Existing field type: Select (single).",
+			"Wind Direction": "Existing field type: Select (single).",
+			"Other Weather Conditions": "Existing field type: Select (single).",
 			"Reinspection Required": "Workbook type: Boolean (Yes/No).",
 			"Reinspection Date": "Workbook type: Date.",
 			"Notice of Inspection Left?": "Workbook type: Boolean (Yes/No).",
@@ -396,7 +413,7 @@
 			"Rain Affect on Sample": "Workbook type: Boolean.",
 			"Sample Comments": "Workbook type: Text.",
 			"Sample Photos": "Workbook type: Media.",
-			"Meter Number": "Workbook type: Number Alpha-numeric.",
+			"Meter Number": "Workbook type: Alpha-numeric.",
 			"Temperature": "Workbook type: Number (Decimal 2DP).",
 			"pH": "Workbook type: Number (Decimal 2DP), range 0-14.",
 			"Dissolved Oxygen % Sat": "Workbook type: Number (Decimal 2DP).",
@@ -450,6 +467,7 @@
 				.replace("Number.", "Number");
 		}
 		function prototypeControlType(field, name) {
+			if (field.querySelector(".signature-pad")) return "Signature capture";
 			if (name === "Sample Location") return "Spatial capture — point type and Label need configuration alignment";
 			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Multi-contact lookup — select one or more contacts";
 			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi · survey-only contacts";
@@ -546,9 +564,74 @@
 				|| /\*\s*$/.test(label?.textContent.trim() || "");
 			return required || mandatoryFieldNames.has(name) ? "Yes" : "not specified";
 		}
+		const fieldChangeNotes = {
+			"Actual Start Date": { status: "New", rows: "2", detail: "Standard booking date requested by the workbook; not present on the linked Sampling survey." },
+			"Actual Start Time": { status: "New", rows: "3", detail: "Standard booking time requested by the workbook; not present on the linked Sampling survey." },
+			"Add Asset": { status: "New", rows: "4", detail: "Standard booking action added to this survey." },
+			"Add Inventory": { status: "New", rows: "5", detail: "Standard booking action added to this survey." },
+			"Photos": { status: "New", rows: "6", detail: "General visual evidence added to this survey; distinct from existing Sample Photos." },
+			"Videos": { status: "New", rows: "7", detail: "General video evidence added to this survey." },
+			"Capture Track Log": { status: "New", rows: "8", detail: "General track capture added to this survey." },
+			"In Attendance": { status: "New", rows: "9", detail: "Not present on the linked survey; configure the survey-only multi-contact lookup confirmed by RSHL." },
+			"Warrant Shown": { status: "New", rows: "10", detail: "Authority field added to this survey; Boolean, default Yes." },
+			"Warrant Shown to Name": { status: "New", rows: "11", detail: "Conditional contact lookup added to this survey." },
+			"Name (if contact not found)": { status: "New", rows: "12", detail: "Conditional text fallback added to this survey." },
+			"Warrant Shown to Relationship": { status: "New", rows: "13", detail: "Conditional relationship field added to this survey." },
+			"Capture Weather?": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
+			"Air Temperature": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Cloud Cover": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Rainfall": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type and align the location type with Sample site - Point and known-site prefill; engineering confirmation remains pending." },
+			"Sample Type": { status: "Update required", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
+			"Sample Type Other": { status: "Update required", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
+			"Rain Affect on Sample": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; workbook option wording is struck out." },
+			"Sample Date": { status: "Update required", currentType: "Date", rows: "32", detail: "Ordering only: move before Sample Time and Sample ID; retain the existing Date type." },
+			"Sample Time": { status: "Update required", currentType: "Time", rows: "33", detail: "Ordering only: place after Sample Date and before Sample ID; retain the existing Time type." },
+			"Sample ID": { status: "Update required", currentType: "Text", rows: "34", detail: "Ordering only: place after Sample Date and Sample Time; retain Text." },
+			"Method of Collection": { status: "Update required", currentType: "Select single", rows: "36-38", detail: "Add Composite to the existing Grab/Other choices and apply the non-groundwater condition; retain default Grab." },
+			"Method of Collection Other": { status: "New", rows: "39", detail: "New conditional text detail for Method of Collection = Other." },
+			"Sample Appearance": { status: "Update required", currentType: "Select single", rows: "40-44, 70-76", detail: "Add Coloured and use separate groundwater and non-groundwater option lists." },
+			"Odour": { status: "Update required", currentType: "Select single", rows: "45-46", detail: "Keep the existing Odour/Odourless choices and add the non-groundwater condition." },
+			"Odour Type": { status: "Update required", currentType: "Select single", rows: "47-51", detail: "Keep the existing choices; show only for non-groundwater samples when Odour = Odour." },
+			"Groundwater sample type": { status: "New", rows: "52-55", detail: "New groundwater subtype choice, distinct from the existing main Sample Type field." },
+			"Sampled from": { status: "Update required", currentType: "Select single (export)", rows: "56-63", detail: "Existing exported field: replace struck Tap/Bore Pipe/Portable Pump options, retain Other, and apply the groundwater condition." },
+			"Sample collection method": { status: "New", rows: "64-69", detail: "New groundwater collection-method choice." },
+			"Bore purge volume (L)": { status: "New", rows: "77", detail: "New groundwater numeric reading with two decimal places." },
+			"Sample filtered": { status: "New", rows: "78", detail: "New groundwater Boolean field." },
+			"Sample Comments": { status: "Update required", currentType: "Text", rows: "79", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
+			"Sample Photos": { status: "Existing", currentType: "Media", rows: "80", detail: "Existing per-sample photo field retained." },
+			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "81", detail: "Workbook changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open workbook question." },
+			"Dissolved Oxygen % Sat": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "82", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
+			"Dissolved Oxygen mg/l": { status: "New", rows: "83", detail: "Additional unit-specific dissolved-oxygen reading at two decimal places." },
+			"Temperature": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "84", detail: "Allow two decimal places instead of the current integer precision." },
+			"pH": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow decimals and enforce the workbook range 0-14." },
+			"Conductivity": { status: "New", rows: "86", detail: "New field measurement at two decimal places." },
+			"Turbidity": { status: "New", rows: "87", detail: "New numeric field measurement; distinct from Turbidity in the legacy Tests list." },
+			"Black disk": { status: "New", rows: "88", detail: "New field measurement at two decimal places." },
+			"Secchi disk": { status: "New", rows: "89", detail: "New field measurement at two decimal places." },
+			"Other": { status: "New", rows: "90", detail: "New free-text field measurement." },
+			"Parameter Set Name": { status: "New", rows: "91", detail: "New parameter-set selector; do not combine a set with individual Parameter Types." },
+			"Parameter Type": { status: "New", rows: "92", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
+			"Chain of Custody Declaration": { status: "Update required", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "121", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to workbook True/False." },
+			"Name of Sampler": { status: "Update required", currentType: "Text", rows: "122", detail: "RSHL clarification changes Text to Lookup + Select multi, defaults to the primary officer and permits additional samplers." },
+			"Laboratory": { status: "Update required", currentType: "Select single, labelled Analysis Request", rows: "128-131", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
+			"Reinspection Required": { status: "New", rows: "135", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
+			"Reinspection Date": { status: "New", rows: "136", detail: "Standard conditional booking date added to this survey." },
+			"Notice of Inspection Left?": { status: "New", rows: "137", detail: "Notice field added to this survey." },
+			"Image of Inspection Notice Left": { status: "New", rows: "138", detail: "Conditional notice image added to this survey." },
+			"Actual End Date": { status: "New", rows: "139", detail: "Standard booking date added to this survey." },
+			"Actual End Time": { status: "New", rows: "140", detail: "Standard booking time added to this survey." },
+			"Reason": { status: "New", rows: "141", detail: "Standard booking reason added to this survey." },
+			"Completion Behaviour": { status: "New", rows: "142-144", detail: "Standard completion choice added to this survey, including the workbook's Complete and Send option." },
+			"Officer Signature": { status: "New", rows: "145", detail: "Standard booking signature retained by Datacom clarification; it is not present on the linked Sampling form." }
+		};
 		function fieldSpecSummary(field, name) {
+			const change = fieldChangeNotes[name];
 			const type = fieldSpecTypeText(field, name);
 			const parts = [type.startsWith("Type not specified ·") ? type : `Type: ${type}`];
+			if (change?.currentType) parts.unshift(`Current type: ${change.currentType}`);
 			const options = fieldSpecOptionCount(field, name);
 			if (options) parts.push(`Options: ${options}`);
 			parts.push(`Control: ${prototypeControlType(field, name)}`);
@@ -557,6 +640,8 @@
 			const condition = fieldConditionText(field, name);
 			if (condition) parts.push(`Condition: ${condition}`);
 			parts.push(`Mandatory: ${fieldMandatoryText(field, name)}`);
+			if (change?.status === "Update required") parts.push(`Change: ${change.detail}`);
+			if (change?.rows) parts.push(`Workbook rows: ${change.rows}`);
 			return parts.join(" · ");
 		}
 		function addMissingFieldSpecNotes(root = document) {
@@ -564,16 +649,25 @@
 				const label = field.querySelector("label");
 				const name = (label?.textContent || field.querySelector("button")?.textContent || "Field")
 					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim().replace(/\s*\*$/, "");
+				const change = fieldChangeNotes[name];
 				let note = field.querySelector(":scope > .spec");
 				if (!note) {
 					note = document.createElement("p");
 					note.className = "spec";
-					note.textContent = fieldSpecNotes[name] || `Existing survey field retained; DRSS-1197 does not request a change to ${name}.`;
+					const detail = fieldSpecNotes[name];
+					note.textContent = detail && !(change?.status === "New" && detail.startsWith("Existing")) ? detail : change?.detail || `Comparison not yet verified for ${name}.`;
 					field.appendChild(note);
 				}
 				if (field.querySelector(":scope > .field-spec")) return;
 				const fieldSpec = document.createElement("div");
 				fieldSpec.className = "field-spec";
+				if (change) {
+					const statusNote = document.createElement("p");
+					const stateClass = change.status === "Update required" ? "update" : change.status.toLowerCase();
+					statusNote.className = `field-spec-note field-spec-status field-spec-${stateClass}`;
+					statusNote.textContent = change.status;
+					fieldSpec.appendChild(statusNote);
+				}
 				const summaryNote = document.createElement("p");
 				summaryNote.className = "field-spec-note field-spec-summary";
 				summaryNote.textContent = fieldSpecSummary(field, name);
