@@ -596,25 +596,47 @@
 			"Reason": { target: "JRB - Dates Reason" },
 			"Sample Location": { target: "Sample site - Point · Label field on location record", specifics: "The Locations worksheet says this Label is not mapped from the survey." }
 		};
+		const workbookFieldValues = {
+			"Photos": "Photo",
+			"Videos": "Video",
+			"Track Log": "Location",
+			"Capture Track Log": "Location",
+			"Warrant Shown": "Yes/No",
+			"Warrant Shown to Name": "[Contact name]",
+			"Sample Location": "Add Location: Single Point",
+			"Sample Type": "Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical, Other",
+			"Method of Collection": "Grab, Composite, Other",
+			"Sample Appearance": "Clear, Turbid, Colourless, Coloured, Other",
+			"Odour": "Odour, Odourless",
+			"Odour Type": "Metallic, Sulphuric, Effluent, Sewage, Other",
+			"Sample type": "Groundwater bore, Geothermal, Spring, Salt water intrusion bore",
+			"Groundwater sample type": "Groundwater bore, Geothermal, Spring, Salt water intrusion bore",
+			"Sampled from": "From tank, After filter, Through hose, Spring, Other",
+			"Sample collection method": "Pumped bore, Bailed, Grab, Bucket, Free flowing artesian, Bilge pump",
+			"Sample filtered": "Yes/No",
+			"Parameter Type": "Parameter Type Name",
+			"Chain of Custody Declaration": "True/False",
+			"Laboratory": "RJ Hill Laboratories Limited Hamilton, RJ Hill Laboratories Limited Christchurch, Eurofins ELS Limited Dunedin",
+			"Reinspection Required": "Yes/No",
+			"Notice of Inspection Left?": "Yes/No",
+			"Image of Inspection Notice Left": "Photo",
+			"Completion Behaviour": "Pending Completion, Complete, Complete and Send"
+		};
+		const fieldDefaultValues = {
+			"Warrant Shown": "Yes",
+			"Method of Collection": "Grab",
+			"Name of Sampler": "primary officer",
+			"Reinspection Required": "No",
+			"Notice of Inspection Left?": "No",
+			"Completion Behaviour": "Pending Completion"
+		};
 		function fieldValueText(field, name) {
-			const defaultNode = field.querySelector("[data-default]");
-			if (defaultNode) return `Default: ${defaultNode.getAttribute("data-default")}`;
-			const exampleNode = field.querySelector("[data-example-value]");
-			if (exampleNode) return `Example: ${exampleNode.getAttribute("data-example-value")}`;
-			if (name === "Warrant Shown") return "Default: Yes";
-			if (name === "Name of Sampler") return "Default: primary officer";
-			if (name === "Method of Collection") return "Default: Grab";
-			const selectedOption = field.querySelector("select option[selected]");
-			if (selectedOption && selectedOption.value && selectedOption.text.trim() !== "[Not Entered]") return `Value: ${selectedOption.text.trim()}`;
-			const toggleValue = field.querySelector(".ds-toggle-val");
-			if (toggleValue) return `Value: ${toggleValue.textContent.trim()}`;
-			const selectedChoice = field.querySelector('.choice[aria-pressed="true"]');
-			if (selectedChoice) return `Value: ${selectedChoice.textContent.trim()}`;
-			const selectedInput = field.querySelector('input[type="radio"]:checked, input[type="checkbox"]:checked');
-			if (selectedInput) return `Value: ${selectedInput.value}`;
-			const input = field.querySelector('input:not([type="file"]):not([type="search"])[value]');
-			if (input && input.getAttribute("value")) return `Value: ${input.getAttribute("value")}`;
-			return "Value: not specified";
+			const groundwater = field.classList.contains("conditional-groundwater") || field.classList.contains("conditional-ground");
+			const value = name === "Sample Appearance" && groundwater
+				? "Clear, Turbid, Colourless, Coloured, Odourless, Odour, Aerated"
+				: workbookFieldValues[name];
+			const defaultValue = fieldDefaultValues[name];
+			return [value ? `Value: ${value}` : "", defaultValue ? `Default: ${defaultValue}` : ""].filter(Boolean).join(" · ");
 		}
 		function fieldConditionText(field, name) {
 			if (name === "Method of Collection Other") return "IF Sample Type is not Groundwater and Method of Collection = Other";
@@ -629,7 +651,7 @@
 			if (field.closest("#notice-image, #notice-photo")) return "IF Notice of Inspection Left? = Yes";
 			const text = [...field.querySelectorAll(".help, .notice")].map((node) => node.textContent).concat(fieldSpecNotes[name] || "").join(" ");
 			const match = text.match(/(?:Show when|Show if|IF|when)\s+[^.;]+/i);
-			return match ? match[0].trim() : "none";
+			return match ? match[0].trim() : "";
 		}
 		const mandatoryFieldNames = new Set(["Actual Start Date", "Actual Start Time", "Warrant Shown", "Warrant Shown to Name", "Name (if contact not found)", "Actual End Date", "Actual End Time"]);
 		function fieldMandatoryText(field, name) {
@@ -643,12 +665,12 @@
 			const parts = [type.startsWith("Type not specified ·") ? type : `Type: ${type}`];
 			const options = fieldSpecOptionCount(field, name);
 			if (options) parts.push(`Options: ${options}`);
-			parts.push(
-				`Control: ${prototypeControlType(field, name)}`,
-				fieldValueText(field, name),
-				`Condition: ${fieldConditionText(field, name)}`,
-				`Mandatory: ${fieldMandatoryText(field, name)}`
-			);
+			parts.push(`Control: ${prototypeControlType(field, name)}`);
+			const value = fieldValueText(field, name);
+			if (value) parts.push(value);
+			const condition = fieldConditionText(field, name);
+			if (condition) parts.push(`Condition: ${condition}`);
+			parts.push(`Mandatory: ${fieldMandatoryText(field, name)}`);
 			return parts.join(" · ");
 		}
 		function addMissingFieldSpecNotes(root = document) {
