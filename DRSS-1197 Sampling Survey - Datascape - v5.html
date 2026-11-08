@@ -93,8 +93,7 @@
 		.spec { margin:4px 0 0; padding:5px 7px; background:#eef4fa; color:#29435c; font-size:10px; line-height:1.4; }
 		.field-spec { display:flex; flex-direction:column; gap:3px; margin:4px 0; }
 		.field-spec-note { margin:0; padding:5px 7px; border-radius:3px; font-size:10px; line-height:1.4; }
-		.field-spec-type { background:#f1f2f5; color:#4a5160; }
-		.field-spec-control { background:#eef6ff; color:#19405e; }
+		.field-spec-summary { background:#f1f2f5; color:#4a5160; }
 		.field-spec-maps { background:#e9f4ed; color:#14603c; }
 		.spec.warn { background:var(--orange); border-left:3px solid #d97835; color:#793a10; }
 		.spec.blocked { background:var(--red-bg); border-left:3px solid var(--red); color:#7e2029; }
@@ -170,9 +169,9 @@
 	</div>
 	<aside class="spec-key" aria-label="Spec notes key">
 		<strong>Spec notes key</strong>
-		<span class="spec-key-item"><i class="key-dot key-grey"></i>Grey: field type and options</span>
-		<span class="spec-key-item"><i class="key-dot key-blue"></i>Blue: control rationale</span>
-		<span class="spec-key-item"><i class="key-dot key-amber"></i>Amber: condition</span>
+		<span class="spec-key-item"><i class="key-dot key-grey"></i>Grey: field specification (type, control, value, condition and mandatory status)</span>
+		<span class="spec-key-item"><i class="key-dot key-blue"></i>Blue: requirement detail</span>
+		<span class="spec-key-item"><i class="key-dot key-amber"></i>Amber: engineering/platform note</span>
 		<span class="spec-key-item"><i class="key-dot key-lilac"></i>Lilac: workbook detail</span>
 		<span class="spec-key-item"><i class="key-dot key-green"></i>Green: mapping</span>
 		<span class="spec-key-item"><i class="key-dot key-red"></i>Red: open question</span>
@@ -486,14 +485,14 @@
 			"Videos": "Workbook type: Media (Video).",
 			"Track Log": "Workbook type: Spatial (Location).",
 			"In Attendance": "Workbook type: Text. RSHL clarification requests a multi-contact lookup.",
-			"Warrant Shown": "Workbook type: Boolean (Yes/No), default Yes.",
+			"Warrant Shown": "Workbook type: Boolean (Yes/No).",
 			"Warrant Shown to Name": "Workbook type: Contact lookup (Look-up, Select); Text fallback if no match.",
 			"Name (if contact not found)": "Workbook type: Text.",
 			"Warrant Shown to Relationship": "Workbook type: Text.",
 			"Chain of Custody Declaration": "Workbook type: Boolean (True/False); no default specified.",
 			"Sample Type": "Workbook type: Select (single).",
 			"Other Sample Type": "Workbook type: Text.",
-			"Sample Location": "Workbook type: Spatial (Single Point); the new location Label is Text.",
+			"Sample Location": "Workbook type: Spatial (Single Point).",
 			"Sample ID": "Workbook type: Text.",
 			"Sample Time": "Workbook type: Time.",
 			"Sample Date": "Workbook type: Date.",
@@ -502,7 +501,7 @@
 			"Sample Appearance": "Workbook type: Select (single).",
 			"Odour": "Workbook type: Select (single).",
 			"Odour Type": "Workbook type: Select (single).",
-			"Rain Affect on Sample": "Workbook type: Boolean; option labels are unresolved because the old wording is struck out.",
+			"Rain Affect on Sample": "Workbook type: Boolean.",
 			"Sample Comments": "Workbook type: Text.",
 			"Sample Photos": "Workbook type: Media.",
 			"Meter Number": "Workbook type: Number Alpha-numeric.",
@@ -548,14 +547,14 @@
 		function fieldSpecTypeText(field, name) {
 			const source = fieldTypeNotes[name] || "";
 			let type;
-			if (name === "In Attendance") type = "Text · RSHL requests multi-contact lookup";
-			else if (name === "Name of Sampler") type = "Lookup · Select · multi; primary officer default per RSHL";
+			if (name === "In Attendance") type = "Text";
+			else if (name === "Name of Sampler") type = "Lookup · Select · multi";
 			else if (source.startsWith("Workbook type not specified:")) {
 				type = `Type not specified · ${source.replace(/^Workbook type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
 			} else if (source.startsWith("Existing field type:")) {
 				type = `Existing · ${source.replace(/^Existing field type: /, "").split(";")[0].replace(/\.$/, "")}`;
 			} else {
-				type = source.replace(/^Workbook type: /, "").split(".")[0] || `Type not specified · ${prototypeControlType(field, name)}`;
+				type = source.replace(/^Workbook type: /, "").split(/[.;]/)[0].replace(/,\s*default.*$/i, "") || `Type not specified · ${prototypeControlType(field, name)}`;
 			}
 			return type.replace("Select (single)", "Select · single")
 				.replace("Boolean (Yes/No)", "Boolean · Yes/No")
@@ -574,7 +573,7 @@
 			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Multi-contact lookup — select one or more contacts";
 			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi · survey-only contacts";
 			if (name === "In Attendance") return "Search input placeholder";
-			if (name === "Name of Sampler" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi · default primary officer";
+			if (name === "Name of Sampler" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi";
 			if (name === "Name of Sampler") return "Officer chip and change/add action";
 			if (field.querySelector("[data-parameter-type]")) return "Searchable multi-select with selected chips";
 			if (field.querySelector(".ds-switch")) return "Boolean switch — one tap, matching the existing Datascape form";
@@ -603,11 +602,66 @@
 			"Reason": { target: "JRB - Dates Reason" },
 			"Sample Location": { target: "Sample site - Point · Label field on location record", specifics: "The Locations worksheet says this Label is not mapped from the survey." }
 		};
+		function fieldValueText(field, name) {
+			const defaultNode = field.querySelector("[data-default]");
+			if (defaultNode) return `Default: ${defaultNode.getAttribute("data-default")}`;
+			const exampleNode = field.querySelector("[data-example-value]");
+			if (exampleNode) return `Example: ${exampleNode.getAttribute("data-example-value")}`;
+			if (name === "Warrant Shown") return "Default: Yes";
+			if (name === "Name of Sampler") return "Default: primary officer";
+			if (name === "Method of Collection") return "Default: Grab";
+			const selectedOption = field.querySelector("select option[selected]");
+			if (selectedOption && selectedOption.value && selectedOption.text.trim() !== "[Not Entered]") return `Value: ${selectedOption.text.trim()}`;
+			const toggleValue = field.querySelector(".ds-toggle-val");
+			if (toggleValue) return `Value: ${toggleValue.textContent.trim()}`;
+			const selectedChoice = field.querySelector('.choice[aria-pressed="true"]');
+			if (selectedChoice) return `Value: ${selectedChoice.textContent.trim()}`;
+			const selectedInput = field.querySelector('input[type="radio"]:checked, input[type="checkbox"]:checked');
+			if (selectedInput) return `Value: ${selectedInput.value}`;
+			const input = field.querySelector('input:not([type="file"]):not([type="search"])[value]');
+			if (input && input.getAttribute("value")) return `Value: ${input.getAttribute("value")}`;
+			return "Value: not specified";
+		}
+		function fieldConditionText(field, name) {
+			if (name === "Method of Collection Other") return "IF Sample Type is not Groundwater and Method of Collection = Other";
+			if (field.classList.contains("conditional-other")) return "IF Sample Type = Other";
+			if (field.classList.contains("conditional-general")) return "IF Sample Type is not Groundwater";
+			if (field.classList.contains("conditional-groundwater") || field.classList.contains("conditional-ground")) return "IF Sample Type = Groundwater";
+			if (field.closest("#warrant-fields")) {
+				return name === "Name (if contact not found)" ? "IF Warrant Shown = Yes and contact is not found" : "IF Warrant Shown = Yes";
+			}
+			if (field.closest("#weather-details")) return "IF Capture Weather = Yes";
+			if (field.closest("#reinspection-date")) return "IF Reinspection Required = Yes";
+			if (field.closest("#notice-image, #notice-photo")) return "IF Notice of Inspection Left? = Yes";
+			const text = [...field.querySelectorAll(".help, .notice")].map((node) => node.textContent).concat(fieldSpecNotes[name] || "").join(" ");
+			const match = text.match(/(?:Show when|Show if|IF|when)\s+[^.;]+/i);
+			return match ? match[0].trim() : "none";
+		}
+		const mandatoryFieldNames = new Set(["Actual Start Date", "Actual Start Time", "Warrant Shown", "Warrant Shown to Name", "Name (if contact not found)", "Actual End Date", "Actual End Time"]);
+		function fieldMandatoryText(field, name) {
+			const label = field.querySelector("label");
+			const required = field.querySelector('[required], [aria-required="true"], .req')
+				|| /\*\s*$/.test(label?.textContent.trim() || "");
+			return required || mandatoryFieldNames.has(name) ? "Yes" : "not specified";
+		}
+		function fieldSpecSummary(field, name) {
+			const type = fieldSpecTypeText(field, name);
+			const parts = [type.startsWith("Type not specified ·") ? type : `Type: ${type}`];
+			const options = fieldSpecOptionCount(field, name);
+			if (options) parts.push(`Options: ${options}`);
+			parts.push(
+				`Control: ${prototypeControlType(field, name)}`,
+				fieldValueText(field, name),
+				`Condition: ${fieldConditionText(field, name)}`,
+				`Mandatory: ${fieldMandatoryText(field, name)}`
+			);
+			return parts.join(" · ");
+		}
 		function addMissingFieldSpecNotes(root = document) {
 			root.querySelectorAll(".field").forEach((field) => {
 				const label = field.querySelector("label");
 				const name = (label?.textContent || field.querySelector("button")?.textContent || "Field")
-					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim();
+					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim().replace(/\s*\*$/, "");
 				let note = field.querySelector(":scope > .spec");
 				if (!note) {
 					note = document.createElement("p");
@@ -618,17 +672,10 @@
 				if (field.querySelector(":scope > .field-spec")) return;
 				const fieldSpec = document.createElement("div");
 				fieldSpec.className = "field-spec";
-				const typeParts = [fieldSpecTypeText(field, name)];
-				const options = fieldSpecOptionCount(field, name);
-				if (options) typeParts.push(`${options} options`);
-				if (name === "Method of Collection") typeParts.push("default “Grab”");
-				const typeNote = document.createElement("p");
-				typeNote.className = "field-spec-note field-spec-type";
-				typeNote.textContent = typeParts.join(" · ");
-				const controlNote = document.createElement("p");
-				controlNote.className = "field-spec-note field-spec-control";
-				controlNote.textContent = prototypeControlType(field, name);
-				fieldSpec.append(typeNote, controlNote);
+				const summaryNote = document.createElement("p");
+				summaryNote.className = "field-spec-note field-spec-summary";
+				summaryNote.textContent = fieldSpecSummary(field, name);
+				fieldSpec.appendChild(summaryNote);
 				const mapping = fieldMappings[name];
 				if (mapping) {
 					const mapNote = document.createElement("p");
