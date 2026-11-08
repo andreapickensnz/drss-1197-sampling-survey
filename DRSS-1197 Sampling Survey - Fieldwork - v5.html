@@ -196,7 +196,14 @@
 							<article class="item" data-sample>
 								<div class="item-head"><span>Sampling Item 1</span><button type="button" data-remove aria-label="Remove Sampling Item">×</button></div>
 								<h3 class="section-title">Sample Detail</h3>
-									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.<small>A new location needs a required site name (Label).</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div><p class="blocked spec">Engineering confirmation pending (Eng 1): the export uses a different location type and does not send it to Fieldwork. RSHL says known sites prefill location, sample type and methods; for a new incident site, create Sample site - Point.</p></div>
+									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.<small>A new location needs a required site name (Label).</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div>
+										<p class="blocked spec"><strong>To confirm with Datacom:</strong><br />
+											<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
+											<strong>New sites:</strong> Can staff put a pin on the map, give the site a name, and save it as a new sampling site (Sample site - Point)?<br />
+											<strong>Fieldwork:</strong> Will the correct site location and saved details appear on the officer's phone after the survey is sent to Fieldwork?<br />
+											<strong>Why check?</strong> The configuration files use a different sampling-site category and do not show Fieldwork enabled for it. These files alone do not prove a fault in the live survey; Datacom needs to confirm the live setup.
+										</p>
+									</div>
 								<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
 								<div class="field conditional-other"><label>Sample Type Other</label><input placeholder="Describe sample type" /></div>
 								<div class="field conditional-general"><label>Rain Affect on Sample</label><div class="choice-row" data-choice-group><button class="choice" type="button" aria-pressed="false">Yes</button><button class="choice" type="button" aria-pressed="false">No</button></div><p class="help">Show when Sample Type is not Groundwater. Is rain likely to have affected the sample? The workbook strikes out the old option wording and gives no default; confirm the option labels.</p></div>
@@ -315,7 +322,7 @@
 			"Purchase Order Number": "Enter the PO manually when it is unavailable in Datascape Financials; include it in the lab submission.",
 			"Sample Type": "Workbook options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other. RSHL says known sites prefill this from the Activity/Register (Eng 1); new sites enter it on the visit.",
 			"Sample Type Other": "Workbook asks for free-text detail when Sample Type is Other.",
-			"Sample Location": "Known sites come from the Activity/Register and prefill related values. New or unknown sites need a Sample site - Point with a required Label. Eng 1 transfer/prefill confirmation is pending.",
+			"Sample Location": "Datacom needs to confirm automatic details for known sites, map-pin and site-name entry for new sites, and that the correct site information reaches Fieldwork.",
 			"Sample ID": "Workbook asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
 			"Sample Time": "Workbook asks for the collection time on each Sampling Detail; include it in that sample's report row.",
 			"Sample Date": "Workbook asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
@@ -468,7 +475,7 @@
 		}
 		function prototypeControlType(field, name) {
 			if (field.querySelector(".signature-pad")) return "Signature capture";
-			if (name === "Sample Location") return "Spatial capture — point type and Label need configuration alignment";
+			if (name === "Sample Location") return "Map pin and site selection";
 			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Multi-contact lookup — select one or more contacts";
 			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi · survey-only contacts";
 			if (name === "In Attendance") return "Search input placeholder";
@@ -583,7 +590,7 @@
 			"Rainfall": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
-			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type and align the location type with Sample site - Point and known-site prefill; engineering confirmation remains pending." },
+			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
 			"Sample Type": { status: "Update required", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
 			"Sample Type Other": { status: "Update required", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
 			"Rain Affect on Sample": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; workbook option wording is struck out." },
