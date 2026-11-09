@@ -45,7 +45,11 @@
 		.record-meta strong { color:var(--blue); }
 		.group-title { display:flex; align-items:center; gap:8px; margin:18px 0 11px; padding:8px 0; border-bottom:1px solid #cfd3d8; color:var(--purple); font-size:16px; text-align:left; }
 		.group-title > span { flex:1; text-align:left; }
-		.section-toggle { display:inline-flex; align-items:center; justify-content:center; flex:none; width:24px; height:24px; padding:0; border:0; background:transparent; color:var(--purple); cursor:pointer; }
+		.section-toggle { display:inline-flex; align-items:center; justify-content:center; gap:4px; flex:none; min-width:24px; height:24px; padding:0; border:0; background:transparent; color:var(--purple); font-size:11px; white-space:nowrap; cursor:pointer; }
+		.section-title { display:flex; align-items:center; gap:8px; }
+		.detail-heading-text,.item-head > span { flex:1; min-width:0; }
+		.item-head .section-toggle { font-size:11px; padding:0; }
+		.detail-content[hidden] { display:none !important; }
 		.chevron-icon { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 		.section-content[hidden] { display:none; }
 		.section-title { margin:21px 0 11px; padding:0 0 7px; border-bottom:1px solid #d5d7da; color:var(--blue); font-size:14px; text-align:left; }
@@ -719,6 +723,8 @@
 					document.querySelector(`[aria-controls="${ancestor.id}"]`).click();
 				}
 			}
+			const detailToggle = target.querySelector(":scope > [data-detail-toggle], :scope > h2 [data-detail-toggle], :scope > h3 [data-detail-toggle]");
+			if (detailToggle?.getAttribute("aria-expanded") === "false") detailToggle.click();
 			target.scrollIntoView({ behavior:"smooth", block:"start" });
 		}));
 		document.getElementById("form-scroll").addEventListener("click", (event) => {
@@ -785,7 +791,7 @@
 			const list = document.getElementById("sample-list");
 			const card = list.querySelector("[data-sample]").cloneNode(true);
 			card.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
-			card.querySelector(".item-head span").textContent = `Sampling Item ${list.querySelectorAll("[data-sample]").length + 1}`;
+			card.querySelector(".item-head > span").textContent = `Sampling Item ${list.querySelectorAll("[data-sample]").length + 1}`;
 			card.querySelectorAll("input,textarea").forEach((field) => { if (field.type !== "checkbox") field.value = ""; else field.checked = false; });
 			card.querySelectorAll("select").forEach((field) => { field.selectedIndex = 0; });
 			card.querySelectorAll("select[multiple]").forEach((field) => [...field.options].forEach((option) => { option.selected = false; }));
@@ -794,6 +800,7 @@
 			card.querySelector("[data-sample-type]").addEventListener("change", () => updateConditionalFields(card));
 			updateConditionalFields(card);
 			bindParameterSelection(card);
+			addDetailToggles(card);
 			list.appendChild(card);
 		});
 		document.querySelectorAll("[data-remove]").forEach((button) => button.addEventListener("click", () => {
@@ -802,39 +809,62 @@
 		document.getElementById("spec-toggle").addEventListener("change", (event) => {
 			document.body.classList.toggle("spec-off", !event.target.checked);
 		});
-		document.querySelectorAll(".group-title").forEach((heading, index) => {
-			const section = heading.parentElement;
-			const headingText = heading.textContent.trim();
-			const panel = document.createElement("div");
-			panel.className = "section-content";
-			panel.id = `${section.id || `group-${index + 1}`}-content`;
-			heading.id = `${panel.id}-heading`;
-			panel.setAttribute("aria-labelledby", heading.id);
-			let sibling = heading.nextElementSibling;
-			while (sibling) {
-				const next = sibling.nextElementSibling;
-				panel.appendChild(sibling);
-				sibling = next;
-			}
-			section.appendChild(panel);
-			heading.insertAdjacentHTML("afterbegin", `<button type="button" class="section-toggle" aria-expanded="true" aria-controls="${panel.id}" aria-label="Hide ${headingText}" title="Hide ${headingText}"></button>`);
-			const toggle = heading.querySelector(".section-toggle");
-			const title = document.createElement("span");
-			title.textContent = headingText;
-			const chevron = (collapsed) => collapsed
+		let detailSequence = 0;
+		function paintDetailToggle(button, panel) {
+			const action = panel.hidden ? "Show" : "Hide";
+			const chevron = panel.hidden
 				? '<svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>'
 				: '<svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
-			toggle.innerHTML = chevron(false);
-			heading.replaceChildren(toggle, title);
-			toggle.addEventListener("click", () => {
-				panel.hidden = !panel.hidden;
-				const action = panel.hidden ? "Show" : "Hide";
-				toggle.setAttribute("aria-expanded", String(!panel.hidden));
-				toggle.setAttribute("aria-label", `${action} ${headingText}`);
-				toggle.title = `${action} ${headingText}`;
-				toggle.innerHTML = chevron(panel.hidden);
+			button.setAttribute("aria-expanded", String(!panel.hidden));
+			button.setAttribute("aria-label", `${action} ${button.dataset.sectionLabel} detail`);
+			button.title = `${action} ${button.dataset.sectionLabel} detail`;
+			button.innerHTML = `${chevron}<span>${action.toLowerCase()} detail</span>`;
+		}
+		function addDetailToggles(root = document) {
+			root.querySelectorAll(".group-title, .section-title, .item-head").forEach((heading) => {
+				let button = heading.querySelector(":scope > [data-detail-toggle]");
+				let panel;
+				const label = heading.querySelector(":scope > span")?.textContent.trim()
+					|| [...heading.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => node.textContent).join("").trim();
+				if (button) {
+					panel = heading.nextElementSibling;
+				} else {
+					const level = heading.classList.contains("item-head") ? 2 : Number(heading.tagName.slice(1));
+					panel = document.createElement("div");
+					panel.className = "section-content detail-content";
+					let sibling = heading.nextElementSibling;
+					while (sibling && !(sibling.matches("h2, h3, h4") && Number(sibling.tagName.slice(1)) <= level)) {
+						const next = sibling.nextElementSibling;
+						panel.appendChild(sibling);
+						sibling = next;
+					}
+					heading.insertAdjacentElement("afterend", panel);
+					if (!heading.classList.contains("item-head")) {
+						const title = document.createElement("span");
+						title.className = "detail-heading-text";
+						title.textContent = label;
+						heading.replaceChildren(title);
+					}
+					heading.insertAdjacentHTML("afterbegin", '<button type="button" class="section-toggle" data-detail-toggle aria-expanded="true" aria-controls=""></button>');
+					button = heading.querySelector(":scope > [data-detail-toggle]");
+				}
+				panel.id = `fieldwork-detail-${++detailSequence}`;
+				panel.hidden = false;
+				panel.setAttribute("role", "group");
+				panel.setAttribute("aria-label", `${label} detail`);
+				button.dataset.sectionLabel = label;
+				button.setAttribute("aria-controls", panel.id);
+				paintDetailToggle(button, panel);
 			});
+		}
+		document.getElementById("form-scroll").addEventListener("click", (event) => {
+			const button = event.target.closest("[data-detail-toggle]");
+			if (!button) return;
+			const panel = document.getElementById(button.getAttribute("aria-controls"));
+			panel.hidden = !panel.hidden;
+			paintDetailToggle(button, panel);
 		});
+		addDetailToggles();
 	</script>
 </body>
 </html>
