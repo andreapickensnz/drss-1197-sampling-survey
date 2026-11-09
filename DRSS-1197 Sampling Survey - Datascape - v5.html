@@ -76,6 +76,10 @@
 		.sample-card { margin:6px 0 10px; padding:12px 14px 14px; border:1px solid #e6e6e7; border-radius:4px; background:#f8f8f9; }
 		.sample-card h3 { margin:0 0 15px; display:flex; align-items:center; gap:12px; padding-bottom:10px; border-bottom:2px solid #d3d5d7; color:var(--navy); font-size:14px; text-align:left; }
 		.sample-card h3 button { margin-left:auto; border:0; color:var(--teal); background:none; font-weight:700; cursor:pointer; }
+		.sample-card h3 { flex-wrap:wrap; }
+		.sample-card h3 button[data-remove-sample] { margin-left:0; }
+		.subheading { display:flex; align-items:center; gap:8px; }
+		.detail-content[hidden] { display:none !important; }
 		.form-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; }
 		.field { min-width:0; margin-bottom:9px; }
 		.signature-pad { min-height:66px; padding:8px; border:1px solid #c9d2d8; background:linear-gradient(to bottom,transparent 0 78%,#c9d2d8 79% 80%,transparent 81%); color:#687580; font-size:11px; }
@@ -311,7 +315,7 @@
 						</div>
 					</section>
 					<div class="add-row"><button type="button" class="add" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
-					<h3 class="subheading">General</h3>
+					<h4 class="subheading">General</h4>
 					<div class="form-grid"><div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent, with no default. Configure and extend the list at implementation. The workbook strikes the old “Analysis Request Laboratory” label but leaves these values; Jira refers to this as “General &gt; Laboratory”.</p></div></div>
 					<div class="spec warn">Workbook revision 3 strikes out Purchase Order Number and Work Order Number. Prior Jira review says the officer enters the PO manually; confirm the report workflow entry point. DRSS-1727 calls its output “Lab Name”; confirm the report team maps from General: Laboratory.</div>
 					</section>
@@ -369,6 +373,59 @@
 				? '<svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>'
 				: '<svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg>';
 		}
+		let detailSequence = 0;
+		function paintDetailToggle(button, panel) {
+			const action = panel.hidden ? "Show" : "Hide";
+			button.setAttribute("aria-expanded", String(!panel.hidden));
+			button.setAttribute("aria-label", `${action} ${button.dataset.sectionLabel} detail`);
+			button.title = `${action} ${button.dataset.sectionLabel} detail`;
+			button.innerHTML = `${visibilityIcon(panel.hidden)}<span>${action.toLowerCase()} detail</span>`;
+		}
+		function addDetailToggles(root = document) {
+			root.querySelectorAll(".subheading, .sample-card > h3").forEach((heading) => {
+				let button = heading.querySelector(":scope > [data-detail-toggle]");
+				let panel;
+				const label = heading.querySelector(":scope > span")?.textContent.trim()
+					|| [...heading.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => node.textContent).join("").trim();
+				if (button) {
+					panel = heading.nextElementSibling;
+				} else {
+					const level = Number(heading.tagName.slice(1));
+					panel = document.createElement("div");
+					panel.className = "detail-content";
+					let sibling = heading.nextElementSibling;
+					while (sibling) {
+						const boundaryHeading = sibling.matches("h2, h3, h4") ? sibling
+							: sibling.matches(".sample-card") ? null : sibling.querySelector(":scope > h2, :scope > h3, :scope > h4");
+						if ((boundaryHeading && Number(boundaryHeading.tagName.slice(1)) <= level)
+							|| sibling.matches(".location-audit, .mapping-guide, .details")) break;
+						const next = sibling.nextElementSibling;
+						panel.appendChild(sibling);
+						sibling = next;
+					}
+					heading.insertAdjacentElement("afterend", panel);
+					button = document.createElement("button");
+					button.type = "button";
+					button.className = "section-toggle";
+					button.setAttribute("data-detail-toggle", "");
+					heading.insertBefore(button, heading.querySelector("[data-remove-sample]"));
+				}
+				panel.id = `sampling-detail-${++detailSequence}`;
+				panel.hidden = false;
+				panel.setAttribute("role", "group");
+				panel.setAttribute("aria-label", `${label} detail`);
+				button.dataset.sectionLabel = label;
+				button.setAttribute("aria-controls", panel.id);
+				paintDetailToggle(button, panel);
+			});
+		}
+		document.addEventListener("click", (event) => {
+			const button = event.target.closest("[data-detail-toggle]");
+			if (!button) return;
+			const panel = document.getElementById(button.getAttribute("aria-controls"));
+			panel.hidden = !panel.hidden;
+			paintDetailToggle(button, panel);
+		});
 		document.querySelectorAll("[data-collapse]").forEach((button) => button.addEventListener("click", () => {
 				const panel = document.getElementById(button.getAttribute("aria-controls"));
 				const collapsed = panel.classList.toggle("hidden");
@@ -840,6 +897,7 @@
 		}
 		addMissingFieldSpecNotes();
 		useSpreadsheetInBlueNotes();
+		addDetailToggles();
 		document.querySelectorAll("[data-sample]").forEach(bindSampleType);
 		document.querySelectorAll("[data-sample]").forEach(bindParameterSelection);
 		bindBooleanSwitches(document);
@@ -852,6 +910,7 @@
 			bindSampleType(sample);
 			bindParameterSelection(sample);
 			bindBooleanSwitches(sample);
+			addDetailToggles(sample);
 			const addRow = document.getElementById("add-sample").parentElement;
 			addRow.parentElement.insertBefore(sample, addRow);
 			sample.querySelector("[data-remove-sample]").addEventListener("click", () => sample.remove());
