@@ -650,6 +650,17 @@
 			if (change?.rows) parts.push(`Workbook rows: ${change.rows}`);
 			return parts.join(" · ");
 		}
+		function useSpreadsheetInBlueNotes(root = document) {
+			const blueBackgrounds = new Set(["rgb(238, 244, 250)", "rgb(232, 242, 255)"]);
+			root.querySelectorAll(".spec, .field-spec-new").forEach((note) => {
+				if (!blueBackgrounds.has(getComputedStyle(note).backgroundColor)) return;
+				const textNodes = document.createTreeWalker(note, NodeFilter.SHOW_TEXT);
+				let textNode;
+				while ((textNode = textNodes.nextNode())) {
+					textNode.nodeValue = textNode.nodeValue.replace(/\bworkbook\b/gi, (word) => word[0] === "W" ? "Spreadsheet" : "spreadsheet");
+				}
+			});
+		}
 		function addMissingFieldSpecNotes(root = document) {
 			root.querySelectorAll(".field").forEach((field) => {
 				const label = field.querySelector("label");
@@ -695,6 +706,7 @@
 			});
 		}
 		addMissingFieldSpecNotes();
+		useSpreadsheetInBlueNotes();
 		document.getElementById("open-index").addEventListener("click", () => panel.classList.add("open"));
 		document.getElementById("close-index").addEventListener("click", () => panel.classList.remove("open"));
 		panel.querySelectorAll("[data-target]").forEach((button) => button.addEventListener("click", () => {
