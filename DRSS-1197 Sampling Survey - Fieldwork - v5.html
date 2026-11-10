@@ -822,7 +822,7 @@
 			button.innerHTML = `${chevron}<span>${action.toLowerCase()} detail</span>`;
 		}
 		function addDetailToggles(root = document) {
-			root.querySelectorAll(".group-title, .section-title, .item-head").forEach((heading) => {
+			root.querySelectorAll(".group-title").forEach((heading) => {
 				let button = heading.querySelector(":scope > [data-detail-toggle]");
 				let panel;
 				const label = heading.querySelector(":scope > span")?.textContent.trim()

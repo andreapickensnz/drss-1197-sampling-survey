@@ -898,7 +898,6 @@
 		}
 		addMissingFieldSpecNotes();
 		useSpreadsheetInBlueNotes();
-		addDetailToggles();
 		document.querySelectorAll("[data-sample]").forEach(bindSampleType);
 		document.querySelectorAll("[data-sample]").forEach(bindParameterSelection);
 		bindBooleanSwitches(document);
@@ -911,7 +910,6 @@
 			bindSampleType(sample);
 			bindParameterSelection(sample);
 			bindBooleanSwitches(sample);
-			addDetailToggles(sample);
 			const addRow = document.getElementById("add-sample").parentElement;
 			addRow.parentElement.insertBefore(sample, addRow);
 			sample.querySelector("[data-remove-sample]").addEventListener("click", () => sample.remove());
