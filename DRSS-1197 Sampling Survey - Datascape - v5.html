@@ -9,22 +9,22 @@
 		* { box-sizing:border-box; }
 		body { margin:0; background:#fff; font-size:12px; }
 		button,input,select,textarea { font:inherit; }
-		.prototype-bar { min-height:30px; display:flex; align-items:center; gap:8px 16px; padding:4px 10px; background:#fff8e1; border-bottom:1px solid #e8d69c; color:#514719; font-size:10px; }
+		.prototype-bar { min-height:30px; display:flex; align-items:center; gap:8px 16px; padding:4px 10px; background:#fff; border-bottom:1px solid var(--line); color:#3b4660; font-size:10px; }
 		.prototype-bar strong { font-size:10px; }
-		.prototype-bar a { color:#514719; font-weight:700; }
+		.prototype-bar a { color:var(--navy); font-weight:700; }
 		.prototype-bar .bar-links { margin-left:auto; display:flex; gap:12px; }
 		.spec-switch { display:flex; align-items:center; gap:5px; font-weight:700; cursor:pointer; }
-		.spec-switch input { width:14px; height:14px; margin:0; accent-color:#5c4b00; }
+		.spec-switch input { width:14px; height:14px; margin:0; accent-color:var(--purple); }
 		.prototype-note { flex-basis:100%; margin:0; padding-top:7px; border-top:1px solid #e8d69c; line-height:1.45; }
 		.prototype-note strong { color:#873518; }
-		.spec-key { display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; padding:8px 16px; border-bottom:1px solid #d6d8da; background:#fafafa; color:#3e4744; font-size:11px; line-height:1.45; }
+		.spec-key { display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; padding:8px 16px; border-bottom:1px solid #d6d8da; background:#fff; color:#3e4744; font-size:11px; line-height:1.45; }
 		.spec-key strong { color:#123b73; }
 		.spec-key-item { display:inline-flex; align-items:center; gap:5px; }
 		.entry-route { padding:8px 16px; border-bottom:1px solid #c5e6ee; background:#f0fbfe; color:#29435c; font-size:11px; line-height:1.45; }
 		.entry-route p { margin:3px 0 0; }
 		.entry-route-open { padding:5px 8px; border-left:3px solid #b72b39; background:#fdecef; color:#8c1035; }
 		.key-dot { width:8px; height:8px; border-radius:50%; flex:none; }
-		.key-grey { background:#7c828a; } .key-blue { background:#2f6fed; } .key-amber { background:#d97835; } .key-lilac { background:#8d68c5; } .key-green { background:#168452; } .key-red { background:#b72b39; }
+		.key-grey { background:#7c828a; } .key-blue { background:#2f6fed; } .key-amber { background:#d97835; } .key-lilac { background:#8d68c5; } .key-green { background:#168452; } .key-orange { background:#e07b39; } .key-red { background:#b72b39; }
 		.appbar { min-width:0; min-height:58px; display:flex; align-items:center; gap:10px; padding:7px 14px; border-bottom:2px solid var(--purple); white-space:nowrap; }
 		.app-grid { display:grid; place-items:center; width:24px; height:24px; color:var(--purple); flex:none; }
 		.app-grid svg { width:20px; height:20px; }
@@ -94,17 +94,24 @@
 		.map-meta { padding:9px 11px; line-height:1.45; }
 		.map-meta strong { color:var(--navy); }
 		.map-meta small { display:block; color:#687580; }
-		.spec { margin:4px 0 0; padding:5px 7px; background:#eef4fa; color:#29435c; font-size:10px; line-height:1.4; }
+		.spec { margin:4px 0 0; padding:5px 7px; border-radius:3px; background:#f5f1fc; color:#3d2278; font-size:10px; line-height:1.4; }
 		.field-spec { display:flex; flex-direction:column; gap:3px; margin:4px 0; }
 		.field-spec-note { margin:0; padding:5px 7px; border-radius:3px; font-size:10px; line-height:1.4; }
 		.field-spec-summary { background:#f1f2f5; color:#4a5160; }
 		.field-spec-status { align-self:flex-start; font-weight:700; }
-		.field-spec-existing { background:#edf0f2; color:#4a5160; }
-		.field-spec-new { background:#e8f2ff; color:#174f8a; }
-		.field-spec-update { background:#fff0d5; color:#795012; }
-		.field-spec-maps { background:#e9f4ed; color:#14603c; }
-		.spec.warn { background:var(--orange); border-left:3px solid #d97835; color:#793a10; }
-		.spec.blocked { background:var(--red-bg); border-left:3px solid var(--red); color:#7e2029; }
+		.field-spec-detail { background:#f5f1fc; color:#3d2278; }
+		.field-spec-existing { background:#e7e9ef; color:#4a5160; }
+		.field-spec-new { background:#e4d4ff; color:#4c1d95; }
+		.field-spec-wording { background:#ffe9d6; color:#8a4b00; }
+		.field-spec-update { background:#dff1f6; color:#0a5a6e; }
+		.field-spec-maps { background:#eef7f2; color:#14603c; }
+		.field-status { display:inline-block; margin-left:6px; padding:1px 7px; border-radius:9px; font-size:10px; font-weight:700; vertical-align:1px; white-space:nowrap; }
+		.chip-new { background:#e4d4ff; color:#4c1d95; }
+		.chip-wording { background:#ffe9d6; color:#8a4b00; }
+		.chip-existing { background:#e7e9ef; color:#4a5160; }
+		.chip-update { background:#dff1f6; color:#0a5a6e; }
+		.spec.warn { background:#fff0e6; border-left:3px solid #e07b39; color:#8a3b00; }
+		.spec.blocked { background:#fdecef; border-left:3px solid #e60060; color:#8c1035; }
 		.field-tag { display:inline-block; margin-left:5px; padding:1px 5px; border-radius:8px; background:#e9e9eb; color:#515a64; font-size:9px; vertical-align:1px; }
 		.multiple { display:flex; flex-wrap:wrap; align-items:center; gap:4px; min-height:29px; padding:4px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; background:#fff; }
 		.multiple input { flex:1 1 180px; width:auto; min-width:140px; border:0; }
@@ -163,7 +170,7 @@
 			.prototype-bar { flex-wrap:nowrap; white-space:nowrap; }
 			.prototype-bar strong { overflow:hidden; text-overflow:ellipsis; }
 		}
-		body.spec-off .spec,body.spec-off .field-spec,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details,body.spec-off .entry-route { display:none !important; }
+		body.spec-off .spec,body.spec-off .spec-key,body.spec-off .field-spec,body.spec-off .field-status,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details,body.spec-off .entry-route { display:none !important; }
 		@media print { .prototype-bar,.spec-key,.appbar,.rail,.record-actions,.details,.add-row,.section-toggle { display:none !important; } .workspace { min-height:0; } .form { max-width:none; } .sample-card { break-inside:avoid; } }
 	</style>
 </head>
@@ -177,17 +184,21 @@
 	</div>
 	<aside class="spec-key" aria-label="Spec notes key">
 		<strong>Spec notes key</strong>
-		<span class="spec-key-item"><i class="key-dot key-grey"></i>Grey: field specification (type, control, value, condition and mandatory status)</span>
-		<span class="spec-key-item"><i class="key-dot key-blue"></i>Blue: requirement detail</span>
-		<span class="spec-key-item"><i class="key-dot key-amber"></i>Amber: engineering/platform note</span>
-		<span class="spec-key-item"><i class="key-dot key-lilac"></i>Lilac: workbook detail</span>
+		<span class="spec-key-item"><i class="key-dot key-grey"></i>Grey: field type and options</span>
+		<span class="spec-key-item"><i class="key-dot key-blue"></i>Blue: why this control</span>
+		<span class="spec-key-item"><i class="key-dot key-amber"></i>Amber: show-when condition</span>
+		<span class="spec-key-item"><i class="key-dot key-lilac"></i>Lilac: spreadsheet detail</span>
 		<span class="spec-key-item"><i class="key-dot key-green"></i>Green: mapping</span>
-		<span class="spec-key-item"><i class="key-dot key-red"></i>Red: open question</span>
+		<span class="spec-key-item"><i class="key-dot key-orange"></i>Orange: check with Datacom, Product or Fieldwork</span>
+		<span class="spec-key-item"><i class="key-dot key-red"></i>Red: unanswered question</span>
 		<span>Toggle Spec notes to show or hide field annotations.</span>
 	</aside>
 	<aside class="spec-key" aria-label="Field change comparison">
 		<strong>Field changes</strong>
-		<span>Existing = retained field; Update required = existing field with a label, type, option, condition or ordering change; New = added to this survey, including standard booking fields absent from the linked form.</span>
+		<span class="spec-key-item"><span class="field-status chip-new">New</span> added to this survey</span>
+		<span class="spec-key-item"><span class="field-status chip-wording">Wording edit</span> label, options or values changed</span>
+		<span class="spec-key-item"><span class="field-status chip-existing">Existing</span> retained as-is</span>
+		<span class="spec-key-item"><span class="field-status chip-update">Update required</span> type, condition, ordering or system change</span>
 		<span>Compared on 9 Nov 2026 with <a href="https://datascape.cloud/regionalsoftwareholdingsltd-accept/#List+Survey/Form+Survey-8492-1000000" target="_blank" rel="noopener">the existing Sampling survey in Datascape</a> and DRSS-1197 Sampling Survey workbook revision 3, with confirmed Jira clarifications. Current types come from live form metadata unless marked export.</span>
 		<span>Removed from the proposed survey: Bottle ID, legacy Tests, Incident Record Number, Purchase Order Number and Work Order Number, as struck out in the workbook.</span>
 	</aside>
@@ -759,23 +770,23 @@
 			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
-			"Sample Type": { status: "Update required", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
-			"Sample Type Other": { status: "Update required", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
-			"Rain Affect on Sample": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; workbook option wording is struck out." },
+			"Sample Type": { status: "Wording edit", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
+			"Sample Type Other": { status: "Wording edit", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
+			"Rain Affect on Sample": { status: "Wording edit", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; workbook option wording is struck out." },
 			"Sample Date": { status: "Update required", currentType: "Date", rows: "32", detail: "Ordering only: move before Sample Time and Sample ID; retain the existing Date type." },
 			"Sample Time": { status: "Update required", currentType: "Time", rows: "33", detail: "Ordering only: place after Sample Date and before Sample ID; retain the existing Time type." },
 			"Sample ID": { status: "Update required", currentType: "Text", rows: "34", detail: "Ordering only: place after Sample Date and Sample Time; retain Text." },
-			"Method of Collection": { status: "Update required", currentType: "Select single", rows: "36-38", detail: "Add Composite to the existing Grab/Other choices and apply the non-groundwater condition; retain default Grab." },
+			"Method of Collection": { status: "Wording edit", currentType: "Select single", rows: "36-38", detail: "Add Composite to the existing Grab/Other choices and apply the non-groundwater condition; retain default Grab." },
 			"Method of Collection Other": { status: "New", rows: "39", detail: "New conditional text detail for Method of Collection = Other." },
-			"Sample Appearance": { status: "Update required", currentType: "Select single", rows: "40-44, 70-76", detail: "Add Coloured and use separate groundwater and non-groundwater option lists." },
+			"Sample Appearance": { status: "Wording edit", currentType: "Select single", rows: "40-44, 70-76", detail: "Add Coloured and use separate groundwater and non-groundwater option lists." },
 			"Odour": { status: "Update required", currentType: "Select single", rows: "45-46", detail: "Keep the existing Odour/Odourless choices and add the non-groundwater condition." },
 			"Odour Type": { status: "Update required", currentType: "Select single", rows: "47-51", detail: "Keep the existing choices; show only for non-groundwater samples when Odour = Odour." },
 			"Sample type": { status: "New", rows: "52-55", detail: "New groundwater subtype choice, distinct from the existing main Sample Type field." },
-			"Sampled from": { status: "Update required", currentType: "Select single (export)", rows: "56-63", detail: "Existing exported field: replace struck Tap/Bore Pipe/Portable Pump options, retain Other, and apply the groundwater condition." },
+			"Sampled from": { status: "Wording edit", currentType: "Select single (export)", rows: "56-63", detail: "Existing exported field: replace struck Tap/Bore Pipe/Portable Pump options, retain Other, and apply the groundwater condition." },
 			"Sample collection method": { status: "New", rows: "64-69", detail: "New groundwater collection-method choice." },
 			"Bore purge volume (L)": { status: "New", rows: "77", detail: "New groundwater numeric reading with two decimal places." },
 			"Sample filtered": { status: "New", rows: "78", detail: "New groundwater Boolean field." },
-			"Sample Comments": { status: "Update required", currentType: "Text", rows: "79", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
+			"Sample Comments": { status: "Wording edit", currentType: "Text", rows: "79", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
 			"Sample Photos": { status: "Existing", currentType: "Media", rows: "80", detail: "Existing per-sample photo field retained." },
 			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "81", detail: "Workbook changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open workbook question." },
 			"Dissolved Oxygen % Sat": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "82", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
@@ -789,9 +800,9 @@
 			"Other": { status: "New", rows: "90", detail: "New free-text field measurement." },
 			"Parameter Set Name": { status: "New", rows: "91", detail: "New parameter-set selector; do not combine a set with individual Parameter Types." },
 			"Parameter Type": { status: "New", rows: "92", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
-			"Chain of Custody Declaration": { status: "Update required", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "121", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to workbook True/False." },
+			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "121", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to workbook True/False." },
 			"Name of Sampler": { status: "Update required", currentType: "Text", rows: "122", detail: "RSHL clarification changes Text to Lookup + Select multi, defaults to the primary officer and permits additional samplers." },
-			"Laboratory": { status: "Update required", currentType: "Select single, labelled Analysis Request", rows: "128-131", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
+			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "128-131", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
 			"Reinspection Required": { status: "New", rows: "135", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
 			"Reinspection Date": { status: "New", rows: "136", detail: "Standard conditional booking date added to this survey." },
 			"Notice of Inspection Left?": { status: "New", rows: "137", detail: "Notice field added to this survey." },
@@ -836,6 +847,13 @@
 				const name = (label?.textContent || field.querySelector("button")?.textContent || "Field")
 					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim().replace(/\s*\*$/, "");
 				const change = fieldChangeNotes[name];
+				if (label && change && !label.querySelector(".field-status")) {
+					const statusClass = ({ "New": "new", "Wording edit": "wording", "Existing": "existing", "Update required": "update" })[change.status] || "update";
+					const statusBadge = document.createElement("span");
+					statusBadge.className = `field-status chip-${statusClass}`;
+					statusBadge.textContent = change.status;
+					label.appendChild(statusBadge);
+				}
 				let note = field.querySelector(":scope > .spec");
 				if (!note) {
 					note = document.createElement("p");
@@ -847,13 +865,6 @@
 				if (field.querySelector(":scope > .field-spec")) return;
 				const fieldSpec = document.createElement("div");
 				fieldSpec.className = "field-spec";
-				if (change) {
-					const statusNote = document.createElement("p");
-					const stateClass = change.status === "Update required" ? "update" : change.status.toLowerCase();
-					statusNote.className = `field-spec-note field-spec-status field-spec-${stateClass}`;
-					statusNote.textContent = change.status;
-					fieldSpec.appendChild(statusNote);
-				}
 				const summaryNote = document.createElement("p");
 				summaryNote.className = "field-spec-note field-spec-summary";
 				summaryNote.textContent = fieldSpecSummary(field, name);
