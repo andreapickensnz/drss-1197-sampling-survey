@@ -867,7 +867,10 @@
 				if (fieldOpenQuestions[name]) {
 					const question = document.createElement("p");
 					question.className = "spec blocked";
-					question.textContent = fieldOpenQuestions[name];
+					const [, lead, rest] = fieldOpenQuestions[name].match(/^([^:]+:)\s*(.*)$/);
+					const strong = document.createElement("strong");
+					strong.textContent = lead;
+					question.append(strong, ` ${rest}`);
 					field.appendChild(question);
 				}
 			});
