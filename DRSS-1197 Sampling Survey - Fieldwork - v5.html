@@ -190,7 +190,7 @@
 							<article class="item" data-sample>
 								<div class="item-head"><span>Sampling Item 1</span><button type="button" data-remove aria-label="Remove Sampling Item">×</button></div>
 								<h3 class="section-title">Sample Detail</h3>
-									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.<small>The workbook's Sample Site Name / Label row is crossed out.</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div>
+									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.<small>The spreadsheet's Sample Site Name / Label row is crossed out.</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div>
 										<p class="blocked spec"><strong>To confirm with Datacom:</strong><br />
 											<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
 										<strong>Site Name for the lab form (RSHL and Datacom Engineering):</strong> Each sample row on the lab form needs a site name. DRSS-1727 says to take it from the location's name (Label), but the report can't read location details, and the spreadsheet's separate Site Name question is crossed out. Should we add a Site Name question to each sample in the survey, or can the report read the location's name? RSHL would prefer to type the name once and have it also name the map location.<br />
@@ -200,7 +200,7 @@
 									</div>
 								<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
 								<div class="field conditional-other"><label>Sample Type Other</label><input placeholder="Describe sample type" /></div>
-								<div class="field conditional-general"><label>Rain Affect on Sample</label><div class="choice-row" data-choice-group><button class="choice" type="button" aria-pressed="false">Yes</button><button class="choice" type="button" aria-pressed="false">No</button></div><p class="help">Show when Sample Type is not Groundwater. Is rain likely to have affected the sample? The workbook strikes out the old option wording and gives no default; confirm the option labels.</p></div>
+								<div class="field conditional-general"><label>Rain Affect on Sample</label><div class="choice-row" data-choice-group><button class="choice" type="button" aria-pressed="false">Yes</button><button class="choice" type="button" aria-pressed="false">No</button></div><p class="help">Show when Sample Type is not Groundwater. Is rain likely to have affected the sample? The spreadsheet strikes out the old option wording and gives no default; confirm the option labels.</p></div>
 								<div class="field"><label>Sample Date</label><input type="date" value="2026-09-28" /></div>
 								<div class="field"><label>Sample Time</label><input type="time" value="08:45" /></div>
 								<div class="field"><label>Sample ID</label><input placeholder="Sample ID" /></div>
@@ -218,7 +218,7 @@
 								<div class="field"><label>Sample Comments</label><input placeholder="Sample Comments" /></div>
 									<div class="field"><label>Sample Photos</label><input type="file" accept="image/*" /></div>
 								<h3 class="section-title" id="field-measurement-section" data-index-section="field-measurement-section">Field Measurement</h3>
-								<p class="spec">Capture one set of readings per Sampling Detail, without a nested Field Measurement repeater. The workbook asks whether Meter Number is redundant; confirm before build.</p>
+								<p class="spec">Capture one set of readings per Sampling Detail, without a nested Field Measurement repeater. The spreadsheet asks whether Meter Number is redundant; confirm before build.</p>
 								<div class="field"><label>Meter Number</label><input placeholder="Alpha-numeric meter ID" /></div>
 								<div class="field"><label>Dissolved Oxygen % Sat</label><input type="number" step="0.01" /></div>
 								<div class="field"><label>Dissolved Oxygen mg/l</label><input type="number" step="0.01" /></div>
@@ -234,9 +234,9 @@
 									<div class="field"><label>Parameter Type</label>
 										<details class="multiselect"><summary>Choose test types</summary><div class="options"><input class="test-search" type="search" placeholder="Search test types" aria-label="Search Parameter Types" />
 											<label><input type="checkbox" data-parameter-type /> Biochemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Total Suspended Solids</label><label><input type="checkbox" data-parameter-type /> pH</label><label><input type="checkbox" data-parameter-type /> Total Ammoniacal Nitrogen</label><label><input type="checkbox" data-parameter-type /> Nitrate Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Dissolved Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Phosphorus</label><label><input type="checkbox" data-parameter-type /> Dissolved Reactive Phosphorus</label><label><input type="checkbox" data-parameter-type /> Total Kjeldahl Nitrogen</label><label><input type="checkbox" data-parameter-type /> Escherichia coli</label><label><input type="checkbox" data-parameter-type /> Chemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Grease and Oil</label><label><input type="checkbox" data-parameter-type /> Combined Metals</label><label><input type="checkbox" data-parameter-type /> Turbidity</label><label><input type="checkbox" data-parameter-type /> Total Hardness</label><label><input type="checkbox" data-parameter-type /> Total Petroleum Hydrocarbons</label><label><input type="checkbox" data-parameter-type /> Polycyclic Aromatic Hydrocarbon</label><label><input type="checkbox" data-parameter-type /> BTEX</label><label><input type="checkbox" data-parameter-type /> Semi volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Total Alkalinity</label><label><input type="checkbox" data-parameter-type /> Organochlorine Pesticides</label><label><input type="checkbox" data-parameter-type /> Organophosphorus Phosphatases</label>
-										</div><div class="selected-tests" data-selected-tests></div></details><p class="spec">The workbook supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text in the report. Consent-condition test auto-fill is tracked in a separate Change Request.</p></div>
+										</div><div class="selected-tests" data-selected-tests></div></details><p class="spec">The spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text in the report. Consent-condition test auto-fill is tracked in a separate Change Request.</p></div>
 									<h3 class="section-title" id="chain-of-custody-section" data-index-section="chain-of-custody-section">Chain of Custody</h3>
-									<div class="field"><label>Chain of Custody Declaration</label><div class="choice-row" data-choice-group><button class="choice" type="button" data-value="True" aria-pressed="false">True</button><button class="choice" type="button" data-value="False" aria-pressed="false">False</button></div><p class="help">The workbook does not specify a default.</p></div>
+									<div class="field"><label>Chain of Custody Declaration</label><div class="choice-row" data-choice-group><button class="choice" type="button" data-value="True" aria-pressed="false">True</button><button class="choice" type="button" data-value="False" aria-pressed="false">False</button></div><p class="help">The spreadsheet does not specify a default.</p></div>
 									<div class="field"><label>Name of Sampler</label><div class="selected-tests"><span class="chip">H. Giles · primary booking officer</span><input class="sampler-lookup" type="search" data-lookup-multiple placeholder="Search and add officers" aria-label="Search and add officers" /></div><p class="spec">RSHL confirmed on 8 Oct 2026: configure this as a Lookup + Select multi-contact field, defaulted to the primary officer; additional officers can be added when another person collected the samples.</p></div>
 							</article>
 						</div>
@@ -244,7 +244,7 @@
 						<div id="general-section">
 							<h3 class="section-title">General</h3>
 							<div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent; no default. Configure and extend the list at implementation. Jira calls this “General &gt; Laboratory”.</p></div>
-							<div class="spec warn">Workbook revision 3 strikes out the old Analysis Request Laboratory label, Purchase Order Number, and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label. DRSS-1727 calls its report output “Lab Name”; confirm the report team maps from this field.</div>
+							<div class="spec warn">Spreadsheet revision 3 strikes out the old Analysis Request Laboratory label, Purchase Order Number, and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label. DRSS-1727 calls its report output “Lab Name”; confirm the report team maps from this field.</div>
 						</div>
 					</section>
 					<section id="reinspection-section">
@@ -271,8 +271,8 @@
 					</section>
 					<details class="mapping-guide">
 						<summary>Future lab submission mapping guide</summary>
-						<div class="mapping-row"><strong>Lab Name</strong>General: Laboratory. The workbook strikes the old field label but leaves the values; Jira uses “General &gt; Laboratory”. Confirm the report maps this field by ID.</div>
-						<div class="mapping-row"><strong>PO Number</strong>No active survey field in workbook revision 3. Prior Jira review says the officer enters the PO manually; confirm the entry point because the survey field is struck out.</div>
+						<div class="mapping-row"><strong>Lab Name</strong>General: Laboratory. The spreadsheet strikes the old field label but leaves the values; Jira uses “General &gt; Laboratory”. Confirm the report maps this field by ID.</div>
+						<div class="mapping-row"><strong>PO Number</strong>No active survey field in spreadsheet revision 3. Prior Jira review says the officer enters the PO manually; confirm the entry point because the survey field is struck out.</div>
 						<div class="mapping-row"><strong>Full name</strong>Sampling Item: Name of Sampler. <span class="mapping-issue"><strong>Open question for RSHL:</strong> The lab form shows the booking officer's name next to the booking officer's signature. Name of Sampler can hold several officers. Should Full name always be the booking officer, or the Name of Sampler? If there are several samplers, should all be listed?</span></div>
 						<div class="mapping-row"><strong>Signature</strong>Primary officer profile, if available; otherwise officer completes it manually.</div>
 						<div class="mapping-row"><strong>Sample Information header</strong>Sample Date, Sample Type, Method of Collection, Sample Appearance, Odour, Rain Affect on Sample and Sample Comments come from each Sampling Item. <span class="mapping-issue"><strong>Open question for RSHL:</strong> The lab form has one box at the top showing a single set of these answers, but the survey asks them for each sample, and the report can't pick one sample. Should the box show the first sample's details, or should these details move into each sample's row in the table?</span></div>
@@ -312,21 +312,21 @@
 		const fieldSpecNotes = {
 					"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
 			"Purchase Order Number": "Enter the PO manually when it is unavailable in Datascape Financials; include it in the lab submission.",
-			"Sample Type": "Workbook options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Staff choose a type for new sites.",
-			"Sample Type Other": "Workbook asks for free-text detail when Sample Type is Other.",
+			"Sample Type": "Spreadsheet options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Staff choose a type for new sites.",
+			"Sample Type Other": "Spreadsheet asks for free-text detail when Sample Type is Other.",
 			"Sample Location": "The Sample Site Name / Label row is crossed out in the spreadsheet. DRSS-1727 maps Site Name from the location Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source.",
-			"Sample ID": "Workbook asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
-			"Sample Time": "Workbook asks for the collection time on each Sampling Detail; include it in that sample's report row.",
-			"Sample Date": "Workbook asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
-			"Method of Collection": "Workbook includes this per-sample field with Grab, Composite and Other choices. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
-			"Method of Collection Other": "Workbook asks for a description when Method of Collection is Other.",
-			"Sample Appearance": "Workbook specifies separate appearance choices for general and groundwater samples; show the list appropriate to Sample Type.",
-			"Odour": "Workbook includes Odour for applicable non-groundwater samples, with Odour or Odourless choices.",
-			"Odour Type": "Workbook includes an Odour Type choice for applicable non-groundwater samples.",
-			"Rain Affect on Sample": "Workbook retains a Boolean field and the non-groundwater condition, but strikes out the old True/False Yes/No option wording. Confirm option labels; no default is specified.",
-			"Sample Comments": "Workbook renames Comments to Sample Comments; capture it per sample and include it in sample information.",
-			"Sample Photos": "Workbook includes photos with each Sampling Detail.",
-			"Meter Number": "Workbook lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
+			"Sample ID": "Spreadsheet asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
+			"Sample Time": "Spreadsheet asks for the collection time on each Sampling Detail; include it in that sample's report row.",
+			"Sample Date": "Spreadsheet asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
+			"Method of Collection": "Spreadsheet includes this per-sample field with Grab, Composite and Other choices. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
+			"Method of Collection Other": "Spreadsheet asks for a description when Method of Collection is Other.",
+			"Sample Appearance": "Spreadsheet specifies separate appearance choices for general and groundwater samples; show the list appropriate to Sample Type.",
+			"Odour": "Spreadsheet includes Odour for applicable non-groundwater samples, with Odour or Odourless choices.",
+			"Odour Type": "Spreadsheet includes an Odour Type choice for applicable non-groundwater samples.",
+			"Rain Affect on Sample": "Spreadsheet retains a Boolean field and the non-groundwater condition, but strikes out the old True/False Yes/No option wording. Confirm option labels; no default is specified.",
+			"Sample Comments": "Spreadsheet renames Comments to Sample Comments; capture it per sample and include it in sample information.",
+			"Sample Photos": "Spreadsheet includes photos with each Sampling Detail.",
+			"Meter Number": "Spreadsheet lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
 			"Temperature": "Capture once per Sampling Detail under Field Measurement.",
 			"pH": "Capture once per Sampling Detail under Field Measurement; range 0-14 with decimals.",
 			"Dissolved Oxygen % Sat": "Capture once per Sampling Detail under Field Measurement.",
@@ -336,20 +336,20 @@
 			"Black disk": "Capture once per Sampling Detail under Field Measurement.",
 			"Secchi disk": "Capture once per Sampling Detail under Field Measurement.",
 			"Other": "Capture once per Sampling Detail under Field Measurement.",
-					"Parameter Set Name": "Workbook supplies ten named Parameter Sets. Consent-condition test auto-fill is tracked in a separate Change Request. Do not combine a set with individual Parameter Types.",
-					"Parameter Type": "Workbook supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text. Consent-condition test auto-fill is tracked in a separate Change Request.",
+					"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Consent-condition test auto-fill is tracked in a separate Change Request. Do not combine a set with individual Parameter Types.",
+					"Parameter Type": "Spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text. Consent-condition test auto-fill is tracked in a separate Change Request.",
 					"Name of Sampler": "RSHL confirmed on 8 Oct 2026: Lookup + Select (multi), default primary officer; additional officers can be added.",
-			"Groundwater sample type": "Workbook supplies groundwater-specific sample types; show only for Groundwater. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
-			"Sampled from": "Workbook lists From tank, After filter, Through hose, Spring and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Struck Tap, Outlet tap, Bore Pipe and Portable Pump are omitted.",
-			"Sample collection method": "Workbook includes this collection method for groundwater samples. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
-			"Bore purge volume (L)": "Workbook includes Bore purge volume (L) for groundwater samples. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
-			"Sample filtered": "Workbook asks for a Yes/No answer for groundwater samples.",
+			"Groundwater sample type": "Spreadsheet supplies groundwater-specific sample types; show only for Groundwater. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
+			"Sampled from": "Spreadsheet lists From tank, After filter, Through hose, Spring and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Struck Tap, Outlet tap, Bore Pipe and Portable Pump are omitted.",
+			"Sample collection method": "Spreadsheet includes this collection method for groundwater samples. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
+			"Bore purge volume (L)": "Spreadsheet includes Bore purge volume (L) for groundwater samples. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
+			"Sample filtered": "Spreadsheet asks for a Yes/No answer for groundwater samples.",
 			"In Attendance": "RSHL confirmed this is a multi-contact lookup for this survey only; it must not update the record's contacts.",
-			"Warrant Shown": "Workbook specifies Yes/No and a default of Yes.",
-			"Warrant Shown to Name": "Workbook requests a contact lookup, with text entry if no contact is found. Show when Warrant Shown is Yes.",
-			"Name (if contact not found)": "Workbook requests text entry only when the contact cannot be found.",
-			"Warrant Shown to Relationship": "Workbook requests a text relationship when Warrant Shown is Yes.",
-					"Chain of Custody Declaration": "Workbook asks for a Boolean declaration and does not specify a default.",
+			"Warrant Shown": "Spreadsheet specifies Yes/No and a default of Yes.",
+			"Warrant Shown to Name": "Spreadsheet requests a contact lookup, with text entry if no contact is found. Show when Warrant Shown is Yes.",
+			"Name (if contact not found)": "Spreadsheet requests text entry only when the contact cannot be found.",
+			"Warrant Shown to Relationship": "Spreadsheet requests a text relationship when Warrant Shown is Yes.",
+					"Chain of Custody Declaration": "Spreadsheet asks for a Boolean declaration and does not specify a default.",
 			"Capture Weather?": "Existing behavior retained: Yes reveals the weather details. DRSS-1197 does not request a change.",
 			"Reinspection Required": "Existing behavior retained: Yes reveals Reinspection Date. DRSS-1197 does not request a change.",
 			"Notice of Inspection Left?": "Existing behavior retained: Yes reveals the notice image. DRSS-1197 does not request a change.",
@@ -363,73 +363,73 @@
 			"Actual End Date": "Existing Fieldwork timesheet field retained; DRSS-1197 does not request a change.",
 			"Actual End Time": "Existing Fieldwork timesheet field retained; DRSS-1197 does not request a change.",
 			"Reason": "Existing Fieldwork timesheet field retained; DRSS-1197 does not request a change.",
-			"Completion Behaviour": "The workbook retains Pending Completion and Complete and adds Complete and Send."
+			"Completion Behaviour": "The spreadsheet retains Pending Completion and Complete and adds Complete and Send."
 		};
 		const fieldTypeNotes = {
-			"Actual Start Date": "Workbook type: Date.",
+			"Actual Start Date": "Spreadsheet type: Date.",
 			"Officer Signature": "Existing field type: Signature.",
-			"Other": "Workbook type: Text.",
-			"Actual Start Time": "Workbook type: Time.",
-			"Add Asset": "Workbook type not specified: existing action button.",
-			"Add Inventory": "Workbook type not specified: existing action button.",
-			"Photos": "Workbook type: Media (Photo).",
-			"Videos": "Workbook type: Media (Video).",
-			"Capture Track Log": "Workbook type: Spatial (Track Log).",
+			"Other": "Spreadsheet type: Text.",
+			"Actual Start Time": "Spreadsheet type: Time.",
+			"Add Asset": "Spreadsheet type not specified: existing action button.",
+			"Add Inventory": "Spreadsheet type not specified: existing action button.",
+			"Photos": "Spreadsheet type: Media (Photo).",
+			"Videos": "Spreadsheet type: Media (Video).",
+			"Capture Track Log": "Spreadsheet type: Spatial (Track Log).",
 					"Laboratory": "Jira-confirmed Select (single); council-dependent, no default.",
-			"Purchase Order Number": "Workbook type: Text.",
-			"Work Order Number": "Workbook type: Text.",
+			"Purchase Order Number": "Spreadsheet type: Text.",
+			"Work Order Number": "Spreadsheet type: Text.",
 			"Capture Weather?": "Existing field type: Boolean (Yes/No).",
 			"Air Temperature": "Existing field type: Select (single).",
 			"Cloud Cover": "Existing field type: Select (single).",
 			"Rainfall": "Existing field type: Select (single).",
 			"Wind Direction": "Existing field type: Select (single).",
 			"Other Weather Conditions": "Existing field type: Select (single).",
-			"Reinspection Required": "Workbook type: Boolean (Yes/No).",
-			"Reinspection Date": "Workbook type: Date.",
-			"Notice of Inspection Left?": "Workbook type: Boolean (Yes/No).",
-			"Image of Inspection Notice Left": "Workbook type: Media (Photo).",
-			"In Attendance": "Workbook type: Text. RSHL clarification requests a multi-contact lookup.",
-			"Warrant Shown": "Workbook type: Boolean (Yes/No).",
-			"Warrant Shown to Name": "Workbook type: Contact lookup (Look-up, Select); Text fallback if no match.",
-			"Name (if contact not found)": "Workbook type: Text.",
-			"Warrant Shown to Relationship": "Workbook type: Text.",
-			"Chain of Custody Declaration": "Workbook type: Boolean (True/False); no default specified.",
-			"Actual End Date": "Workbook type: Date.",
-			"Actual End Time": "Workbook type: Time.",
-			"Reason": "Workbook type: Text.",
-			"Completion Behaviour": "Workbook type: Select (single).",
-			"Sample Type": "Workbook type: Select (single).",
-			"Sample Type Other": "Workbook type: Text.",
-			"Sample Location": "Workbook type: Spatial (Single Point).",
-			"Sample ID": "Workbook type: Text.",
-			"Sample Time": "Workbook type: Time.",
-			"Sample Date": "Workbook type: Date.",
-			"Method of Collection": "Workbook type: Select (single).",
-			"Method of Collection Other": "Workbook type: Text.",
-			"Sample Appearance": "Workbook type: Select (single).",
-			"Odour": "Workbook type: Select (single).",
-			"Odour Type": "Workbook type: Select (single).",
-			"Rain Affect on Sample": "Workbook type: Boolean.",
-			"Sample Comments": "Workbook type: Text.",
-			"Sample Photos": "Workbook type: Media.",
-			"Meter Number": "Workbook type: Alpha-numeric.",
-			"Temperature": "Workbook type: Number (Decimal 2DP).",
-			"pH": "Workbook type: Number (Decimal 2DP), range 0-14.",
-			"Dissolved Oxygen % Sat": "Workbook type: Number (Decimal 2DP).",
-			"Dissolved Oxygen mg/l": "Workbook type: Number (Decimal 2DP).",
-			"Conductivity": "Workbook type: Number (Decimal 2DP).",
-			"Turbidity": "Workbook type: Number (Decimal 2DP).",
-			"Black disk": "Workbook type: Number (Decimal 2DP).",
-			"Secchi disk": "Workbook type: Number (Decimal 2DP).",
-			"Other measurement": "Workbook type: Text.",
-			"Parameter Set Name": "Workbook type: Select (single).",
-			"Parameter Type": "Workbook type: Look up-select multi.",
-					"Name of Sampler": "Workbook says Text; RSHL clarified Lookup + Select (multi), with the primary officer as the default.",
-			"Groundwater sample type": "Workbook type: Select (single).",
-			"Sampled from": "Workbook type: Select (single).",
-			"Sample collection method": "Workbook type: Select (single).",
-			"Bore purge volume (L)": "Workbook type: Number (2DP).",
-			"Sample filtered": "Workbook type: Boolean (Yes/No)."
+			"Reinspection Required": "Spreadsheet type: Boolean (Yes/No).",
+			"Reinspection Date": "Spreadsheet type: Date.",
+			"Notice of Inspection Left?": "Spreadsheet type: Boolean (Yes/No).",
+			"Image of Inspection Notice Left": "Spreadsheet type: Media (Photo).",
+			"In Attendance": "Spreadsheet type: Text. RSHL clarification requests a multi-contact lookup.",
+			"Warrant Shown": "Spreadsheet type: Boolean (Yes/No).",
+			"Warrant Shown to Name": "Spreadsheet type: Contact lookup (Look-up, Select); Text fallback if no match.",
+			"Name (if contact not found)": "Spreadsheet type: Text.",
+			"Warrant Shown to Relationship": "Spreadsheet type: Text.",
+			"Chain of Custody Declaration": "Spreadsheet type: Boolean (True/False); no default specified.",
+			"Actual End Date": "Spreadsheet type: Date.",
+			"Actual End Time": "Spreadsheet type: Time.",
+			"Reason": "Spreadsheet type: Text.",
+			"Completion Behaviour": "Spreadsheet type: Select (single).",
+			"Sample Type": "Spreadsheet type: Select (single).",
+			"Sample Type Other": "Spreadsheet type: Text.",
+			"Sample Location": "Spreadsheet type: Spatial (Single Point).",
+			"Sample ID": "Spreadsheet type: Text.",
+			"Sample Time": "Spreadsheet type: Time.",
+			"Sample Date": "Spreadsheet type: Date.",
+			"Method of Collection": "Spreadsheet type: Select (single).",
+			"Method of Collection Other": "Spreadsheet type: Text.",
+			"Sample Appearance": "Spreadsheet type: Select (single).",
+			"Odour": "Spreadsheet type: Select (single).",
+			"Odour Type": "Spreadsheet type: Select (single).",
+			"Rain Affect on Sample": "Spreadsheet type: Boolean.",
+			"Sample Comments": "Spreadsheet type: Text.",
+			"Sample Photos": "Spreadsheet type: Media.",
+			"Meter Number": "Spreadsheet type: Alpha-numeric.",
+			"Temperature": "Spreadsheet type: Number (Decimal 2DP).",
+			"pH": "Spreadsheet type: Number (Decimal 2DP), range 0-14.",
+			"Dissolved Oxygen % Sat": "Spreadsheet type: Number (Decimal 2DP).",
+			"Dissolved Oxygen mg/l": "Spreadsheet type: Number (Decimal 2DP).",
+			"Conductivity": "Spreadsheet type: Number (Decimal 2DP).",
+			"Turbidity": "Spreadsheet type: Number (Decimal 2DP).",
+			"Black disk": "Spreadsheet type: Number (Decimal 2DP).",
+			"Secchi disk": "Spreadsheet type: Number (Decimal 2DP).",
+			"Other measurement": "Spreadsheet type: Text.",
+			"Parameter Set Name": "Spreadsheet type: Select (single).",
+			"Parameter Type": "Spreadsheet type: Look up-select multi.",
+					"Name of Sampler": "Spreadsheet says Text; RSHL clarified Lookup + Select (multi), with the primary officer as the default.",
+			"Groundwater sample type": "Spreadsheet type: Select (single).",
+			"Sampled from": "Spreadsheet type: Select (single).",
+			"Sample collection method": "Spreadsheet type: Select (single).",
+			"Bore purge volume (L)": "Spreadsheet type: Number (2DP).",
+			"Sample filtered": "Spreadsheet type: Boolean (Yes/No)."
 		};
 		function fieldSpecOptionCount(field, name) {
 			if (name === "Sample Location") return 0;
@@ -446,12 +446,12 @@
 			if (name === "In Attendance") type = "Text";
 			else if (!source && field.querySelector('[role="switch"], .choice-row')) type = "Boolean";
 					else if (name === "Name of Sampler") type = "Lookup · Select · multi";
-			else if (source.startsWith("Workbook type not specified:")) {
-				type = `Type not specified · ${source.replace(/^Workbook type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
+			else if (source.startsWith("Spreadsheet type not specified:")) {
+				type = `Type not specified · ${source.replace(/^Spreadsheet type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
 			} else if (source.startsWith("Existing field type:")) {
 				type = `Existing · ${source.replace(/^Existing field type: /, "").split(";")[0].replace(/\.$/, "")}`;
 			} else {
-				type = source.replace(/^Workbook type: /, "").split(/[.;]/)[0].replace(/,\s*default.*$/i, "") || `Type not specified · ${prototypeControlType(field, name)}`;
+				type = source.replace(/^Spreadsheet type: /, "").split(/[.;]/)[0].replace(/,\s*default.*$/i, "") || `Type not specified · ${prototypeControlType(field, name)}`;
 			}
 			return type.replace("Select (single)", "Select · single")
 				.replace("Boolean (Yes/No)", "Boolean · Yes/No")
@@ -499,7 +499,7 @@
 			"Reason": { target: "JRB - Dates Reason" },
 			"Sample Location": { target: "Sample site - Point · Label field on location record", specifics: "The Locations worksheet says this Label is not mapped from the survey." }
 		};
-		const workbookFieldValues = {
+		const spreadsheetFieldValues = {
 			"Photos": "Photo",
 			"Videos": "Video",
 			"Track Log": "Location",
@@ -537,7 +537,7 @@
 			const groundwater = field.classList.contains("conditional-groundwater") || field.classList.contains("conditional-ground");
 			const value = name === "Sample Appearance" && groundwater
 				? "Clear, Turbid, Colourless, Coloured, Odourless, Odour, Aerated"
-				: workbookFieldValues[name];
+				: spreadsheetFieldValues[name];
 			const defaultValue = fieldDefaultValues[name];
 			return [value ? `Value: ${value}` : "", defaultValue ? `Default: ${defaultValue}` : ""].filter(Boolean).join(" · ");
 		}
@@ -564,8 +564,8 @@
 			return required || mandatoryFieldNames.has(name) ? "Yes" : "not specified";
 		}
 		const fieldChangeNotes = {
-			"Actual Start Date": { status: "New", rows: "2", detail: "Standard booking date requested by the workbook; not present on the linked Sampling survey." },
-			"Actual Start Time": { status: "New", rows: "3", detail: "Standard booking time requested by the workbook; not present on the linked Sampling survey." },
+			"Actual Start Date": { status: "New", rows: "2", detail: "Standard booking date requested by the spreadsheet; not present on the linked Sampling survey." },
+			"Actual Start Time": { status: "New", rows: "3", detail: "Standard booking time requested by the spreadsheet; not present on the linked Sampling survey." },
 			"Add Asset": { status: "New", rows: "4", detail: "Standard booking action added to this survey." },
 			"Add Inventory": { status: "New", rows: "5", detail: "Standard booking action added to this survey." },
 			"Photos": { status: "New", rows: "6", detail: "General visual evidence added to this survey; distinct from existing Sample Photos." },
@@ -585,7 +585,7 @@
 			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
 			"Sample Type": { status: "Wording edit", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
 			"Sample Type Other": { status: "Wording edit", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
-			"Rain Affect on Sample": { status: "Wording edit", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; workbook option wording is struck out." },
+			"Rain Affect on Sample": { status: "Wording edit", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; spreadsheet option wording is struck out." },
 			"Sample Date": { status: "Update required", currentType: "Date", rows: "32", detail: "Ordering only: move before Sample Time and Sample ID; retain the existing Date type." },
 			"Sample Time": { status: "Update required", currentType: "Time", rows: "33", detail: "Ordering only: place after Sample Date and before Sample ID; retain the existing Time type." },
 			"Sample ID": { status: "Update required", currentType: "Text", rows: "34", detail: "Ordering only: place after Sample Date and Sample Time; retain Text." },
@@ -601,11 +601,11 @@
 			"Sample filtered": { status: "New", rows: "78", detail: "New groundwater Boolean field." },
 			"Sample Comments": { status: "Wording edit", currentType: "Text", rows: "79", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
 			"Sample Photos": { status: "Existing", currentType: "Media", rows: "80", detail: "Existing per-sample photo field retained." },
-			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "81", detail: "Workbook changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open workbook question." },
+			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "81", detail: "Spreadsheet changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open spreadsheet question." },
 			"Dissolved Oxygen % Sat": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "82", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
 			"Dissolved Oxygen mg/l": { status: "New", rows: "83", detail: "Additional unit-specific dissolved-oxygen reading at two decimal places." },
 			"Temperature": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "84", detail: "Allow two decimal places instead of the current integer precision." },
-			"pH": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow decimals and enforce the workbook range 0-14." },
+			"pH": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow decimals and enforce the spreadsheet range 0-14." },
 			"Conductivity": { status: "New", rows: "86", detail: "New field measurement at two decimal places." },
 			"Turbidity": { status: "New", rows: "87", detail: "New numeric field measurement; distinct from Turbidity in the legacy Tests list." },
 			"Black disk": { status: "New", rows: "88", detail: "New field measurement at two decimal places." },
@@ -613,7 +613,7 @@
 			"Other": { status: "New", rows: "90", detail: "New free-text field measurement." },
 			"Parameter Set Name": { status: "New", rows: "91", detail: "New parameter-set selector; do not combine a set with individual Parameter Types." },
 			"Parameter Type": { status: "New", rows: "92", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
-			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "121", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to workbook True/False." },
+			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "121", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to spreadsheet True/False." },
 			"Name of Sampler": { status: "Update required", currentType: "Text", rows: "122", detail: "RSHL clarification changes Text to Lookup + Select multi, defaults to the primary officer and permits additional samplers." },
 			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "128-131", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
 			"Reinspection Required": { status: "New", rows: "135", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
@@ -623,7 +623,7 @@
 			"Actual End Date": { status: "New", rows: "139", detail: "Standard booking date added to this survey." },
 			"Actual End Time": { status: "New", rows: "140", detail: "Standard booking time added to this survey." },
 			"Reason": { status: "New", rows: "141", detail: "Standard booking reason added to this survey." },
-			"Completion Behaviour": { status: "New", rows: "142-144", detail: "Standard completion choice added to this survey, including the workbook's Complete and Send option." },
+			"Completion Behaviour": { status: "New", rows: "142-144", detail: "Standard completion choice added to this survey, including the spreadsheet's Complete and Send option." },
 			"Officer Signature": { status: "New", rows: "145", detail: "Standard booking signature retained by Datacom clarification; it is not present on the linked Sampling form." }
 		};
 		function fieldSpecSummary(field, name) {
@@ -640,7 +640,7 @@
 			if (condition) parts.push(`Condition: ${condition}`);
 			parts.push(`Mandatory: ${fieldMandatoryText(field, name)}`);
 			if (change?.status === "Update required") parts.push(`Change: ${change.detail}`);
-			if (change?.rows) parts.push(`Workbook rows: ${change.rows}`);
+			if (change?.rows) parts.push(`Spreadsheet rows: ${change.rows}`);
 			return parts.join(" · ");
 		}
 		function useSpreadsheetInBlueNotes(root = document) {
@@ -650,7 +650,7 @@
 				const textNodes = document.createTreeWalker(note, NodeFilter.SHOW_TEXT);
 				let textNode;
 				while ((textNode = textNodes.nextNode())) {
-					textNode.nodeValue = textNode.nodeValue.replace(/\bworkbook\b/gi, (word) => word[0] === "W" ? "Spreadsheet" : "spreadsheet");
+					textNode.nodeValue = textNode.nodeValue.replace(/\bspreadsheet\b/gi, (word) => word[0] === "W" ? "Spreadsheet" : "spreadsheet");
 				}
 			});
 		}
