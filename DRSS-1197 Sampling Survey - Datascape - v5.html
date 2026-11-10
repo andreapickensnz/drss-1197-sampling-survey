@@ -261,10 +261,10 @@
 						<h3><span>Sampling Item</span><span class="field-tag">location-backed repeater</span><button type="button" data-remove-sample aria-label="Remove sample">Remove</button></h3>
 						<h4 class="subheading">Sample Detail</h4>
 						<div class="form-grid">
-							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>A new location needs a required site name (Label).</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div>
+							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>The workbook's Sample Site Name / Label row is crossed out.</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div>
 								<p class="spec blocked"><strong>To confirm with Datacom:</strong><br />
 									<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
-									<strong>New sites:</strong> Can staff put a pin on the map, give the site a name, and save it as a new sampling site (Sample site - Point)?<br />
+										<strong>New sites and lab report:</strong> DRSS-1727 maps Site Name from the location Label, but the workbook's separate Sample Site Name / Label row is crossed out and comments say location attributes are not part of the visual report template. Can the report read Label through Sample Location, or is another source needed? RSHL prefers entering the name once if it can also name the GIS location.<br />
 									<strong>Fieldwork:</strong> Will the correct site location and saved details appear on the officer's phone after the survey is sent to Fieldwork?<br />
 									<strong>Why check?</strong> The configuration files use a different sampling-site category and do not show Fieldwork enabled for it. These files alone do not prove a fault in the live survey; Datacom needs to confirm the live setup.
 								</p>
@@ -348,21 +348,19 @@
 							<tr><td>PO Number</td><td>No active survey field in workbook revision 3</td><td>Prior Jira review says the officer enters the PO manually; confirm the entry point because the survey field is struck out.</td></tr>
 							<tr><td>Full name</td><td>Sampling Item: Name of Sampler</td><td>Rachel answered on 19 Nov 2025: start with the booking’s primary officer, but let staff change or add the person who collected samples.</td></tr>
 							<tr><td>Signature</td><td>Primary officer profile</td><td>Use the profile signature if available; otherwise the ticket says the officer completes it manually.</td></tr>
-							<tr><td>Sample Date, Sample Type, Collection Method, Sample Appearance, Odour, Rain Affected, Sample Comments</td><td>Fields inside each Sampling Item</td><td>These values repeat for every sample, but the lab form shows them once in its header.</td></tr>
+							<tr><td>Sample Date, Sample Type, Collection Method, Sample Appearance, Odour, Rain Affected, Sample Comments</td><td>Fields inside each Sampling Item</td><td><span class="mapping-issue">These details are shown once at the top of the lab form, but the survey stores them on each Sampling Item. Which sample should provide them, or should the report repeat them on every sample row? The ticket only confirms one row per sample ID and time.</span></td></tr>
 							<tr><td>Sample ID, Sample Time</td><td>Sampling Item: Sample ID, Sample Time</td><td>One output row per Sampling Item.</td></tr>
-							<tr><td>Site Name</td><td>Sample Location Label</td><td>The workbook requires a name on the location. The future report cannot read location attributes, so its team needs another supported source.</td></tr>
-							<tr><td>Site GPS Coordinates (NZTM)</td><td>Sample Location point geometry</td><td>Coordinate mapping into the template is unverified. Keep as an explicit build-time check.</td></tr>
-							<tr><td>Test Names</td><td>Parameter Set Name or selected Parameter Types</td><td>Rachel confirmed test names are comma-separated. For known sites, Jira says condition parameters prefill the test set (Eng 2); engineering must confirm support. Confirm with the report team whether a selected set expands to component test names.</td></tr>
+							<tr><td>Site Name</td><td>Sample Location Label</td><td><span class="mapping-issue">DRSS-1727 maps Site Name from the location Label, but the workbook's Sample Site Name / Label row is crossed out. Comments say location attributes are not part of the visual report template. Can the report read Label through Sample Location, or is another source needed? RSHL prefers entering the name once if it can also name the GIS location.</span></td></tr>
+							<tr><td>Site GPS Coordinates (NZTM)</td><td>Location layer information</td><td>DRSS-1727 says Easting and Northing come from the location type's layer information.</td></tr>
+							<tr><td>Test Names</td><td>Sampling Item: Parameter Type multi-select</td><td>DRSS-1727 comments confirm selected tests are comma-separated in the report, with overflow continuing on another line. Consent-condition test auto-fill is tracked separately.</td></tr>
 							<tr><td>Quote number, Tamper tag ID, Tracking number</td><td>No current Sampling survey field</td><td>DRSS-1727 says the officer fills these in after generating the report.</td></tr>
 						</tbody>
 					</table>
-					<p class="mapping-issue"><strong>Needs a decision:</strong> The lab form’s single-value header fields are mapped from a repeating Sampling Item. For multiple samples, which item supplies the header, or should those values move into each repeated output row? The current ticket confirms one line per sample for the table, but does not settle the header behavior.</p>
-					<p class="mapping-issue"><strong>Engineering checks:</strong> Eng 1 is prefill from the known Activity/Register location and related sample values; Eng 2 is prefill of consent-condition tests for known sites. RSHL requested both, but the current export uses a different sample location type and does not send it to Fieldwork. Confirm platform support before treating either behavior as implemented.</p>
 				</details>
 				<details class="details">
 					<summary>Review notes and crossed-out content</summary>
 					<p>The workbook crosses out Incident Record Number, Wastewater, Bottle ID, old test values, four Tap/Tag questions, Other Lab, Purchase Order Number, Work Order Number, and the old Analysis Request Laboratory label. Datacom development confirmed Customer Signature can be removed for this survey; Officer Signature remains. “Sample Site ID” becomes “Sample Location,” and “Comments” becomes “Sample Comments.”</p>
-					<p><strong>New fields versus new capability:</strong> Most additions use existing field types. RSHL answered that Name of Sampler is a Lookup + Select field with the primary officer as the default. Eng 1 (known-site prefill/Fieldwork transfer) and Eng 2 (consent-condition test prefill) remain engineering checks; no new app capability is confirmed.</p>
+					<p><strong>New fields versus new capability:</strong> Most additions use existing field types. RSHL answered that Name of Sampler is a Lookup + Select field with the primary officer as the default. Automatic known-site details remain a setup check; consent-condition test auto-fill is tracked in a separate Change Request.</p>
 				</details>
 			</div>
 		</main>
@@ -506,7 +504,7 @@
 			"Name (if contact not found)": "Workbook requests text entry only when the contact cannot be found.",
 			"Warrant Shown to Relationship": "Workbook requests a text relationship when Warrant Shown is Yes.",
 			"Chain of Custody Declaration": "Workbook asks for a Boolean declaration and does not specify a default.",
-			"Sample Location": "Datacom needs to confirm automatic details for known sites, map-pin and site-name entry for new sites, and that the correct site information reaches Fieldwork.",
+			"Sample Location": "The Sample Site Name / Label row is crossed out in the spreadsheet. DRSS-1727 maps Site Name from the location Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source.",
 			"Sample ID": "Workbook asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
 			"Sample Time": "Workbook asks for the collection time on each Sampling Detail; include it in that sample's report row.",
 			"Sample Date": "Workbook asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
@@ -528,8 +526,8 @@
 			"Black disk": "Capture once per Sampling Detail under Field Measurement.",
 			"Secchi disk": "Capture once per Sampling Detail under Field Measurement.",
 			"Other": "Capture once per Sampling Detail under Field Measurement.",
-			"Parameter Set Name": "Workbook supplies ten named Parameter Sets. For known sites, Jira says prefill condition tests (Eng 2); engineering support is not confirmed. Do not combine a set with individual Parameter Types.",
-			"Parameter Type": "Workbook supplies 23 Parameter Types. For known sites, Jira says prefill condition tests (Eng 2); for new sites select for the suspected contaminant. Engineering support is not confirmed.",
+			"Parameter Set Name": "Workbook supplies ten named Parameter Sets. Consent-condition test auto-fill is tracked in a separate Change Request. Do not combine a set with individual Parameter Types.",
+			"Parameter Type": "Workbook supplies 23 Parameter Types. The lab form maps selected tests as comma-separated text; consent-condition test auto-fill is tracked in a separate Change Request.",
 			"Name of Sampler": "RSHL confirmed on 8 Oct 2026: Lookup + Select, multiple officers, default primary officer.",
 			"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
 			"Sample type": "Workbook supplies groundwater-specific sample types; show only for Groundwater.",
@@ -675,7 +673,7 @@
 			"Actual End Date": { target: "JRB - Actual date/time" },
 			"Actual End Time": { target: "JRB - Actual date/time" },
 			"Reason": { target: "JRB - Dates Reason" },
-			"Sample Location": { target: "Sample site - Point · Label field on location record", specifics: "The Locations worksheet says this Label is not mapped from the survey." }
+			"Sample Location": { target: "Sample site - Point · Label field on location record", specifics: "DRSS-1727 maps Site Name from this Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source." }
 		};
 		const workbookFieldValues = {
 			"Photos": "Photo",
