@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>DRSS-1197 Sampling Survey - Datascape - v3</title>
+	<style>
+		:root { --purple:#7827ff; --purple-light:#f3eaff; --navy:#123b73; --teal:#007b91; --ink:#24282d; --muted:#66717c; --line:#d6d8da; --field:#fafafa; --yellow:#fff45b; --orange:#fff0e6; --red:#9f2631; --red-bg:#fff0f1; --green:#19a76f; font-family:Arial,Helvetica,sans-serif; color:var(--ink); }
+		* { box-sizing:border-box; }
+		body { margin:0; background:#fff; font-size:12px; }
+		button,input,select,textarea { font:inherit; }
+		.prototype-bar { min-height:30px; display:flex; align-items:center; gap:8px 16px; padding:4px 10px; background:#fff; border-bottom:1px solid var(--line); color:#3b4660; font-size:10px; }
+		.prototype-bar strong { font-size:10px; }
+		.prototype-bar a { color:var(--navy); font-weight:700; }
+		.prototype-bar .bar-links { margin-left:auto; display:flex; gap:12px; }
+		.spec-switch { display:flex; align-items:center; gap:5px; font-weight:700; cursor:pointer; }
+		.spec-switch input { width:14px; height:14px; margin:0; accent-color:var(--purple); }
+		.prototype-note { flex-basis:100%; margin:0; padding-top:7px; border-top:1px solid #e8d69c; line-height:1.45; }
+		.prototype-note strong { color:#873518; }
+		.spec-key { display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; padding:8px 16px; border-bottom:1px solid #d6d8da; background:#fff; color:#3e4744; font-size:11px; line-height:1.45; }
+		.spec-key strong { color:#123b73; }
+		.spec-key-item { display:inline-flex; align-items:center; gap:5px; }
+		.entry-route { padding:8px 16px; border-bottom:1px solid #c5e6ee; background:#f0fbfe; color:#29435c; font-size:11px; line-height:1.45; }
+		.entry-route p { margin:3px 0 0; }
+		.entry-route-open { padding:5px 8px; border-left:3px solid #b72b39; background:#fdecef; color:#8c1035; }
+		.key-dot { width:8px; height:8px; border-radius:50%; flex:none; }
+		.key-grey { background:#7c828a; } .key-blue { background:#2f6fed; } .key-amber { background:#d97835; } .key-lilac { background:#8d68c5; } .key-green { background:#168452; } .key-orange { background:#e07b39; } .key-red { background:#b72b39; }
+		.appbar { min-width:0; min-height:58px; display:flex; align-items:center; gap:10px; padding:7px 14px; border-bottom:2px solid var(--purple); white-space:nowrap; }
+		.app-grid { display:grid; place-items:center; width:24px; height:24px; color:var(--purple); flex:none; }
+		.app-grid svg { width:20px; height:20px; }
+		.brand { display:flex; align-items:center; gap:8px; color:var(--purple); font-weight:700; }
+		.brand-mark { width:22px; height:22px; background:radial-gradient(circle at 66% 40%,#d4c2ff 0 29%,#8d5cff 31% 57%,#5f29cd 59%); border-radius:50%; }
+		.tenant { flex:0 1 145px; min-width:0; font-weight:700; max-width:145px; white-space:normal; line-height:1.1; color:#282c32; }
+		.tenant small { display:block; font-size:10px; font-weight:400; color:#6b7076; }
+		.open-tabs { display:flex; flex:0 1 300px; min-width:0; gap:5px; }
+		.open-tabs span { flex:1 1 0; min-width:0; max-width:150px; overflow:hidden; text-overflow:ellipsis; padding:6px 9px; border:1px solid var(--purple); border-radius:3px; color:var(--purple); white-space:nowrap; }
+		.open-tabs .active { background:var(--purple); color:#fff; }
+		.goto { flex:1 1 130px; min-width:100px; padding:8px 10px; border:1px solid #cfc7dd; border-radius:14px; color:#756f80; }
+		.app-tools { display:flex; align-items:center; flex:none; gap:4px; color:var(--purple); }
+		.app-tools button { position:relative; display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; padding:4px; border:0; border-radius:4px; background:transparent; color:inherit; cursor:pointer; }
+		.app-tools svg { width:20px; height:20px; }
+		.app-tools button:focus-visible,.record-actions button:focus-visible,.section-toggle:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+		.app-tools .menu-button { width:28px; height:28px; border-radius:50%; background:var(--purple); color:#fff; }
+		.app-tools .menu-button svg { width:17px; height:17px; }
+		.rec-bell .badge { position:absolute; top:0; right:0; display:grid; place-items:center; min-width:14px; height:14px; padding:0 3px; border:1px solid #fff; border-radius:8px; background:var(--purple); color:#fff; font-size:9px; font-weight:700; line-height:1; }
+		.app-more .status-dot { position:absolute; right:3px; bottom:3px; width:6px; height:6px; border:1px solid #fff; border-radius:50%; background:#31a56b; }
+		.avatar { display:grid; place-items:center; flex:none; width:28px; height:28px; border-radius:50%; color:#fff; background:var(--purple); font-weight:700; }
+		.workspace { display:flex; min-height:calc(100vh - 94px); }
+		.rail { width:48px; flex:0 0 48px; padding-top:12px; background:#f4f4f5; border-right:1px solid var(--line); color:#686d75; }
+		.rail span { display:grid; place-items:center; height:42px; }
+		.rail svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+		.rail .selected { color:var(--purple); background:#e9ddff; border-left:4px solid var(--purple); }
+		main { min-width:0; flex:1; }
+		.record-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; color:#123b73; }
+		.record-actions button { background:none; border:0; color:inherit; padding:2px; cursor:pointer; }
+		.record-actions svg { width:19px; height:19px; vertical-align:middle; }
+		.record-actions .caret { display:inline-flex; align-items:center; margin-left:2px; }
+		.record-actions .caret svg { width:12px; height:12px; }
+		.record-title { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:4px 20px 10px; }
+		.record-title h1 { margin:0; color:var(--navy); font-size:20px; }
+		.info { color:var(--teal); border:1px solid var(--teal); border-radius:50%; width:17px; height:17px; display:inline-grid; place-items:center; font-style:italic; font-weight:700; font-size:11px; }
+		.identity { display:flex; flex-wrap:wrap; align-items:flex-end; gap:26px; padding:10px 20px; background:#f0fbfe; }
+		.identity label { display:flex; flex-direction:column; gap:4px; color:#4b5056; font-weight:700; }
+		.identity input { width:150px; height:29px; padding:4px 8px; border:1px solid #b8c5ce; border-radius:3px; background:#fff; color:#262a2e; }
+		.identity-meta { margin-left:auto; text-align:right; color:#687580; }
+		.identity-meta strong { color:#202d38; }
+		.status { padding:6px 12px; border-radius:14px; background:#40b55c; color:#fff; font-weight:700; }
+		.form { width:100%; padding:0 22px 40px; }
+		.group-heading { display:flex; align-items:center; gap:9px; margin:0; padding:16px 0 9px; border-bottom:1px solid #dedfe1; color:var(--navy); font-size:15px; text-align:left; }
+		.section-toggle { display:inline-flex; align-items:center; gap:5px; margin-left:auto; padding:0; border:0; background:transparent; color:#365b92; font-size:12px; font-weight:700; white-space:nowrap; cursor:pointer; }
+		.visibility-icon { width:16px; height:16px; flex:none; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+		.group-content { padding:0; }
+		.group-content.hidden { display:none; }
+		.subheading { margin:20px 0 9px; padding-bottom:7px; border-bottom:1px solid #d6d8da; color:#123b73; font-size:13px; text-align:left; }
+		.item-label { margin:16px 0 8px; color:#173d69; font-weight:700; font-size:12px; text-align:left; }
+		.sample-card { margin:6px 0 10px; padding:12px 14px 14px; border:1px solid #e6e6e7; border-radius:4px; background:#f8f8f9; }
+		.sample-card h3 { margin:0 0 15px; display:flex; align-items:center; gap:12px; padding-bottom:10px; border-bottom:2px solid #d3d5d7; color:var(--navy); font-size:14px; text-align:left; }
+		.sample-card h3 button { margin-left:auto; border:0; color:var(--teal); background:none; font-weight:700; cursor:pointer; }
+		.sample-card h3 { flex-wrap:wrap; }
+		.sample-card h3 button[data-remove-sample] { margin-left:0; }
+		.subheading { display:flex; align-items:center; gap:8px; }
+		.detail-content[hidden] { display:none !important; }
+		.form-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; }
+		.field { min-width:0; margin-bottom:9px; }
+		.signature-pad { min-height:66px; padding:8px; border:1px solid #c9d2d8; background:linear-gradient(to bottom,transparent 0 78%,#c9d2d8 79% 80%,transparent 81%); color:#687580; font-size:11px; }
+		.field.wide { grid-column:1 / -1; }
+		.field label { display:block; margin-bottom:4px; color:#404a54; font-weight:700; }
+		.field input,.field select,.field textarea { display:block; width:100%; min-height:29px; padding:5px 8px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; border-radius:2px; background:#fff; color:#26292c; }
+		.field textarea { min-height:58px; resize:vertical; }
+		.field select { appearance:none; padding-right:28px; background-image:linear-gradient(45deg,transparent 50%,#425a70 50%),linear-gradient(135deg,#425a70 50%,transparent 50%); background-position:calc(100% - 14px) 12px,calc(100% - 9px) 12px; background-size:5px 5px,5px 5px; background-repeat:no-repeat; }
+		.map-card { display:grid; grid-template-columns:120px 1fr; min-height:86px; border:1px solid #c9d2d8; background:#fff; }
+		.map { position:relative; min-height:86px; background:linear-gradient(25deg,#dcece0 0 35%,#edf1e8 36% 60%,#d5e5e9 61%), repeating-linear-gradient(90deg,transparent 0 17px,#fff8 18px 19px); border-right:1px solid #c9d2d8; }
+		.pin { position:absolute; left:54px; top:25px; width:14px; height:14px; border:3px solid #fff; border-radius:50% 50% 50% 0; background:#dc493b; transform:rotate(-45deg); box-shadow:0 1px 3px #3338; }
+		.map-meta { padding:9px 11px; line-height:1.45; }
+		.map-meta strong { color:var(--navy); }
+		.map-meta small { display:block; color:#687580; }
+		.spec { margin:4px 0 0; padding:5px 7px; border-radius:3px; background:#f5f1fc; color:#3d2278; font-size:10px; line-height:1.4; }
+		.field-spec { display:flex; flex-direction:column; gap:3px; margin:4px 0; }
+		.field-spec-note { margin:0; padding:5px 7px; border-radius:3px; font-size:10px; line-height:1.4; }
+		.field-spec-summary { background:#f1f2f5; color:#4a5160; }
+		.field-spec-status { align-self:flex-start; font-weight:700; }
+		.field-spec-detail { background:#f5f1fc; color:#3d2278; }
+		.field-spec-existing { background:#e7e9ef; color:#4a5160; }
+		.field-spec-new { background:#e4d4ff; color:#4c1d95; }
+		.field-spec-wording { background:#ffe9d6; color:#8a4b00; }
+		.field-spec-update { background:#dff1f6; color:#0a5a6e; }
+		.field-spec-maps { background:#eef7f2; color:#14603c; }
+		.field-status { display:inline-block; margin-left:6px; padding:1px 7px; border-radius:9px; font-size:10px; font-weight:700; vertical-align:1px; white-space:nowrap; }
+		.chip-new { background:#e4d4ff; color:#4c1d95; }
+		.chip-wording { background:#ffe9d6; color:#8a4b00; }
+		.chip-existing { background:#e7e9ef; color:#4a5160; }
+		.chip-update { background:#dff1f6; color:#0a5a6e; }
+		.spec.warn { background:#fff0e6; border-left:3px solid #e07b39; color:#8a3b00; }
+		.spec.blocked { background:#fdecef; border-left:3px solid #e60060; color:#8c1035; }
+		.field-tag { display:inline-block; margin-left:5px; padding:1px 5px; border-radius:8px; background:#e9e9eb; color:#515a64; font-size:9px; vertical-align:1px; }
+		.multiple { display:flex; flex-wrap:wrap; align-items:center; gap:4px; min-height:29px; padding:4px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; background:#fff; }
+		.multiple input { flex:1 1 180px; width:auto; min-width:140px; border:0; }
+		.parameter-dropdown { position:relative; }
+		.parameter-trigger { min-height:29px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 8px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; background:#fff; cursor:pointer; list-style:none; }
+		.parameter-trigger::-webkit-details-marker { display:none; }
+		.parameter-menu { max-height:260px; overflow:auto; padding:8px; border:1px solid #c7ccd7; background:#fff; }
+		.parameter-menu label { display:flex; align-items:center; gap:8px; min-height:30px; }
+		.parameter-menu input { width:14px; min-height:14px; margin:0; accent-color:var(--purple); }
+		.parameter-menu .add { margin:2px 0 8px; }
+		.parameter-dropdown > .multiple { border:0; border-top:1px solid #e3e3e3; }
+		.chip { padding:3px 7px; border-radius:10px; background:#e8e4f4; color:#43306c; font-size:10px; }
+		.subtle { color:var(--muted); font-size:10px; line-height:1.45; }
+			.action-row { display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; }
+			.mapped-action { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
+			.mapped-action .field-spec-note { margin:0; }
+			.add-row { display:flex; align-items:center; gap:8px; padding:4px 0 12px; }
+		.add,.add-row button { display:inline-flex; align-items:center; gap:7px; min-height:32px; border:1px solid #c9c9c9; border-radius:4px; background:linear-gradient(#fbfbfc,#f0f0f2); color:#5c5f5c; padding:0 12px; font-weight:700; cursor:pointer; }
+		.add-icon { font-size:16px; line-height:1; font-weight:400; }
+		.ds-switch { position:relative; display:block; flex:0 0 44px; width:44px; height:24px; margin:0; padding:0; border:1px solid #bbbcbd; border-radius:2px; background:#fff; color:#1c1c1d; box-shadow:inset 0 -1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.05); cursor:pointer; }
+		.ds-switch i { position:absolute; top:2px; left:2px; width:14px; height:18px; border-radius:2px; background:#00bce2; }
+		.ds-switch.on i { left:auto; right:2px; }
+		.ds-toggle-val { position:absolute; inset:0; display:flex; align-items:center; justify-content:flex-end; padding:0 6px 0 16px; color:#1c1c1d; font-size:10px; line-height:10px; font-weight:400; }
+		.ds-switch.on .ds-toggle-val { justify-content:flex-start; padding:0 16px 0 6px; }
+		.ds-switch:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+		.location-audit { margin:12px 0 0; padding:9px 11px; border-left:3px solid #b75447; background:#fff1ef; line-height:1.45; }
+		.location-audit strong { color:#76251f; }
+		.details { border-top:1px solid #dedfe1; padding-top:10px; margin-top:14px; }
+		.details summary { color:var(--teal); font-weight:700; cursor:pointer; }
+		.details p { margin:8px 0 0; line-height:1.45; color:#515c67; }
+		.mapping-table { width:100%; margin-top:9px; border-collapse:collapse; }
+		.mapping-table th,.mapping-table td { padding:7px 8px; border:1px solid #d6d8da; text-align:left; vertical-align:top; line-height:1.4; }
+		.mapping-table th { background:#f0fbfe; color:var(--navy); }
+		.mapping-issue { display:block; margin:6px 0 0; padding:7px 9px; border-left:3px solid #e60060; border-radius:3px; background:#fdecef; color:#8c1035; line-height:1.45; }
+		.mapping-table td > .mapping-issue:first-child { margin-top:0; }
+		.hidden { display:none !important; }
+		@media(max-width:1100px) {
+			.prototype-bar { min-height:34px; }
+			.appbar { display:grid; grid-template-columns:30px minmax(75px,auto) minmax(0,1fr) 30px; grid-template-areas:"grid brand tenant avatar" "tools tools tools tools" "tabs tabs tabs tabs" "goto goto goto goto"; gap:8px; padding:8px; white-space:normal; }
+			.app-grid { grid-area:grid; }
+			.brand { grid-area:brand; }
+			.tenant { grid-area:tenant; max-width:none; text-align:center; }
+			.avatar { grid-area:avatar; }
+			.app-tools { grid-area:tools; display:flex; justify-content:space-around; padding:4px 10px; }
+			.open-tabs { grid-area:tabs; min-width:0; }
+			.open-tabs span { min-width:0; max-width:50%; overflow:hidden; text-overflow:ellipsis; }
+			.goto { grid-area:goto; min-width:0; }
+			.identity { display:flex; flex-direction:column; align-items:stretch; gap:8px; padding:10px 12px; }
+			.identity label { width:100%; }
+			.identity input { width:150px; max-width:100%; }
+			.identity-meta { margin-left:0; text-align:left; }
+			.status { align-self:flex-start; }
+			.field.wide { grid-column:auto; }
+			.form { padding:0 12px 30px; }
+			.map-card { grid-template-columns:85px 1fr; }
+			.group-heading { flex-wrap:nowrap; }
+			.prototype-bar { flex-wrap:nowrap; white-space:nowrap; }
+			.prototype-bar strong { overflow:hidden; text-overflow:ellipsis; }
+		}
+		body.spec-off .spec,body.spec-off .spec-key,body.spec-off .field-spec,body.spec-off .field-status,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details,body.spec-off .entry-route { display:none !important; }
+		@media print { .prototype-bar,.spec-key,.appbar,.rail,.record-actions,.details,.add-row,.section-toggle { display:none !important; } .workspace { min-height:0; } .form { max-width:none; } .sample-card { break-inside:avoid; } }
+	</style>
+</head>
+<body>
+	<div class="prototype-bar">
+				<strong data-doc-title>DRSS-1197 | Datascape v3</strong>
+		<nav class="bar-links" aria-label="Related prototypes">
+				<a href="DRSS-1197%20Sampling%20Survey%20-%20Fieldwork%20-%20v3.html">Fieldwork</a>
+		</nav>
+		<label class="spec-switch"><input type="checkbox" id="spec-toggle" checked /> Spec notes</label>
+	</div>
+	<aside class="entry-route" aria-label="How to enter Sampling Survey">
+		<strong>How to enter Sampling Survey</strong>
+		<p>Default: SLUS Monitoring / Sampling; Environmental Monitoring / Monitoring / Sampling.</p>
+		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
+		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
+	</aside>
+	<header class="appbar">
+		<span class="app-grid" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="10" y="3" width="5" height="5" rx="1"/><rect x="17" y="3" width="5" height="5" rx="1"/><rect x="3" y="10" width="5" height="5" rx="1"/><rect x="10" y="10" width="5" height="5" rx="1"/><rect x="17" y="10" width="5" height="5" rx="1"/><rect x="3" y="17" width="5" height="5" rx="1"/><rect x="10" y="17" width="5" height="5" rx="1"/><rect x="17" y="17" width="5" height="5" rx="1"/></svg></span>
+		<div class="brand"><i class="brand-mark"></i><span>Datascape</span></div>
+		<div class="tenant">Regional Software Holdings Ltd<small>ACCEPT</small></div>
+		<div class="open-tabs"><span>All Surveys: Survey</span><span class="active">Survey: SMPLNG.8469</span></div>
+		<div class="goto">Go to ...</div>
+		<div class="app-tools" aria-label="Application tools">
+			<button type="button" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+			<button type="button" class="rec-bell" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7 2.5 8.5H3.5C3.5 16 6 15 6 9"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="badge">1</span></button>
+			<button type="button" class="menu-button" aria-label="Menu" title="Menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg></button>
+			<button type="button" class="app-more" aria-label="More" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg><i class="status-dot"></i></button>
+		</div>
+		<div class="avatar" aria-label="Andrea Pickens">AP</div>
+	</header>
+	<div class="workspace">
+		<aside class="rail" aria-label="Application navigation"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6M16 6l6 6-6 6"/></svg></span><span class="selected" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m14 4 6 6M4 20l4-.8L19 8a2.1 2.1 0 0 0-3-3L5 16z"/></svg></span><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg></span><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="16" r="3"/></svg></span><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></span></aside>
+		<main>
+			<div class="record-title"><h1>Sampling - 8469 <span class="info" title="About this record">i</span></h1>
+				<div class="record-actions" aria-label="Record actions">
+					<button type="button" aria-label="Delete" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13"/></svg></button>
+					<button type="button" aria-label="Print" title="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg><span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button>
+					<button type="button" aria-label="Save" title="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h11l3 3v15H5zM8 3v6h8V3M8 21v-6h8v6"/></svg><span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button>
+					<button type="button" aria-label="Close" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+				</div>
+			</div>
+			<div class="identity">
+				<label>Survey Type*<input value="SMPLNG" readonly /></label>
+				<label>Number<input value="8469" readonly /></label>
+				<div class="identity-meta">Last Modified<br /><strong>4 days ago by Byron Pretorius</strong></div>
+				<span class="status">Completed</span>
+			</div>
+			<div class="form">
+				<h2 class="group-heading"><span>Survey Detail</span><button class="section-toggle" type="button" aria-expanded="true" aria-controls="survey-detail" data-collapse="survey-detail" data-section-label="Survey Detail" aria-label="Hide Survey Detail" title="Hide Survey Detail"><svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg><span>hide Survey Detail</span></button></h2>
+				<div id="survey-detail" class="group-content">
+					<h3 class="subheading">Timesheet Start Date</h3>
+					<div class="form-grid"><div class="field"><label>Actual Start Date</label><input type="date" value="2026-09-28" /></div><div class="field"><label>Actual Start Time</label><input type="time" value="08:20" /></div></div>
+					<h3 class="subheading">Assets and Inventory</h3>
+					<div class="action-row"><button type="button" class="add">Add Asset</button><button type="button" class="add">Add Inventory</button></div>
+					<h3 class="subheading">General Visual Evidence</h3>
+					<div class="form-grid"><div class="field"><label>Photos</label><input type="file" accept="image/*" multiple /></div><div class="field"><label>Videos</label><input type="file" accept="video/*" multiple /></div><div class="field wide"><label>Track Log</label><div class="map-card"><div class="map" aria-label="Track log preview"></div><div class="map-meta"><strong>Capture path</strong><small>Track Log</small></div></div></div></div>
+					<h3 class="subheading">Sampling · Officer</h3>
+					<div class="field"><label for="in-attendance">In Attendance</label><input id="in-attendance" type="search" data-lookup-multiple placeholder="Search and add contacts" /><p class="spec">RSHL answered on 8 Oct 2026: select one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
+					<h3 class="subheading">Authority</h3>
+					<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><button class="ds-switch on" type="button" role="switch" aria-label="Warrant Shown" aria-required="true" aria-checked="true" data-default="Yes" data-conditional-toggle="warrant-fields"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button></div>
+					<div id="warrant-fields" class="form-grid">
+						<div class="field"><label>Warrant Shown to Name</label><input type="search" placeholder="Search contacts" required /><p class="help">Use the contact lookup. If there is no match, enter the name below.</p></div>
+						<div class="field"><label>Name (if contact not found)</label><input type="text" placeholder="Warrant Shown to Name" required /><p class="help">Show when the person cannot be found in Contacts.</p></div>
+						<div class="field"><label>Warrant Shown to Relationship</label><input type="text" placeholder="Relationship" /></div>
+					</div>
+					<h3 class="subheading">Weather</h3>
+					<div class="field"><label>Capture Weather?</label><button class="ds-switch" type="button" role="switch" aria-label="Capture Weather?" aria-checked="false" data-default="No" data-conditional-toggle="weather-details"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
+					<div id="weather-details" class="weather-details hidden">
+						<div class="field"><label>Air Temperature</label><select><option value="">[Not Entered]</option><option>Cold (0-10 degrees)</option><option>Cool (10-15 degrees)</option><option>Freezing (&lt;0 degrees)</option><option>Hot (above 28 degrees)</option><option>Warm (15-28 degrees)</option></select></div>
+						<div class="field"><label>Cloud Cover</label><select><option value="">[Not Entered]</option><option>0/8</option><option>1/8</option><option>2/8</option><option>3/8</option><option>4/8</option><option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option></select></div>
+						<div class="field"><label>Rainfall</label><select><option value="">[Not Entered]</option><option>Heavy</option><option>Light</option><option>Medium</option></select></div>
+						<div class="field"><label>Wind Direction</label><select><option value="">[Not Entered]</option><option>E</option><option>N</option><option>NE</option><option>NW</option><option>S</option><option>SE</option><option>SW</option><option>W</option></select></div>
+						<div class="field wide"><label>Other Weather Conditions</label><select><option value="">[Not Entered]</option><option>Fog</option><option>High Humidity (&gt;90%)</option><option>Inversion Layer</option></select></div>
+					</div>
+					<section id="sampling-section">
+					<h3 class="subheading">Add Sampling Detail</h3>
+					<section class="sample-card" data-sample>
+						<h3><span>Sampling Item</span><span class="field-tag">location-backed repeater</span><button type="button" data-remove-sample aria-label="Remove sample">Remove</button></h3>
+						<h4 class="subheading">Sample Detail</h4>
+						<div class="form-grid">
+							<div class="field wide"><label>Sample Location <span class="field-tag">Sample site - Point</span></label><div class="map-card"><div class="map" aria-label="Map preview"><i class="pin"></i></div><div class="map-meta"><strong>Kaikorai Stream, Green Island</strong><small>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.</small><small>The spreadsheet's Sample Site Name / Label row is crossed out.</small></div></div><div class="add-row"><button type="button">Use existing location</button><button type="button">Add Location: Single Point</button></div>
+								<p class="spec blocked"><strong>To confirm with Datacom:</strong><br />
+									<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
+										<strong>Site Name for the Lab Submission Form:</strong> Each sample row on the Lab Submission Form needs a site name. DRSS-1727 says to take it from the location's name (Label), but the spreadsheet's separate Site Name question is crossed out.<br />
+									<strong>Open question for Datacom Engineering:</strong> Can the report read the sample location's name (Label)?<br />
+									<strong>Open question for RSHL:</strong> DRSS-1197 originally asked for a new Sample Site Name field, filled from the location's name where the location already exists, but the spreadsheet now crosses this row out. If the report can't read the location's name, do you still want a Site Name question on each sample? RSHL would prefer to type the name once and have it also name the map location.<br />
+									<strong>Fieldwork:</strong> Will the correct site location and saved details appear on the officer's phone after the survey is sent to Fieldwork?<br />
+									<strong>Why check?</strong> The configuration files use a different sampling-site category and do not show Fieldwork enabled for it. These files alone do not prove a fault in the live survey; Datacom needs to confirm the live setup.
+								</p>
+							</div>
+							<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
+							<div class="field conditional-other hidden"><label>Sample Type Other</label><input placeholder="Describe sample type" /><p class="help">Show when Sample Type is Other.</p></div>
+							<div class="field conditional-general"><label>Rain Affect on Sample</label><button class="ds-switch on" type="button" role="switch" aria-label="Rain Affect on Sample" aria-checked="true" data-example-value="Yes"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button><p class="subtle">Is rain likely to have affected the sample?</p></div>
+							<div class="field"><label>Sample Date</label><input type="date" value="2026-09-28" /></div>
+							<div class="field"><label>Sample Time</label><input type="time" value="08:45" /></div>
+							<div class="field"><label>Sample ID</label><input value="SMPL-001" /></div>
+							<div class="field conditional-general"><label>Method of Collection</label><select><option selected>Grab</option><option>Composite</option><option>Other</option></select></div>
+							<div class="field conditional-general"><label>Method of Collection Other</label><input placeholder="Describe method" /></div>
+							<div class="field conditional-general"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Other</option></select></div>
+							<div class="field conditional-general"><label>Odour</label><select><option>Odour</option><option>Odourless</option></select></div>
+							<div class="field conditional-general"><label>Odour Type</label><select><option>Metallic</option><option>Sulphuric</option><option>Effluent</option><option>Sewage</option><option>Other</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample type</label><select><option>Groundwater bore</option><option>Geothermal</option><option>Spring</option><option>Salt water intrusion bore</option></select></div>
+							<div class="field conditional-groundwater"><label>Sampled from</label><select><option>From tank</option><option>After filter</option><option>Through hose</option><option>Spring</option><option>Other</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample collection method</label><select><option>Pumped bore</option><option>Bailed</option><option>Grab</option><option>Bucket</option><option>Free flowing artesian</option><option>Bilge pump</option></select></div>
+							<div class="field conditional-groundwater"><label>Sample Appearance</label><select><option>Clear</option><option>Turbid</option><option>Colourless</option><option>Coloured</option><option>Odourless</option><option>Odour</option><option>Aerated</option></select></div>
+							<div class="field conditional-groundwater"><label>Bore purge volume (L)</label><input type="number" step="0.01" /></div>
+							<div class="field conditional-groundwater"><label>Sample filtered</label><button class="ds-switch" type="button" role="switch" aria-label="Sample filtered" aria-checked="false" data-default="No"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
+							<div class="field wide"><label>Sample Comments</label><input placeholder="Sample Comments" /></div>
+							<div class="field"><label>Sample Photos</label><input type="file" accept="image/*" /></div>
+						</div>
+						<h4 class="subheading">Field Measurement</h4>
+						<p class="spec">Capture one set of readings per Sampling Detail, without a nested Field Measurement repeater. The spreadsheet asks whether Meter Number is redundant; confirm before build.</p>
+						<div class="form-grid">
+							<div class="field"><label>Meter Number</label><input type="text" placeholder="Alpha-numeric meter ID" /></div>
+							<div class="field"><label>Dissolved Oxygen (% Sat)</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Dissolved Oxygen (mg/L)</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Temperature (°C)</label><input type="number" step="0.01" placeholder="Number" /></div>
+							<div class="field"><label>pH</label><input type="number" min="0" max="14" step="0.01" placeholder="0-14" /></div>
+							<div class="field"><label>Conductivity (μS/cm)</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Turbidity (NTU)</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Black disk (m)</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Secchi disk (m)</label><input type="number" step="0.01" /></div>
+							<div class="field"><label>Other</label><input placeholder="Other" /></div>
+						</div>
+						<h4 class="subheading">Sample Tests</h4>
+						<div class="form-grid">
+							<div class="field"><label>Parameter Set Name</label><select data-parameter-set><option value="" selected>[Not Entered]</option><option>Animal effluent discharge</option><option>Biological wastewater discharge</option><option>Sediment discharge</option><option>Concrete discharge</option><option>Hydrocarbon discharge</option><option>Paint discharge</option><option>Milk discharge</option><option>Chemical discharge</option><option>Pesticide or herbicide discharge / runoff</option><option>Mass avian (bird) death</option></select><p class="spec">Choose one of the ten named sets. Each set has its own test list on the Parameter Set worksheet.</p></div>
+							<div class="field wide"><label>Parameter Type</label><details class="parameter-dropdown"><summary class="parameter-trigger"><span data-parameter-summary>Choose test types</span><span aria-hidden="true">⌄</span></summary><div class="parameter-menu"><button type="button" class="add" data-select-all>Select All</button><div class="choice-list"><label><input type="checkbox" data-parameter-type /> Biochemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Total Suspended Solids</label><label><input type="checkbox" data-parameter-type /> pH</label><label><input type="checkbox" data-parameter-type /> Total Ammoniacal Nitrogen</label><label><input type="checkbox" data-parameter-type /> Nitrate Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Dissolved Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Phosphorus</label><label><input type="checkbox" data-parameter-type /> Dissolved Reactive Phosphorus</label><label><input type="checkbox" data-parameter-type /> Total Kjeldahl Nitrogen</label><label><input type="checkbox" data-parameter-type /> Escherichia coli</label><label><input type="checkbox" data-parameter-type /> Chemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Grease and Oil</label><label><input type="checkbox" data-parameter-type /> Combined Metals</label><label><input type="checkbox" data-parameter-type /> Turbidity</label><label><input type="checkbox" data-parameter-type /> Total Hardness</label><label><input type="checkbox" data-parameter-type /> Total Petroleum Hydrocarbons</label><label><input type="checkbox" data-parameter-type /> Polycyclic Aromatic Hydrocarbon</label><label><input type="checkbox" data-parameter-type /> BTEX</label><label><input type="checkbox" data-parameter-type /> Semi volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Total Alkalinity</label><label><input type="checkbox" data-parameter-type /> Organochlorine Pesticides</label><label><input type="checkbox" data-parameter-type /> Organophosphorus Phosphatases</label></div></div><div class="multiple" data-selected-tests></div></details><p class="spec">Choose one or more test types from the spreadsheet list. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.</p></div>
+						</div>
+						<h4 class="subheading">Chain of Custody</h4>
+						<div class="form-grid">
+							<div class="field"><label>Chain of Custody Declaration</label><select><option value="" selected>[Not Entered]</option><option>True</option><option>False</option></select><p class="help">The spreadsheet does not specify a default.</p></div>
+							<div class="field wide"><label>Name of Sampler</label><div class="multiple"><span class="chip">H. Giles · primary booking officer</span><input class="sampler-lookup" type="search" data-lookup-multiple placeholder="Search and add officers" aria-label="Search and add officers" /></div><p class="spec">RSHL confirmed on 8 Oct 2026: configure this as a Lookup + Select multi-contact field, defaulted to the primary officer; additional officers can be added when another person collected the samples.</p></div>
+						</div>
+					</section>
+					<div class="add-row"><button type="button" class="add" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
+					<h4 class="subheading">General</h4>
+					<div class="form-grid"><div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent, with no default. Configure and extend the list at implementation. The spreadsheet strikes the old “Analysis Request Laboratory” label but leaves these values; Jira refers to this as “General &gt; Laboratory”.</p></div></div>
+					<div class="spec warn">Spreadsheet revision 3 strikes out Purchase Order Number and Work Order Number. Prior Jira review says the officer enters the PO manually; confirm the report workflow entry point. DRSS-1727 calls its output “Lab Name”; confirm the report team maps from General: Laboratory.</div>
+					</section>
+				</div>
+				<h3 class="subheading">Reinspection</h3>
+				<div class="field"><label>Reinspection Required</label><button class="ds-switch" type="button" role="switch" aria-label="Reinspection Required" aria-checked="false" data-default="No" data-conditional-toggle="reinspection-date"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
+				<div class="field hidden" id="reinspection-date"><label>Reinspection Date</label><input type="date" /></div>
+				<h3 class="subheading">Notice of Inspection</h3>
+				<div class="field"><label>Notice of Inspection Left?</label><button class="ds-switch" type="button" role="switch" aria-label="Notice of Inspection Left?" aria-checked="false" data-default="No" data-conditional-toggle="notice-image"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
+				<div class="field hidden" id="notice-image"><label>Image of Inspection Notice Left</label><input type="file" accept="image/*" /></div>
+				<h3 class="subheading">Timesheet End Date</h3>
+				<div class="form-grid">
+					<div class="field"><label>Actual End Date</label><input type="date" value="2026-09-28" /></div>
+					<div class="field"><label>Actual End Time</label><input type="time" value="12:05" /></div>
+					<div class="field"><label>Reason</label><input placeholder="Reason" /></div>
+					<div class="field"><label>Completion Behaviour</label><select><option>Pending Completion</option><option>Complete</option><option>Complete and Send</option></select></div>
+				</div>
+				<h3 class="subheading">Signatures</h3>
+				<div class="form-grid">
+					<div class="field"><label>Officer Signature</label><div class="signature-pad" role="img" aria-label="Officer signature capture area">Signature capture</div></div>
+				</div>
+								<p class="spec">Datacom development confirmed Customer Signature can be removed for this survey. Officer Signature remains.</p>
+				<details class="details">
+					<summary>Future Lab Submission Form mapping guide</summary>
+					<table class="mapping-table" aria-label="Sampling survey to Lab Submission Form field mapping">
+						<thead><tr><th>Lab Submission Form destination</th><th>Survey source</th><th>Mapping note</th></tr></thead>
+						<tbody>
+							<tr><td>Lab Name</td><td>General: Laboratory</td><td>RSHL says the list is council-dependent and has no default. Confirm the report maps this survey field to its Lab Name output.</td></tr>
+							<tr><td>PO Number</td><td>No active survey field in spreadsheet revision 3</td><td>Prior Jira review says the officer enters the PO manually; confirm the entry point because the survey field is struck out.</td></tr>
+							<tr><td>Full name</td><td>Sampling Item: Name of Sampler</td><td><span class="mapping-issue"><strong>Open question for RSHL:</strong> Rachel confirmed on 8 Oct that whoever collects the samples must be named as the sampler, so Full name will come from Name of Sampler. The signature comes from the booking officer's profile. If the sampler isn't the booking officer, whose signature should appear? If there are several samplers, should all be listed?</span></td></tr>
+							<tr><td>Signature</td><td>Primary officer profile</td><td>Use the profile signature if available; otherwise the ticket says the officer completes it manually.</td></tr>
+							<tr><td>Sample Date, Sample Type, Collection Method, Sample Appearance, Odour, Rain Affected, Sample Comments</td><td>Fields inside each Sampling Item</td><td><span class="mapping-issue"><strong>Open question for RSHL:</strong> The Lab Submission Form has one box at the top showing a single Sample Date, Sample Type, Collection Method, Appearance, Odour, Rain Affected and Comments. The survey asks these for each sample. If a visit has three samples, the box can only show one set of answers, and the report can't pick one sample. Should the box show the first sample's details, or should these details move into each sample's row in the table?</span></td></tr>
+							<tr><td>Sample ID, Sample Time</td><td>Sampling Item: Sample ID, Sample Time</td><td>One output row per Sampling Item. <span class="mapping-issue"><strong>Open question for RSHL:</strong> Suggested help text under Sample Time: “The lab needs samples from the same site to have different times. The survey won't stop two samples having the same time, so please check before completing.” Are you happy with this?</span></td></tr>
+							<tr><td>Site Name</td><td>Sample Location Label</td><td><span class="mapping-issue"><strong>Open question for Datacom Engineering:</strong> Each sample row needs a site name. The ticket says to take it from the location's name (Label), and the spreadsheet's separate Site Name question is crossed out, so nothing else on the survey supplies it. Can the report read the sample location's name?</span><span class="mapping-issue"><strong>Open question for RSHL:</strong> DRSS-1197 originally asked for a new Sample Site Name field, but the spreadsheet now crosses it out. If the report can't read the location's name, do you still want a Site Name question on each sample?</span></td></tr>
+							<tr><td>Site GPS Coordinates (NZTM)</td><td>Location layer information</td><td><span class="mapping-issue"><strong>Open question for Datacom Engineering:</strong> The ticket says Easting and Northing come from the sample's map point. Coordinates are location data too, so they may not be readable by the report either. Can the report read the sample point's Easting and Northing? If not, where should they come from?</span></td></tr>
+							<tr><td>Test Names</td><td>Sampling Item: Parameter Type multi-select</td><td>Selected tests are listed in one cell, separated by commas; a column per test with ticks isn't possible from a repeating section. <span class="mapping-issue"><strong>Open question for Datacom Engineering:</strong> If staff choose a Parameter Set, can the report list the individual tests in that set? If not, should staff always select each test from the Parameter Type list instead of choosing a set?</span></td></tr>
+							<tr><td>Quote number, Tamper tag ID, Tracking number</td><td>No current Sampling survey field</td><td>DRSS-1727 says the officer fills these in after generating the report.</td></tr>
+						</tbody>
+					</table>
+				</details>
+			</div>
+		</main>
+	</div>
+	<script>
+		function visibilityIcon(collapsed) {
+			return collapsed
+				? '<svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>'
+				: '<svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg>';
+		}
+		let detailSequence = 0;
+		function paintDetailToggle(button, panel) {
+			const action = panel.hidden ? "Show" : "Hide";
+			button.setAttribute("aria-expanded", String(!panel.hidden));
+			button.setAttribute("aria-label", `${action} ${button.dataset.sectionLabel} detail`);
+			button.title = `${action} ${button.dataset.sectionLabel} detail`;
+			button.innerHTML = `${visibilityIcon(panel.hidden)}<span>${action.toLowerCase()} detail</span>`;
+		}
+		function addDetailToggles(root = document) {
+			root.querySelectorAll(".subheading, .sample-card > h3").forEach((heading) => {
+				let button = heading.querySelector(":scope > [data-detail-toggle]");
+				let panel;
+				const label = heading.querySelector(":scope > span")?.textContent.trim()
+					|| [...heading.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => node.textContent).join("").trim();
+				if (button) {
+					panel = heading.nextElementSibling;
+				} else {
+					const level = Number(heading.tagName.slice(1));
+					panel = document.createElement("div");
+					panel.className = "detail-content";
+					let sibling = heading.nextElementSibling;
+					while (sibling) {
+						const boundaryHeading = sibling.matches("h2, h3, h4") ? sibling
+							: sibling.matches(".sample-card") ? null : sibling.querySelector(":scope > h2, :scope > h3, :scope > h4");
+						if ((boundaryHeading && Number(boundaryHeading.tagName.slice(1)) <= level)
+							|| sibling.matches(".location-audit, .mapping-guide, .details")) break;
+						const next = sibling.nextElementSibling;
+						panel.appendChild(sibling);
+						sibling = next;
+					}
+					heading.insertAdjacentElement("afterend", panel);
+					button = document.createElement("button");
+					button.type = "button";
+					button.className = "section-toggle";
+					button.setAttribute("data-detail-toggle", "");
+					heading.insertBefore(button, heading.querySelector("[data-remove-sample]"));
+				}
+				panel.id = `sampling-detail-${++detailSequence}`;
+				panel.hidden = false;
+				panel.setAttribute("role", "group");
+				panel.setAttribute("aria-label", `${label} detail`);
+				button.dataset.sectionLabel = label;
+				button.setAttribute("aria-controls", panel.id);
+				paintDetailToggle(button, panel);
+			});
+		}
+		document.addEventListener("click", (event) => {
+			const button = event.target.closest("[data-detail-toggle]");
+			if (!button) return;
+			const panel = document.getElementById(button.getAttribute("aria-controls"));
+			panel.hidden = !panel.hidden;
+			paintDetailToggle(button, panel);
+		});
+		document.querySelectorAll("[data-collapse]").forEach((button) => button.addEventListener("click", () => {
+				const panel = document.getElementById(button.getAttribute("aria-controls"));
+				const collapsed = panel.classList.toggle("hidden");
+				const action = collapsed ? "Show" : "Hide";
+				button.setAttribute("aria-expanded", String(!collapsed));
+				button.setAttribute("aria-label", `${action} ${button.dataset.sectionLabel}`);
+				button.title = `${action} ${button.dataset.sectionLabel}`;
+				button.innerHTML = `${visibilityIcon(collapsed)}<span>${action.toLowerCase()} ${button.dataset.sectionLabel}</span>`;
+			}));
+		function updateSampleType(sample) {
+			const type = sample.querySelector("[data-sample-type]").value;
+			const groundwater = type === "Groundwater";
+			sample.querySelectorAll(".conditional-general").forEach((field) => field.classList.toggle("hidden", groundwater));
+			sample.querySelectorAll(".conditional-groundwater").forEach((field) => field.classList.toggle("hidden", !groundwater));
+			sample.querySelector(".conditional-other").classList.toggle("hidden", type !== "Other");
+		}
+		function bindSampleType(sample) {
+			const select = sample.querySelector("[data-sample-type]");
+			select.addEventListener("change", () => updateSampleType(sample));
+			updateSampleType(sample);
+		}
+		function bindParameterSelection(sample) {
+			const parameterSet = sample.querySelector("[data-parameter-set]");
+			const parameterTypes = [...sample.querySelectorAll("[data-parameter-type]")];
+			const selected = sample.querySelector("[data-selected-tests]");
+			const summary = sample.querySelector("[data-parameter-summary]");
+			const selectAll = sample.querySelector("[data-select-all]");
+			const refresh = () => {
+				const chosen = parameterTypes.filter((input) => input.checked);
+				selected.innerHTML = "";
+				chosen.forEach((input) => {
+					const chip = document.createElement("span");
+					chip.className = "chip";
+					chip.textContent = input.parentElement.textContent.trim();
+					selected.appendChild(chip);
+				});
+				parameterSet.disabled = chosen.length > 0;
+				parameterTypes.forEach((input) => { input.disabled = !!parameterSet.value; });
+				summary.textContent = parameterSet.value ? `Parameter set: ${parameterSet.value}` : chosen.length ? `${chosen.length} selected` : "Choose test types";
+				selectAll.disabled = !!parameterSet.value;
+			};
+			parameterSet.addEventListener("change", () => {
+				if (parameterSet.value) parameterTypes.forEach((input) => { input.checked = false; });
+				refresh();
+			});
+			parameterTypes.forEach((input) => input.addEventListener("change", () => {
+				if (input.checked) parameterSet.value = "";
+				refresh();
+			}));
+			selectAll.addEventListener("click", () => {
+				parameterSet.value = "";
+				parameterTypes.forEach((input) => { input.checked = true; });
+				refresh();
+			});
+			refresh();
+		}
+		function bindBooleanSwitches(root) {
+			root.querySelectorAll(".ds-switch").forEach((button) => {
+				const paint = (value) => {
+					const isYes = value === "Yes";
+					button.classList.toggle("on", isYes);
+					button.dataset.value = isYes ? "Yes" : "No";
+					button.setAttribute("aria-checked", String(isYes));
+					button.querySelector(".ds-toggle-val").textContent = button.dataset.value;
+					const targetId = button.dataset.conditionalToggle;
+					if (targetId) document.getElementById(targetId).classList.toggle("hidden", !isYes);
+				};
+				paint(button.dataset.default || "No");
+				paint(button.dataset.default || button.dataset.exampleValue || "No");
+				button.addEventListener("click", () => paint(button.dataset.value === "Yes" ? "No" : "Yes"));
+			});
+		}
+		const fieldSpecNotes = {
+			"Sample Type": "Spreadsheet options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other.",
+			"Sample Type Other": "Spreadsheet asks for free-text detail when Sample Type is Other.",
+			"Warrant Shown": "Spreadsheet specifies Yes/No and a default of Yes.",
+			"Warrant Shown to Name": "Spreadsheet requests a contact lookup, with text entry if no contact is found. Show when Warrant Shown is Yes.",
+			"Name (if contact not found)": "Spreadsheet requests text entry only when the contact cannot be found.",
+			"Warrant Shown to Relationship": "Spreadsheet requests a text relationship when Warrant Shown is Yes.",
+			"Chain of Custody Declaration": "Spreadsheet asks for a Boolean declaration and does not specify a default.",
+			"Sample Location": "The Sample Site Name / Label row is crossed out in the spreadsheet. DRSS-1727 maps Site Name from the location Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source.",
+			"Sample ID": "Spreadsheet asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
+			"Sample Time": "Spreadsheet asks for the collection time on each Sampling Detail; include it in that sample's report row.",
+			"Sample Date": "Spreadsheet asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
+			"Method of Collection": "Spreadsheet includes this per-sample field with Grab, Composite and Other choices.",
+			"Method of Collection Other": "Spreadsheet asks for a description when Method of Collection is Other.",
+			"Sample Appearance": "Spreadsheet specifies separate appearance choices for general and groundwater samples; show the list appropriate to Sample Type.",
+			"Odour": "Spreadsheet includes Odour for applicable non-groundwater samples, with Odour or Odourless choices.",
+			"Odour Type": "Spreadsheet includes an Odour Type choice for applicable non-groundwater samples.",
+			"Rain Affect on Sample": "The displayed Yes is an example only, not a default. Spreadsheet retains a Boolean field and the non-groundwater condition, but strikes out the old option wording. Confirm the option labels; no default is specified.",
+			"Sample Comments": "Spreadsheet renames Comments to Sample Comments; capture it per sample and include it in sample information.",
+			"Sample Photos": "Spreadsheet includes photos with each Sampling Detail.",
+			"Meter Number": "Spreadsheet lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
+			"Temperature (°C)": "Capture once per Sampling Detail under Field Measurement.",
+			"pH": "Capture once per Sampling Detail under Field Measurement; range 0-14 with decimals.",
+			"Dissolved Oxygen (% Sat)": "Capture once per Sampling Detail under Field Measurement.",
+			"Dissolved Oxygen (mg/L)": "Capture once per Sampling Detail under Field Measurement.",
+			"Conductivity (μS/cm)": "Capture once per Sampling Detail under Field Measurement.",
+			"Turbidity (NTU)": "Capture once per Sampling Detail under Field Measurement.",
+			"Black disk (m)": "Capture once per Sampling Detail under Field Measurement.",
+			"Secchi disk (m)": "Capture once per Sampling Detail under Field Measurement.",
+			"Other": "Capture once per Sampling Detail under Field Measurement.",
+			"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering. Do not combine a set with individual Parameter Types.",
+			"Parameter Type": "Spreadsheet supplies 23 Parameter Types. The Lab Submission Form maps selected tests as comma-separated text; automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.",
+			"Name of Sampler": "RSHL confirmed on 8 Oct 2026: Lookup + Select, multiple officers, default primary officer.",
+			"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
+			"Sample type": "Spreadsheet supplies groundwater-specific sample types; show only for Groundwater.",
+			"Sampled from": "Spreadsheet lists From tank, After filter, Through hose, Spring and Other. Tap, Outlet tap, Bore Pipe and Portable Pump are struck out.",
+			"Sample collection method": "Spreadsheet includes this collection method for groundwater samples.",
+			"Bore purge volume (L)": "Spreadsheet includes Bore purge volume (L) for groundwater samples.",
+			"Sample filtered": "Spreadsheet asks for a Yes/No answer for groundwater samples.",
+			"Purchase Order Number": "Enter the PO manually when it is unavailable in Datascape Financials; include it in the Lab Submission Form.",
+			"In Attendance": "RSHL confirmed this is a multi-contact lookup for this survey only; it must not update the record's contacts.",
+			"Capture Weather?": "Existing behavior retained: Yes reveals the weather details. DRSS-1197 does not request a change.",
+			"Reinspection Required": "Existing behavior retained: Yes reveals Reinspection Date. DRSS-1197 does not request a change.",
+			"Notice of Inspection Left?": "Existing behavior retained: Yes reveals the notice image. DRSS-1197 does not request a change."
+		};
+		const fieldTypeNotes = {
+			"Actual Start Date": "Spreadsheet type: Date.",
+			"Officer Signature": "Existing field type: Signature.",
+			"Actual Start Time": "Spreadsheet type: Time.",
+			"Add Asset": "Spreadsheet type not specified: existing action button.",
+			"Add Inventory": "Spreadsheet type not specified: existing action button.",
+			"Photos": "Spreadsheet type: Media (Photo).",
+			"Videos": "Spreadsheet type: Media (Video).",
+			"Track Log": "Spreadsheet type: Spatial (Location).",
+			"In Attendance": "Spreadsheet type: Text. RSHL clarification requests a multi-contact lookup.",
+			"Warrant Shown": "Spreadsheet type: Boolean (Yes/No).",
+			"Warrant Shown to Name": "Spreadsheet type: Contact lookup (Look-up, Select); Text fallback if no match.",
+			"Name (if contact not found)": "Spreadsheet type: Text.",
+			"Warrant Shown to Relationship": "Spreadsheet type: Text.",
+			"Chain of Custody Declaration": "Spreadsheet type: Boolean (True/False); no default specified.",
+			"Sample Type": "Spreadsheet type: Select (single).",
+			"Sample Type Other": "Spreadsheet type: Text.",
+			"Other Sample Type": "Spreadsheet type: Text.",
+			"Sample Location": "Spreadsheet type: Spatial (Single Point).",
+			"Sample ID": "Spreadsheet type: Text.",
+			"Sample Time": "Spreadsheet type: Time.",
+			"Sample Date": "Spreadsheet type: Date.",
+			"Method of Collection": "Spreadsheet type: Select (single).",
+			"Method of Collection Other": "Spreadsheet type: Text.",
+			"Sample Appearance": "Spreadsheet type: Select (single).",
+			"Odour": "Spreadsheet type: Select (single).",
+			"Odour Type": "Spreadsheet type: Select (single).",
+			"Rain Affect on Sample": "Spreadsheet type: Boolean.",
+			"Sample Comments": "Spreadsheet type: Text.",
+			"Sample Photos": "Spreadsheet type: Media.",
+			"Meter Number": "Spreadsheet type: Alpha-numeric.",
+			"Temperature (°C)": "Spreadsheet type: Number (Decimal 2DP).",
+			"pH": "Spreadsheet type: Number (Decimal 2DP), range 0-14.",
+			"Dissolved Oxygen (% Sat)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Dissolved Oxygen (mg/L)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Conductivity (μS/cm)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Turbidity (NTU)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Black disk (m)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Secchi disk (m)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Other": "Spreadsheet type: Text.",
+			"Parameter Set Name": "Spreadsheet type: Select (single).",
+			"Parameter Type": "Spreadsheet type: Look up-select multi.",
+			"Name of Sampler": "Spreadsheet says Text; RSHL clarified Lookup + Select (multi), default primary officer.",
+			"Laboratory": "Jira-confirmed Select (single); council-dependent, no default.",
+			"Sample type": "Spreadsheet type: Select (single).",
+			"Sampled from": "Spreadsheet type: Select (single).",
+			"Sample collection method": "Spreadsheet type: Select (single).",
+			"Bore purge volume (L)": "Spreadsheet type: Number (2DP).",
+			"Sample filtered": "Spreadsheet type: Boolean (Yes/No).",
+			"Purchase Order Number": "Spreadsheet type: Text.",
+			"Work Order Number": "Spreadsheet type: Text.",
+			"Capture Weather?": "Existing field type: Boolean (Yes/No).",
+			"Air Temperature": "Existing field type: Select (single).",
+			"Cloud Cover": "Existing field type: Select (single).",
+			"Rainfall": "Existing field type: Select (single).",
+			"Wind Direction": "Existing field type: Select (single).",
+			"Other Weather Conditions": "Existing field type: Select (single).",
+			"Reinspection Required": "Spreadsheet type: Boolean (Yes/No).",
+			"Reinspection Date": "Spreadsheet type: Date.",
+			"Notice of Inspection Left?": "Spreadsheet type: Boolean (Yes/No).",
+			"Image of Inspection Notice Left": "Spreadsheet type: Media (Photo).",
+			"Actual End Date": "Spreadsheet type: Date.",
+			"Actual End Time": "Spreadsheet type: Time.",
+			"Reason": "Spreadsheet type: Text.",
+			"Completion Behaviour": "Spreadsheet type: Select (single)."
+		};
+		function fieldSpecOptionCount(field, name) {
+			if (name === "Sample Location") return 0;
+			if (field.querySelector(".ds-switch")) return 2;
+			const parameterCount = field.querySelectorAll("[data-parameter-type]").length;
+			if (parameterCount) return parameterCount;
+			const select = field.querySelector("select");
+			if (select) return [...select.options].filter((option) => option.value && option.text.trim() !== "[Not Entered]").length;
+			return field.querySelectorAll(".choice").length;
+		}
+		function fieldSpecTypeText(field, name) {
+			const source = fieldTypeNotes[name] || "";
+			let type;
+			if (name === "In Attendance") type = "Text";
+			else if (name === "Name of Sampler") type = "Lookup · Select · multi";
+			else if (source.startsWith("Spreadsheet type not specified:")) {
+				type = `Type not specified · ${source.replace(/^Spreadsheet type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
+			} else if (source.startsWith("Existing field type:")) {
+				type = `Existing · ${source.replace(/^Existing field type: /, "").split(";")[0].replace(/\.$/, "")}`;
+			} else {
+				type = source.replace(/^Spreadsheet type: /, "").split(/[.;]/)[0].replace(/,\s*default.*$/i, "") || `Type not specified · ${prototypeControlType(field, name)}`;
+			}
+			return type.replace("Select (single)", "Select · single")
+				.replace("Boolean (Yes/No)", "Boolean · Yes/No")
+				.replace("Number (Decimal 2DP)", "Number · Decimal 2DP")
+				.replace("Number (2DP)", "Number · 2DP")
+				.replace("Number Alpha-numeric", "Number · Alpha-numeric")
+				.replace("Media (Photo)", "Media · Photo")
+				.replace("Media (Video)", "Media · Video")
+				.replace("Spatial (Single Point)", "Spatial · Single Point")
+				.replace("Spatial (Location)", "Spatial · Location")
+				.replace("Look up-select multi", "Look up-select · multi")
+				.replace("Number.", "Number");
+		}
+		function prototypeControlType(field, name) {
+			if (field.querySelector(".signature-pad")) return "Signature capture";
+			if (name === "Sample Location") return "Spatial capture";
+			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Multi-contact lookup — select one or more contacts";
+			if (name === "In Attendance" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi · survey-only contacts";
+			if (name === "In Attendance") return "Search input placeholder";
+			if (name === "Name of Sampler" && field.querySelector("[data-lookup-multiple]")) return "Lookup + Select · multi";
+			if (name === "Name of Sampler") return "Officer chip and change/add action";
+			if (field.querySelector("[data-parameter-type]")) return "Searchable multi-select with selected chips";
+			if (field.querySelector(".ds-switch")) return "Boolean switch — one tap, matching the existing Datascape form";
+			if (field.querySelector(".choice-row")) {
+				const choices = [...field.querySelectorAll(".choice")].map((choice) => choice.textContent.trim());
+				if (choices.length === 2 && choices.includes("Yes") && choices.includes("No")) return "Boolean switch/choices — one tap";
+				return `Choice buttons — ${choices.length} options, one tap per option`;
+			}
+			const select = field.querySelector("select");
+			if (select) return `Dropdown — select one of ${fieldSpecOptionCount(field, name)} options`;
+			const input = field.querySelector("input");
+			if (input) return ({ date: "Date picker", time: "Time picker", number: "Numeric input", file: "Media upload", search: "Search/lookup input", text: "Text input" })[input.type] || "Text input";
+			if (field.querySelector("textarea")) return "Text area";
+			if (field.querySelector("button")) return "Action button";
+			return "No input control identified";
+		}
+		const fieldMappings = {
+			"Actual Start Date": { target: "JRB - Actual date/time", specifics: "Ad hoc surveys need mapping to INC Known date/time." },
+			"Actual Start Time": { target: "JRB - Actual date/time", specifics: "Ad hoc surveys need mapping to INC Known date/time." },
+			"Add Asset": { target: "JRB - Assets" },
+			"Add Inventory": { target: "JRB - Inventory" },
+			"Reinspection Required": { target: "JRB - Reinspection Booking and Date" },
+			"Reinspection Date": { target: "JRB - Reinspection Booking and Date" },
+			"Actual End Date": { target: "JRB - Actual date/time" },
+			"Actual End Time": { target: "JRB - Actual date/time" },
+			"Reason": { target: "JRB - Dates Reason" },
+			"Sample Location": { target: "Sample site - Point · Label field on location record", specifics: "DRSS-1727 maps Site Name from this Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source." }
+		};
+		const spreadsheetFieldValues = {
+			"Photos": "Photo",
+			"Videos": "Video",
+			"Track Log": "Location",
+			"Capture Track Log": "Location",
+			"Warrant Shown": "Yes/No",
+			"Warrant Shown to Name": "[Contact name]",
+			"Sample Location": "Add Location: Single Point",
+			"Sample Type": "Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical, Other",
+			"Method of Collection": "Grab, Composite, Other",
+			"Sample Appearance": "Clear, Turbid, Colourless, Coloured, Other",
+			"Odour": "Odour, Odourless",
+			"Odour Type": "Metallic, Sulphuric, Effluent, Sewage, Other",
+			"Sample type": "Groundwater bore, Geothermal, Spring, Salt water intrusion bore",
+			"Groundwater sample type": "Groundwater bore, Geothermal, Spring, Salt water intrusion bore",
+			"Sampled from": "From tank, After filter, Through hose, Spring, Other",
+			"Sample collection method": "Pumped bore, Bailed, Grab, Bucket, Free flowing artesian, Bilge pump",
+			"Sample filtered": "Yes/No",
+			"Parameter Type": "Parameter Type Name",
+			"Chain of Custody Declaration": "True/False",
+			"Laboratory": "RJ Hill Laboratories Limited Hamilton, RJ Hill Laboratories Limited Christchurch, Eurofins ELS Limited Dunedin",
+			"Reinspection Required": "Yes/No",
+			"Notice of Inspection Left?": "Yes/No",
+			"Image of Inspection Notice Left": "Photo",
+			"Completion Behaviour": "Pending Completion, Complete, Complete and Send"
+		};
+		const fieldDefaultValues = {
+			"Warrant Shown": "Yes",
+			"Method of Collection": "Grab",
+			"Name of Sampler": "primary officer",
+			"Reinspection Required": "No",
+			"Notice of Inspection Left?": "No",
+			"Completion Behaviour": "Pending Completion"
+		};
+		function fieldValueText(field, name) {
+			const groundwater = field.classList.contains("conditional-groundwater") || field.classList.contains("conditional-ground");
+			const value = name === "Sample Appearance" && groundwater
+				? "Clear, Turbid, Colourless, Coloured, Odourless, Odour, Aerated"
+				: spreadsheetFieldValues[name];
+			const defaultValue = fieldDefaultValues[name];
+			return [value ? `Value: ${value}` : "", defaultValue ? `Default: ${defaultValue}` : ""].filter(Boolean).join(" · ");
+		}
+		function fieldConditionText(field, name) {
+			if (name === "Method of Collection Other") return "IF Sample Type is not Groundwater and Method of Collection = Other";
+			if (field.classList.contains("conditional-other")) return "IF Sample Type = Other";
+			if (field.classList.contains("conditional-general")) return "IF Sample Type is not Groundwater";
+			if (field.classList.contains("conditional-groundwater") || field.classList.contains("conditional-ground")) return "IF Sample Type = Groundwater";
+			if (field.closest("#warrant-fields")) {
+				return name === "Name (if contact not found)" ? "IF Warrant Shown = Yes and contact is not found" : "IF Warrant Shown = Yes";
+			}
+			if (field.closest("#weather-details")) return "IF Capture Weather = Yes";
+			if (field.closest("#reinspection-date")) return "IF Reinspection Required = Yes";
+			if (field.closest("#notice-image, #notice-photo")) return "IF Notice of Inspection Left? = Yes";
+			const text = [...field.querySelectorAll(".help, .notice")].map((node) => node.textContent).concat(fieldSpecNotes[name] || "").join(" ");
+			const match = text.match(/(?:Show when|Show if|IF|when)\s+[^.;]+/i);
+			return match ? match[0].trim() : "";
+		}
+		const mandatoryFieldNames = new Set(["Actual Start Date", "Actual Start Time", "Warrant Shown", "Warrant Shown to Name", "Name (if contact not found)", "Actual End Date", "Actual End Time"]);
+		function fieldMandatoryText(field, name) {
+			const label = field.querySelector("label");
+			const required = field.querySelector('[required], [aria-required="true"], .req')
+				|| /\*\s*$/.test(label?.textContent.trim() || "");
+			return required || mandatoryFieldNames.has(name) ? "Yes" : "not specified";
+		}
+		const fieldChangeNotes = {
+			"Actual Start Date": { status: "New", rows: "2", detail: "Standard booking date requested by the spreadsheet; not present on the linked Sampling survey." },
+			"Actual Start Time": { status: "New", rows: "3", detail: "Standard booking time requested by the spreadsheet; not present on the linked Sampling survey." },
+			"Add Asset": { status: "New", rows: "4", detail: "Standard booking action added to this survey." },
+			"Add Inventory": { status: "New", rows: "5", detail: "Standard booking action added to this survey." },
+			"Photos": { status: "New", rows: "6", detail: "General visual evidence added to this survey; distinct from existing Sample Photos." },
+			"Videos": { status: "New", rows: "7", detail: "General video evidence added to this survey." },
+			"Track Log": { status: "New", rows: "8", detail: "General track capture added to this survey." },
+			"In Attendance": { status: "New", rows: "9", detail: "Not present on the linked survey; configure the survey-only multi-contact lookup confirmed by RSHL." },
+			"Warrant Shown": { status: "New", rows: "10", detail: "Authority field added to this survey; Boolean, default Yes." },
+			"Warrant Shown to Name": { status: "New", rows: "11", detail: "Conditional contact lookup added to this survey." },
+			"Name (if contact not found)": { status: "New", rows: "12", detail: "Conditional text fallback added to this survey." },
+			"Warrant Shown to Relationship": { status: "New", rows: "13", detail: "Conditional relationship field added to this survey." },
+			"Capture Weather?": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
+			"Air Temperature": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Cloud Cover": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Rainfall": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
+			"Sample Type": { status: "Wording edit", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
+			"Sample Type Other": { status: "Wording edit", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
+			"Rain Affect on Sample": { status: "Wording edit", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; spreadsheet option wording is struck out." },
+			"Sample Date": { status: "Update required", currentType: "Date", rows: "32", detail: "Ordering only: move before Sample Time and Sample ID; retain the existing Date type." },
+			"Sample Time": { status: "Update required", currentType: "Time", rows: "33", detail: "Ordering only: place after Sample Date and before Sample ID; retain the existing Time type." },
+			"Sample ID": { status: "Update required", currentType: "Text", rows: "34", detail: "Ordering only: place after Sample Date and Sample Time; retain Text." },
+			"Method of Collection": { status: "Wording edit", currentType: "Select single", rows: "36-38", detail: "Add Composite to the existing Grab/Other choices and apply the non-groundwater condition; retain default Grab." },
+			"Method of Collection Other": { status: "New", rows: "39", detail: "New conditional text detail for Method of Collection = Other." },
+			"Sample Appearance": { status: "Wording edit", currentType: "Select single", rows: "40-44, 70-76", detail: "Add Coloured and use separate groundwater and non-groundwater option lists." },
+			"Odour": { status: "Update required", currentType: "Select single", rows: "45-46", detail: "Keep the existing Odour/Odourless choices and add the non-groundwater condition." },
+			"Odour Type": { status: "Update required", currentType: "Select single", rows: "47-51", detail: "Keep the existing choices; show only for non-groundwater samples when Odour = Odour." },
+			"Sample type": { status: "New", rows: "52-55", detail: "New groundwater subtype choice, distinct from the existing main Sample Type field." },
+			"Sampled from": { status: "Wording edit", currentType: "Select single (export)", rows: "56-63", detail: "Existing exported field: replace struck Tap/Bore Pipe/Portable Pump options, retain Other, and apply the groundwater condition." },
+			"Sample collection method": { status: "New", rows: "64-69", detail: "New groundwater collection-method choice." },
+			"Bore purge volume (L)": { status: "New", rows: "77", detail: "New groundwater numeric reading with two decimal places." },
+			"Sample filtered": { status: "New", rows: "78", detail: "New groundwater Boolean field." },
+			"Sample Comments": { status: "Wording edit", currentType: "Text", rows: "79", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
+			"Sample Photos": { status: "Existing", currentType: "Media", rows: "80", detail: "Existing per-sample photo field retained." },
+			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "81", detail: "Spreadsheet changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open spreadsheet question." },
+			"Dissolved Oxygen (% Sat)": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "82", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
+			"Dissolved Oxygen (mg/L)": { status: "New", rows: "83", detail: "Additional unit-specific dissolved-oxygen reading at two decimal places." },
+			"Temperature (°C)": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "84", detail: "Allow two decimal places instead of the current integer precision." },
+			"pH": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow decimals and enforce the spreadsheet range 0-14." },
+			"Conductivity (μS/cm)": { status: "New", rows: "86", detail: "New field measurement at two decimal places." },
+			"Turbidity (NTU)": { status: "New", rows: "87", detail: "New numeric field measurement; distinct from Turbidity in the legacy Tests list." },
+			"Black disk (m)": { status: "New", rows: "88", detail: "New field measurement at two decimal places." },
+			"Secchi disk (m)": { status: "New", rows: "89", detail: "New field measurement at two decimal places." },
+			"Other": { status: "New", rows: "90", detail: "New free-text field measurement." },
+			"Parameter Set Name": { status: "New", rows: "91", detail: "New parameter-set selector; do not combine a set with individual Parameter Types." },
+			"Parameter Type": { status: "New", rows: "92", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
+			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "121", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to spreadsheet True/False." },
+			"Name of Sampler": { status: "Update required", currentType: "Text", rows: "122", detail: "RSHL clarification changes Text to Lookup + Select multi, defaults to the primary officer and permits additional samplers." },
+			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "128-131", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
+			"Reinspection Required": { status: "New", rows: "135", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
+			"Reinspection Date": { status: "New", rows: "136", detail: "Standard conditional booking date added to this survey." },
+			"Notice of Inspection Left?": { status: "New", rows: "137", detail: "Notice field added to this survey." },
+			"Image of Inspection Notice Left": { status: "New", rows: "138", detail: "Conditional notice image added to this survey." },
+			"Actual End Date": { status: "New", rows: "139", detail: "Standard booking date added to this survey." },
+			"Actual End Time": { status: "New", rows: "140", detail: "Standard booking time added to this survey." },
+			"Reason": { status: "New", rows: "141", detail: "Standard booking reason added to this survey." },
+			"Completion Behaviour": { status: "New", rows: "142-144", detail: "Standard completion choice added to this survey, including the spreadsheet's Complete and Send option." },
+			"Officer Signature": { status: "New", rows: "145", detail: "Standard booking signature retained by Datacom clarification; it is not present on the linked Sampling form." }
+		};
+		function fieldSpecSummary(field, name) {
+			const change = fieldChangeNotes[name];
+			const type = fieldSpecTypeText(field, name);
+			const parts = [type.startsWith("Type not specified ·") ? type : `Type: ${type}`];
+			if (change?.currentType) parts.unshift(`Current type: ${change.currentType}`);
+			const options = fieldSpecOptionCount(field, name);
+			if (options) parts.push(`Options: ${options}`);
+			parts.push(`Control: ${prototypeControlType(field, name)}`);
+			const value = fieldValueText(field, name);
+			if (value) parts.push(value);
+			const condition = fieldConditionText(field, name);
+			if (condition) parts.push(`Condition: ${condition}`);
+			parts.push(`Mandatory: ${fieldMandatoryText(field, name)}`);
+			if (change?.status === "Update required") parts.push(`Change: ${change.detail}`);
+			if (change?.rows) parts.push(`Spreadsheet rows: ${change.rows}`);
+			return parts.join(" · ");
+		}
+		function useSpreadsheetInBlueNotes(root = document) {
+			const blueBackgrounds = new Set(["rgb(238, 244, 250)", "rgb(232, 242, 255)"]);
+			root.querySelectorAll(".spec, .field-spec-new").forEach((note) => {
+				if (!blueBackgrounds.has(getComputedStyle(note).backgroundColor)) return;
+				const textNodes = document.createTreeWalker(note, NodeFilter.SHOW_TEXT);
+				let textNode;
+				while ((textNode = textNodes.nextNode())) {
+					textNode.nodeValue = textNode.nodeValue.replace(/\bspreadsheet\b/gi, (word) => word[0] === "W" ? "Spreadsheet" : "spreadsheet");
+				}
+			});
+		}
+		const fieldOpenQuestions = {
+			"Sample Date": "Open question for RSHL: The Lab Submission Form shows Sample Date, Sample Type, Collection Method, Appearance, Odour, Rain Affected and Comments once, in one box at the top, but the survey asks them for each sample. With more than one sample, should the box show the first sample's details, or should these details move into each sample's row?",
+			"Sample Time": "Open question for RSHL: Suggested help text under this question: “The lab needs samples from the same site to have different times. The survey won't stop two samples having the same time, so please check before completing.” Are you happy with this?",
+			"Sample Appearance": "Open question for RSHL: The DRSS-1197 ticket asks to add “Humic” to the Sample Appearance list, but it isn't in the spreadsheet's options. Is Humic still needed, and in which list (general, groundwater or both)?",
+			"Parameter Set Name": "Open question for Datacom Engineering: If staff choose a Parameter Set, can the Lab Submission Form list the individual tests in that set? If not, should staff always select each test from the Parameter Type list instead of choosing a set?",
+			"Name of Sampler": "Open question for RSHL: Rachel confirmed on 8 Oct that whoever collects the samples must be named as the sampler, so Full name will come from Name of Sampler. The signature comes from the booking officer's profile. If the sampler isn't the booking officer, whose signature should appear? If there are several samplers, should all be listed?"
+		};
+		function addMissingFieldSpecNotes(root = document) {
+			root.querySelectorAll(".field").forEach((field) => {
+				const label = field.querySelector("label");
+				const name = (label?.textContent || field.querySelector("button")?.textContent || "Field")
+					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim().replace(/\s*\*$/, "");
+				const change = fieldChangeNotes[name];
+				if (label && change && !label.querySelector(".field-status")) {
+					const statusClass = ({ "New": "new", "Wording edit": "wording", "Existing": "existing", "Update required": "update" })[change.status] || "update";
+					const statusBadge = document.createElement("span");
+					statusBadge.className = `field-status chip-${statusClass}`;
+					statusBadge.textContent = change.status;
+					label.appendChild(statusBadge);
+				}
+				let note = field.querySelector(":scope > .spec");
+				if (!note) {
+					note = document.createElement("p");
+					note.className = "spec";
+					const detail = fieldSpecNotes[name];
+					note.textContent = detail && !(change?.status === "New" && detail.startsWith("Existing")) ? detail : change?.detail || `Comparison not yet verified for ${name}.`;
+					field.appendChild(note);
+				}
+				if (field.querySelector(":scope > .field-spec")) return;
+				const fieldSpec = document.createElement("div");
+				fieldSpec.className = "field-spec";
+				const summaryNote = document.createElement("p");
+				summaryNote.className = "field-spec-note field-spec-summary";
+				summaryNote.textContent = fieldSpecSummary(field, name);
+				fieldSpec.appendChild(summaryNote);
+				const mapping = fieldMappings[name];
+				if (mapping) {
+					const mapNote = document.createElement("p");
+					mapNote.className = "field-spec-note field-spec-maps";
+					mapNote.textContent = `Maps to ERP: ${mapping.target}`;
+					fieldSpec.appendChild(mapNote);
+					if (mapping.specifics) {
+						const specificsNote = document.createElement("p");
+						specificsNote.className = "field-spec-note field-spec-maps";
+						specificsNote.textContent = `Mapping specifics: ${mapping.specifics}`;
+						fieldSpec.appendChild(specificsNote);
+					}
+				}
+				field.insertBefore(fieldSpec, note);
+				if (fieldOpenQuestions[name]) {
+					const question = document.createElement("p");
+					question.className = "spec blocked";
+					const [, lead, rest] = fieldOpenQuestions[name].match(/^([^:]+:)\s*(.*)$/);
+					const strong = document.createElement("strong");
+					strong.textContent = lead;
+					question.append(strong, ` ${rest}`);
+					field.appendChild(question);
+				}
+			});
+			root.querySelectorAll(".action-row .add").forEach((button) => {
+				const mapping = fieldMappings[button.textContent.trim()];
+				if (!mapping) return;
+				const wrapper = document.createElement("div");
+				wrapper.className = "mapped-action";
+				button.parentElement.insertBefore(wrapper, button);
+				wrapper.appendChild(button);
+				const change = fieldChangeNotes[button.textContent.trim()];
+				if (change) {
+					const statusNote = document.createElement("p");
+					statusNote.className = "field-spec-note field-spec-status field-spec-new";
+					statusNote.textContent = `${change.status} to this survey (spreadsheet row ${change.rows})`;
+					wrapper.appendChild(statusNote);
+				}
+				const mapNote = document.createElement("p");
+				mapNote.className = "field-spec-note field-spec-maps";
+				mapNote.textContent = `Maps to ERP: ${mapping.target}`;
+				wrapper.appendChild(mapNote);
+			});
+		}
+		addMissingFieldSpecNotes();
+		useSpreadsheetInBlueNotes();
+		document.querySelectorAll("[data-sample]").forEach(bindSampleType);
+		document.querySelectorAll("[data-sample]").forEach(bindParameterSelection);
+		bindBooleanSwitches(document);
+		document.getElementById("add-sample").addEventListener("click", () => {
+			const sample = document.querySelector("[data-sample]").cloneNode(true);
+			sample.querySelectorAll("input,textarea").forEach((field) => { field.value = ""; });
+			sample.querySelectorAll("select").forEach((field) => { field.selectedIndex = 0; });
+			sample.querySelectorAll("select[multiple]").forEach((field) => [...field.options].forEach((option) => { option.selected = false; }));
+			sample.querySelector("h3 span").textContent = "Sampling Item " + (document.querySelectorAll("[data-sample]").length + 1);
+			bindSampleType(sample);
+			bindParameterSelection(sample);
+			bindBooleanSwitches(sample);
+			const addRow = document.getElementById("add-sample").parentElement;
+			addRow.parentElement.insertBefore(sample, addRow);
+			sample.querySelector("[data-remove-sample]").addEventListener("click", () => sample.remove());
+		});
+		document.querySelectorAll("[data-remove-sample]").forEach((button) => button.addEventListener("click", () => {
+			if (document.querySelectorAll("[data-sample]").length > 1) button.closest("[data-sample]").remove();
+		}));
+		document.getElementById("spec-toggle").addEventListener("change", (event) => {
+			document.body.classList.toggle("spec-off", !event.target.checked);
+		});
+	</script>
+</body>
+</html>
