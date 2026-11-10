@@ -220,21 +220,21 @@
 								<h3 class="section-title" id="field-measurement-section" data-index-section="field-measurement-section">Field Measurement</h3>
 								<p class="spec">Capture one set of readings per Sampling Detail, without a nested Field Measurement repeater. The spreadsheet asks whether Meter Number is redundant; confirm before build.</p>
 								<div class="field"><label>Meter Number</label><input placeholder="Alpha-numeric meter ID" /></div>
-								<div class="field"><label>Dissolved Oxygen % Sat</label><input type="number" step="0.01" /></div>
-								<div class="field"><label>Dissolved Oxygen mg/l</label><input type="number" step="0.01" /></div>
-								<div class="field"><label>Temperature</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Dissolved Oxygen (% Sat)</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Dissolved Oxygen (mg/L)</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Temperature (°C)</label><input type="number" step="0.01" /></div>
 								<div class="field"><label>pH</label><input type="number" min="0" max="14" step="0.01" placeholder="0-14" /></div>
-								<div class="field"><label>Conductivity</label><input type="number" step="0.01" /></div>
-								<div class="field"><label>Turbidity</label><input type="number" step="0.01" /></div>
-								<div class="field"><label>Black disk</label><input type="number" step="0.01" /></div>
-								<div class="field"><label>Secchi disk</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Conductivity (μS/cm)</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Turbidity (NTU)</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Black disk (m)</label><input type="number" step="0.01" /></div>
+								<div class="field"><label>Secchi disk (m)</label><input type="number" step="0.01" /></div>
 								<div class="field"><label>Other</label><input placeholder="Other" /></div>
 									<h3 class="section-title" id="sample-tests-section" data-index-section="sample-tests-section">Sample Tests</h3>
-											<div class="field"><label>Parameter Set Name</label><select data-parameter-set><option value="" selected>[Not Entered]</option><option>Animal effluent discharge</option><option>Biological wastewater discharge</option><option>Sediment discharge</option><option>Concrete discharge</option><option>Hydrocarbon discharge</option><option>Paint discharge</option><option>Milk discharge</option><option>Chemical discharge</option><option>Pesticide or herbicide discharge / runoff</option><option>Mass avian (bird) death</option></select><p class="spec">Consent-condition test auto-fill is tracked in a separate Change Request. For this survey, staff select a parameter set or individual test types, not both.</p></div>
+											<div class="field"><label>Parameter Set Name</label><select data-parameter-set><option value="" selected>[Not Entered]</option><option>Animal effluent discharge</option><option>Biological wastewater discharge</option><option>Sediment discharge</option><option>Concrete discharge</option><option>Hydrocarbon discharge</option><option>Paint discharge</option><option>Milk discharge</option><option>Chemical discharge</option><option>Pesticide or herbicide discharge / runoff</option><option>Mass avian (bird) death</option></select><p class="spec">Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering. For this survey, staff select a parameter set or individual test types, not both.</p></div>
 									<div class="field"><label>Parameter Type</label>
 										<details class="multiselect"><summary>Choose test types</summary><div class="options"><input class="test-search" type="search" placeholder="Search test types" aria-label="Search Parameter Types" />
 											<label><input type="checkbox" data-parameter-type /> Biochemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Total Suspended Solids</label><label><input type="checkbox" data-parameter-type /> pH</label><label><input type="checkbox" data-parameter-type /> Total Ammoniacal Nitrogen</label><label><input type="checkbox" data-parameter-type /> Nitrate Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Dissolved Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Phosphorus</label><label><input type="checkbox" data-parameter-type /> Dissolved Reactive Phosphorus</label><label><input type="checkbox" data-parameter-type /> Total Kjeldahl Nitrogen</label><label><input type="checkbox" data-parameter-type /> Escherichia coli</label><label><input type="checkbox" data-parameter-type /> Chemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Grease and Oil</label><label><input type="checkbox" data-parameter-type /> Combined Metals</label><label><input type="checkbox" data-parameter-type /> Turbidity</label><label><input type="checkbox" data-parameter-type /> Total Hardness</label><label><input type="checkbox" data-parameter-type /> Total Petroleum Hydrocarbons</label><label><input type="checkbox" data-parameter-type /> Polycyclic Aromatic Hydrocarbon</label><label><input type="checkbox" data-parameter-type /> BTEX</label><label><input type="checkbox" data-parameter-type /> Semi volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Total Alkalinity</label><label><input type="checkbox" data-parameter-type /> Organochlorine Pesticides</label><label><input type="checkbox" data-parameter-type /> Organophosphorus Phosphatases</label>
-										</div><div class="selected-tests" data-selected-tests></div></details><p class="spec">The spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text in the report. Consent-condition test auto-fill is tracked in a separate Change Request.</p></div>
+										</div><div class="selected-tests" data-selected-tests></div></details><p class="spec">The spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text in the report. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.</p></div>
 									<h3 class="section-title" id="chain-of-custody-section" data-index-section="chain-of-custody-section">Chain of Custody</h3>
 									<div class="field"><label>Chain of Custody Declaration</label><div class="choice-row" data-choice-group><button class="choice" type="button" data-value="True" aria-pressed="false">True</button><button class="choice" type="button" data-value="False" aria-pressed="false">False</button></div><p class="help">The spreadsheet does not specify a default.</p></div>
 									<div class="field"><label>Name of Sampler</label><div class="selected-tests"><span class="chip">H. Giles · primary booking officer</span><input class="sampler-lookup" type="search" data-lookup-multiple placeholder="Search and add officers" aria-label="Search and add officers" /></div><p class="spec">RSHL confirmed on 8 Oct 2026: configure this as a Lookup + Select multi-contact field, defaulted to the primary officer; additional officers can be added when another person collected the samples.</p></div>
@@ -327,17 +327,17 @@
 			"Sample Comments": "Spreadsheet renames Comments to Sample Comments; capture it per sample and include it in sample information.",
 			"Sample Photos": "Spreadsheet includes photos with each Sampling Detail.",
 			"Meter Number": "Spreadsheet lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
-			"Temperature": "Capture once per Sampling Detail under Field Measurement.",
+			"Temperature (°C)": "Capture once per Sampling Detail under Field Measurement.",
 			"pH": "Capture once per Sampling Detail under Field Measurement; range 0-14 with decimals.",
-			"Dissolved Oxygen % Sat": "Capture once per Sampling Detail under Field Measurement.",
-			"Dissolved Oxygen mg/l": "Capture once per Sampling Detail under Field Measurement.",
-			"Conductivity": "Capture once per Sampling Detail under Field Measurement.",
-			"Turbidity": "Capture once per Sampling Detail under Field Measurement.",
-			"Black disk": "Capture once per Sampling Detail under Field Measurement.",
-			"Secchi disk": "Capture once per Sampling Detail under Field Measurement.",
+			"Dissolved Oxygen (% Sat)": "Capture once per Sampling Detail under Field Measurement.",
+			"Dissolved Oxygen (mg/L)": "Capture once per Sampling Detail under Field Measurement.",
+			"Conductivity (μS/cm)": "Capture once per Sampling Detail under Field Measurement.",
+			"Turbidity (NTU)": "Capture once per Sampling Detail under Field Measurement.",
+			"Black disk (m)": "Capture once per Sampling Detail under Field Measurement.",
+			"Secchi disk (m)": "Capture once per Sampling Detail under Field Measurement.",
 			"Other": "Capture once per Sampling Detail under Field Measurement.",
-					"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Consent-condition test auto-fill is tracked in a separate Change Request. Do not combine a set with individual Parameter Types.",
-					"Parameter Type": "Spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text. Consent-condition test auto-fill is tracked in a separate Change Request.",
+					"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering. Do not combine a set with individual Parameter Types.",
+					"Parameter Type": "Spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.",
 					"Name of Sampler": "RSHL confirmed on 8 Oct 2026: Lookup + Select (multi), default primary officer; additional officers can be added.",
 			"Groundwater sample type": "Spreadsheet supplies groundwater-specific sample types; show only for Groundwater. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
 			"Sampled from": "Spreadsheet lists From tank, After filter, Through hose, Spring and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Struck Tap, Outlet tap, Bore Pipe and Portable Pump are omitted.",
@@ -413,14 +413,14 @@
 			"Sample Comments": "Spreadsheet type: Text.",
 			"Sample Photos": "Spreadsheet type: Media.",
 			"Meter Number": "Spreadsheet type: Alpha-numeric.",
-			"Temperature": "Spreadsheet type: Number (Decimal 2DP).",
+			"Temperature (°C)": "Spreadsheet type: Number (Decimal 2DP).",
 			"pH": "Spreadsheet type: Number (Decimal 2DP), range 0-14.",
-			"Dissolved Oxygen % Sat": "Spreadsheet type: Number (Decimal 2DP).",
-			"Dissolved Oxygen mg/l": "Spreadsheet type: Number (Decimal 2DP).",
-			"Conductivity": "Spreadsheet type: Number (Decimal 2DP).",
-			"Turbidity": "Spreadsheet type: Number (Decimal 2DP).",
-			"Black disk": "Spreadsheet type: Number (Decimal 2DP).",
-			"Secchi disk": "Spreadsheet type: Number (Decimal 2DP).",
+			"Dissolved Oxygen (% Sat)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Dissolved Oxygen (mg/L)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Conductivity (μS/cm)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Turbidity (NTU)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Black disk (m)": "Spreadsheet type: Number (Decimal 2DP).",
+			"Secchi disk (m)": "Spreadsheet type: Number (Decimal 2DP).",
 			"Other measurement": "Spreadsheet type: Text.",
 			"Parameter Set Name": "Spreadsheet type: Select (single).",
 			"Parameter Type": "Spreadsheet type: Look up-select multi.",
@@ -602,14 +602,14 @@
 			"Sample Comments": { status: "Wording edit", currentType: "Text", rows: "79", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
 			"Sample Photos": { status: "Existing", currentType: "Media", rows: "80", detail: "Existing per-sample photo field retained." },
 			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "81", detail: "Spreadsheet changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open spreadsheet question." },
-			"Dissolved Oxygen % Sat": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "82", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
-			"Dissolved Oxygen mg/l": { status: "New", rows: "83", detail: "Additional unit-specific dissolved-oxygen reading at two decimal places." },
-			"Temperature": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "84", detail: "Allow two decimal places instead of the current integer precision." },
+			"Dissolved Oxygen (% Sat)": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "82", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
+			"Dissolved Oxygen (mg/L)": { status: "New", rows: "83", detail: "Additional unit-specific dissolved-oxygen reading at two decimal places." },
+			"Temperature (°C)": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "84", detail: "Allow two decimal places instead of the current integer precision." },
 			"pH": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow decimals and enforce the spreadsheet range 0-14." },
-			"Conductivity": { status: "New", rows: "86", detail: "New field measurement at two decimal places." },
-			"Turbidity": { status: "New", rows: "87", detail: "New numeric field measurement; distinct from Turbidity in the legacy Tests list." },
-			"Black disk": { status: "New", rows: "88", detail: "New field measurement at two decimal places." },
-			"Secchi disk": { status: "New", rows: "89", detail: "New field measurement at two decimal places." },
+			"Conductivity (μS/cm)": { status: "New", rows: "86", detail: "New field measurement at two decimal places." },
+			"Turbidity (NTU)": { status: "New", rows: "87", detail: "New numeric field measurement; distinct from Turbidity in the legacy Tests list." },
+			"Black disk (m)": { status: "New", rows: "88", detail: "New field measurement at two decimal places." },
+			"Secchi disk (m)": { status: "New", rows: "89", detail: "New field measurement at two decimal places." },
 			"Other": { status: "New", rows: "90", detail: "New free-text field measurement." },
 			"Parameter Set Name": { status: "New", rows: "91", detail: "New parameter-set selector; do not combine a set with individual Parameter Types." },
 			"Parameter Type": { status: "New", rows: "92", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
