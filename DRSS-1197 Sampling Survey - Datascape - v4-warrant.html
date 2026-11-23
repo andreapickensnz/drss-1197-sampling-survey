@@ -235,7 +235,7 @@
 					<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><button class="ds-switch on" type="button" role="switch" aria-label="Warrant Shown" aria-required="true" aria-checked="true" data-default="Yes" data-conditional-toggle="warrant-fields"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button></div>
 					<div id="warrant-fields" class="form-grid">
 						<div class="field" data-field-id="samplingWarrantContact" data-lookup-proxy><label>Warrant Shown to Name</label><input type="search" placeholder="Search contacts" list="warrant-contact-options" /><datalist id="warrant-contact-options"><option value="Aroha Ngatai"></option></datalist><p class="help">Use the contact lookup. If there is no match, enter the name below.</p></div>
-						<div class="field" data-field-id="warrantNameFree"><label>Warrant Shown to Name (if contact is not found)</label><input type="text" placeholder="Warrant Shown to Name" /><p class="help">Select a contact or enter a name; both may be provided.</p></div>
+						<div class="field" data-field-id="warrantNameFree"><label>Warrant Shown to Name (if contact is not found)</label><input type="text" placeholder="Warrant Shown to Name" /></div>
 						<div class="field"><label>Warrant Shown to Relationship</label><input type="text" placeholder="Relationship" /></div>
 					</div>
 					<h3 class="subheading">Weather</h3>
@@ -489,7 +489,6 @@
 			"Sample Type Other": "Spreadsheet asks for free-text detail when Sample Type is Other.",
 			"Warrant Shown": "Spreadsheet specifies Yes/No and a default of Yes.",
 			"Warrant Shown to Name": "Spreadsheet requests a contact lookup, with text entry if no contact is found. Show when Warrant Shown is Yes.",
-			"Warrant Shown to Name (if contact is not found)": "Select a contact or enter a name; both may be provided.",
 			"Warrant Shown to Relationship": "Spreadsheet requests a text relationship when Warrant Shown is Yes.",
 			"Chain of Custody Declaration": "Spreadsheet asks for a Boolean declaration and does not specify a default.",
 			"Sample Location": "The Sample Site Name / Label row is crossed out in the spreadsheet. DRSS-1727 maps Site Name from the location Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source.",
@@ -738,7 +737,7 @@
 			"In Attendance": { status: "New", rows: "9", detail: "Not present on the linked survey; configure the survey-only multi-contact lookup confirmed by RSHL." },
 			"Warrant Shown": { status: "New", rows: "10", detail: "Authority field added to this survey; Boolean, default Yes." },
 			"Warrant Shown to Name": { status: "New", rows: "11", detail: "Conditional contact lookup added to this survey." },
-			"Warrant Shown to Name (if contact is not found)": { status: "New", rows: "12", detail: "Shown when Warrant Shown is Yes. Select a contact or enter a name; both may be provided." },
+			"Warrant Shown to Name (if contact is not found)": { status: "New", rows: "12", detail: "Shown when Warrant Shown is Yes." },
 			"Warrant Shown to Relationship": { status: "New", rows: "13", detail: "Conditional relationship field added to this survey." },
 			"Capture Weather?": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
 			"Air Temperature": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
@@ -931,7 +930,7 @@
 		["warrantNameFree", "samplingWarrantContact"],
 		["searchName", "searchContact"]
 	];
-	const message = "Select a contact or enter a name. You can also provide both.";
+	const message = "Select a contact or enter a name.";
 
 	function clearError(field) {
 		field.querySelector(".warrant-validation-error")?.remove();
