@@ -169,9 +169,9 @@
 						<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><div class="choice-row" role="group" aria-label="Warrant Shown" aria-required="true" data-choice-group data-conditional-choice="warrant-fields"><button class="choice" type="button" data-value="Yes" aria-pressed="true">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="false">No</button></div></div>
 						<div id="warrant-fields">
 							<div class="field"><label>Warrant Shown to Name</label><input type="search" placeholder="Search contacts" required /><p class="help">Use the contact lookup. If there is no match, enter the name below.</p></div>
-							<div class="field"><label>Name (if contact not found)</label><input type="text" placeholder="Warrant Shown to Name" required /><p class="help">Show when the person cannot be found in Contacts.</p></div>
 							<div class="field"><label>Warrant Shown to Relationship</label><input type="text" placeholder="Relationship" /></div>
 						</div>
+						<div class="field"><label>Warrant Shown to Name (if contact is not found)</label><input type="text" placeholder="Warrant Shown to Name" /><p class="help">Contact not found? Enter their name here.</p></div>
 					</section>
 					<section id="weather-section">
 						<h2 class="group-title">Weather</h2>
@@ -349,7 +349,7 @@
 			"In Attendance": "RSHL confirmed this is a multi-contact lookup for this survey only; it must not update the record's contacts.",
 			"Warrant Shown": "Spreadsheet specifies Yes/No and a default of Yes.",
 			"Warrant Shown to Name": "Spreadsheet requests a contact lookup, with text entry if no contact is found. Show when Warrant Shown is Yes.",
-			"Name (if contact not found)": "Spreadsheet requests text entry only when the contact cannot be found.",
+			"Warrant Shown to Name (if contact is not found)": "Use for names missing from the contact list. Always available.",
 			"Warrant Shown to Relationship": "Spreadsheet requests a text relationship when Warrant Shown is Yes.",
 					"Chain of Custody Declaration": "Spreadsheet asks for a Boolean declaration and does not specify a default.",
 			"Capture Weather?": "Existing behavior retained: Yes reveals the weather details. DRSS-1197 does not request a change.",
@@ -393,7 +393,7 @@
 			"In Attendance": "Spreadsheet type: Text. RSHL clarification requests a multi-contact lookup.",
 			"Warrant Shown": "Spreadsheet type: Boolean (Yes/No).",
 			"Warrant Shown to Name": "Spreadsheet type: Contact lookup (Look-up, Select); Text fallback if no match.",
-			"Name (if contact not found)": "Spreadsheet type: Text.",
+			"Warrant Shown to Name (if contact is not found)": "Spreadsheet type: Text.",
 			"Warrant Shown to Relationship": "Spreadsheet type: Text.",
 			"Chain of Custody Declaration": "Spreadsheet type: Boolean (True/False); no default specified.",
 			"Actual End Date": "Spreadsheet type: Date.",
@@ -549,7 +549,7 @@
 			if (field.classList.contains("conditional-general")) return "IF Sample Type is not Groundwater";
 			if (field.classList.contains("conditional-groundwater") || field.classList.contains("conditional-ground")) return "IF Sample Type = Groundwater";
 			if (field.closest("#warrant-fields")) {
-				return name === "Name (if contact not found)" ? "IF Warrant Shown = Yes and contact is not found" : "IF Warrant Shown = Yes";
+				return "IF Warrant Shown = Yes";
 			}
 			if (field.closest("#weather-details")) return "IF Capture Weather = Yes";
 			if (field.closest("#reinspection-date")) return "IF Reinspection Required = Yes";
@@ -558,7 +558,7 @@
 			const match = text.match(/(?:Show when|Show if|IF|when)\s+[^.;]+/i);
 			return match ? match[0].trim() : "";
 		}
-		const mandatoryFieldNames = new Set(["Actual Start Date", "Actual Start Time", "Warrant Shown", "Warrant Shown to Name", "Name (if contact not found)", "Actual End Date", "Actual End Time"]);
+		const mandatoryFieldNames = new Set(["Actual Start Date", "Actual Start Time", "Warrant Shown", "Warrant Shown to Name", "Actual End Date", "Actual End Time"]);
 		function fieldMandatoryText(field, name) {
 			const label = field.querySelector("label");
 			const required = field.querySelector('[required], [aria-required="true"], .req')
@@ -576,7 +576,7 @@
 			"In Attendance": { status: "New", rows: "9", detail: "Not present on the linked survey; configure the survey-only multi-contact lookup confirmed by RSHL." },
 			"Warrant Shown": { status: "New", rows: "10", detail: "Authority field added to this survey; Boolean, default Yes." },
 			"Warrant Shown to Name": { status: "New", rows: "11", detail: "Conditional contact lookup added to this survey." },
-			"Name (if contact not found)": { status: "New", rows: "12", detail: "Conditional text fallback added to this survey." },
+			"Warrant Shown to Name (if contact is not found)": { status: "New", rows: "12", detail: "Optional text fallback added to this survey; always visible." },
 			"Warrant Shown to Relationship": { status: "New", rows: "13", detail: "Conditional relationship field added to this survey." },
 			"Capture Weather?": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
 			"Air Temperature": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
