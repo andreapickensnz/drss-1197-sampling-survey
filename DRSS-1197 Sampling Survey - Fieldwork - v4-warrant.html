@@ -169,7 +169,7 @@
 						<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><div class="choice-row" role="group" aria-label="Warrant Shown" aria-required="true" data-choice-group data-conditional-choice="warrant-fields"><button class="choice" type="button" data-value="Yes" aria-pressed="true">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="false">No</button></div></div>
 						<div id="warrant-fields">
 							<div class="field" data-field-id="samplingWarrantContact" data-lookup-proxy><label>Warrant Shown to Name</label><input type="search" placeholder="Search contacts" list="warrant-contact-options" /><datalist id="warrant-contact-options"><option value="Aroha Ngatai"></option></datalist><p class="help">Use the contact lookup. If there is no match, enter the name below.</p></div>
-							<div class="field" data-field-id="warrantNameFree"><label>Warrant Shown to Name (if contact is not found)</label><input type="text" placeholder="Warrant Shown to Name" /></div>
+							<div class="field" data-field-id="warrantNameFree"><label>Warrant Shown to Name (enter a name if contact is not found)</label><input type="text" placeholder="Warrant Shown to Name" /></div>
 							<div class="field"><label>Warrant Shown to Relationship</label><input type="text" placeholder="Relationship" /></div>
 						</div>
 					</section>
@@ -392,7 +392,7 @@
 			"In Attendance": "Spreadsheet type: Text. RSHL clarification requests a multi-contact lookup.",
 			"Warrant Shown": "Spreadsheet type: Boolean (Yes/No).",
 			"Warrant Shown to Name": "Spreadsheet type: Contact lookup (Look-up, Select); Text fallback if no match.",
-			"Warrant Shown to Name (if contact is not found)": "Spreadsheet type: Text.",
+			"Warrant Shown to Name (enter a name if contact is not found)": "Spreadsheet type: Text.",
 			"Warrant Shown to Relationship": "Spreadsheet type: Text.",
 			"Chain of Custody Declaration": "Spreadsheet type: Boolean (True/False); no default specified.",
 			"Actual End Date": "Spreadsheet type: Date.",
@@ -575,7 +575,7 @@
 			"In Attendance": { status: "New", rows: "9", detail: "Not present on the linked survey; configure the survey-only multi-contact lookup confirmed by RSHL." },
 			"Warrant Shown": { status: "New", rows: "10", detail: "Authority field added to this survey; Boolean, default Yes." },
 			"Warrant Shown to Name": { status: "New", rows: "11", detail: "Conditional contact lookup added to this survey." },
-			"Warrant Shown to Name (if contact is not found)": { status: "New", rows: "12", detail: "Shown when Warrant Shown is Yes." },
+			"Warrant Shown to Name (enter a name if contact is not found)": { status: "New", rows: "12", detail: "Shown when Warrant Shown is Yes." },
 			"Warrant Shown to Relationship": { status: "New", rows: "13", detail: "Conditional relationship field added to this survey." },
 			"Capture Weather?": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
 			"Air Temperature": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
