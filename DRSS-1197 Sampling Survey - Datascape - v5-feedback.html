@@ -4,15 +4,19 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>DRSS-1197 Sampling Survey - Datascape - v5</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
 	<style>
-		:root { --purple:#7827ff; --purple-light:#f3eaff; --navy:#123b73; --teal:#007b91; --ink:#24282d; --muted:#66717c; --line:#d6d8da; --field:#fafafa; --yellow:#fff45b; --orange:#fff0e6; --red:#9f2631; --red-bg:#fff0f1; --green:#19a76f; font-family:Arial,Helvetica,sans-serif; color:var(--ink); }
+		:root { --purple:#7827ff; --purple-light:#f3eaff; --navy:#002b7f; --teal:#00819b; --ink:#24282d; --muted:#66717c; --line:#d6d8da; --field:#fafafa; --yellow:#fff45b; --orange:#fff0e6; --red:#9f2631; --red-bg:#fff0f1; --green:#19a76f; font-family:Roboto,Arial,Helvetica,sans-serif; color:var(--ink); }
 		* { box-sizing:border-box; }
 		body { margin:0; background:#fff; font-size:12px; }
 		button,input,select,textarea { font:inherit; }
-		.prototype-bar { min-height:30px; display:flex; align-items:center; gap:8px 16px; padding:4px 10px; background:#fff; border-bottom:1px solid var(--line); color:#3b4660; font-size:10px; }
-		.prototype-bar strong { font-size:10px; }
-		.prototype-bar a { color:var(--navy); font-weight:700; }
+		.prototype-bar { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; padding:8px 16px; background:#fff8e1; border-bottom:1px solid #ecd9a3; color:#5c4b00; font-size:12px; }
+		.prototype-bar strong { font-size:12px; }
+		.prototype-bar a { color:#5c4b00; font-weight:700; }
 		.prototype-bar .bar-links { margin-left:auto; display:flex; gap:12px; }
+		.scope-note { flex-basis:100%; margin:0; line-height:1.4; }
 		.spec-switch { display:flex; align-items:center; gap:5px; font-weight:700; cursor:pointer; }
 		.spec-switch input { width:14px; height:14px; margin:0; accent-color:var(--purple); }
 		.prototype-note { flex-basis:100%; margin:0; padding-top:7px; border-top:1px solid #e8d69c; line-height:1.45; }
@@ -67,7 +71,7 @@
 		.status { padding:6px 12px; border-radius:14px; background:#40b55c; color:#fff; font-weight:700; }
 		.form { width:100%; padding:0 22px 40px; }
 		.group-heading { display:flex; align-items:center; gap:9px; margin:0; padding:16px 0 9px; border-bottom:1px solid #dedfe1; color:var(--navy); font-size:15px; text-align:left; }
-		.section-toggle { display:inline-flex; align-items:center; gap:5px; margin-left:auto; padding:0; border:0; background:transparent; color:#365b92; font-size:12px; font-weight:700; white-space:nowrap; cursor:pointer; }
+		.section-toggle { display:inline-flex; align-items:center; gap:5px; margin-left:auto; padding:0; border:0; background:transparent; color:var(--teal); font-size:12px; font-weight:700; white-space:nowrap; cursor:pointer; }
 		.visibility-icon { width:16px; height:16px; flex:none; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 		.group-content { padding:0; }
 		.group-content.hidden { display:none; }
@@ -129,7 +133,7 @@
 			.mapped-action { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
 			.mapped-action .field-spec-note { margin:0; }
 			.add-row { display:flex; align-items:center; gap:8px; padding:4px 0 12px; }
-		.add,.add-row button { display:inline-flex; align-items:center; gap:7px; min-height:32px; border:1px solid #c9c9c9; border-radius:4px; background:linear-gradient(#fbfbfc,#f0f0f2); color:#5c5f5c; padding:0 12px; font-weight:700; cursor:pointer; }
+		.add,.add-row button { display:inline-flex; align-items:center; gap:7px; min-height:32px; border:1px solid var(--teal); border-radius:4px; background:#fff; color:var(--teal); padding:0 12px; font-weight:700; cursor:pointer; }
 		.add-icon { font-size:16px; line-height:1; font-weight:400; }
 		.ds-switch { position:relative; display:block; flex:0 0 44px; width:44px; height:24px; margin:0; padding:0; border:1px solid #bbbcbd; border-radius:2px; background:#fff; color:#1c1c1d; box-shadow:inset 0 -1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.05); cursor:pointer; }
 		.ds-switch i { position:absolute; top:2px; left:2px; width:14px; height:18px; border-radius:2px; background:#00bce2; }
@@ -141,7 +145,7 @@
 		.location-audit strong { color:#76251f; }
 		.field-guidance { margin:5px 0 0; color:#5f6973; font-size:11px; line-height:1.4; }
 		.hidden { display:none !important; }
-		@media(max-width:1100px) {
+		@media(max-width:760px) {
 			.prototype-bar { min-height:34px; }
 			.appbar { display:grid; grid-template-columns:30px minmax(75px,auto) minmax(0,1fr) 30px; grid-template-areas:"grid brand tenant avatar" "tools tools tools tools" "tabs tabs tabs tabs" "goto goto goto goto"; gap:8px; padding:8px; white-space:normal; }
 			.app-grid { grid-area:grid; }
@@ -161,20 +165,20 @@
 			.form { padding:0 12px 30px; }
 			.map-card { grid-template-columns:85px 1fr; }
 			.group-heading { flex-wrap:nowrap; }
-			.prototype-bar { flex-wrap:nowrap; white-space:nowrap; }
-			.prototype-bar strong { overflow:hidden; text-overflow:ellipsis; }
+			.section-toggle { white-space:normal; text-align:right; }
 		}
-		body.spec-off .spec,body.spec-off .spec-key,body.spec-off .field-spec,body.spec-off .field-status,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details,body.spec-off .entry-route { display:none !important; }
+		body.spec-off .spec,body.spec-off .spec-key,body.spec-off .field-spec,body.spec-off .mapped-action .field-spec-note,body.spec-off .field-status,body.spec-off .subtle,body.spec-off .field-tag,body.spec-off .location-audit,body.spec-off .details,body.spec-off .entry-route { display:none !important; }
 		@media print { .prototype-bar,.spec-key,.appbar,.rail,.record-actions,.details,.add-row,.section-toggle { display:none !important; } .workspace { min-height:0; } .form { max-width:none; } .sample-card { break-inside:avoid; } }
 	</style>
 </head>
-<body>
+<body class="spec-off">
 	<div class="prototype-bar">
 				<strong data-doc-title>DRSS-1197 | Datascape v5</strong>
 		<nav class="bar-links" aria-label="Related prototypes">
 				<a href="DRSS-1197%20Sampling%20Survey%20-%20Fieldwork%20-%20v5-feedback.html">Fieldwork</a>
 		</nav>
-		<label class="spec-switch"><input type="checkbox" id="spec-toggle" checked /> Spec notes</label>
+		<label class="spec-switch"><input type="checkbox" id="spec-toggle" /> Spec notes</label>
+		<p class="scope-note">DRSS-1727 and Lab Submission Form report mapping are out of scope for this delivery. <a href="DRSS-1197%20Sampling%20Survey%20-%20Datascape%20-%20v4-warrant.html">See the earlier mapping discussion in v4.</a></p>
 	</div>
 	<aside class="entry-route" aria-label="How to enter Sampling Survey">
 		<strong>How to enter Sampling Survey</strong>
@@ -182,7 +186,6 @@
 		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
 		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
 		<p>RSHL has updated the master Surveys sheet to include SLUS, Environmental Monitoring and Biodiversity Fieldwork job types. Confirm their availability in Fieldwork during implementation.</p>
-		<p>DRSS-1727 and Lab Submission Form report mapping are out of scope for this delivery. <a href="DRSS-1197%20Sampling%20Survey%20-%20Datascape%20-%20v4-warrant.html">See the earlier mapping discussion in v4.</a></p>
 	</aside>
 	<header class="appbar">
 		<span class="app-grid" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="10" y="3" width="5" height="5" rx="1"/><rect x="17" y="3" width="5" height="5" rx="1"/><rect x="3" y="10" width="5" height="5" rx="1"/><rect x="10" y="10" width="5" height="5" rx="1"/><rect x="17" y="10" width="5" height="5" rx="1"/><rect x="3" y="17" width="5" height="5" rx="1"/><rect x="10" y="17" width="5" height="5" rx="1"/><rect x="17" y="17" width="5" height="5" rx="1"/></svg></span>
@@ -338,9 +341,9 @@
 		function paintDetailToggle(button, panel) {
 			const action = panel.hidden ? "Show" : "Hide";
 			button.setAttribute("aria-expanded", String(!panel.hidden));
-			button.setAttribute("aria-label", `${action} ${button.dataset.sectionLabel} detail`);
-			button.title = `${action} ${button.dataset.sectionLabel} detail`;
-			button.innerHTML = `${visibilityIcon(panel.hidden)}<span>${action.toLowerCase()} detail</span>`;
+			button.setAttribute("aria-label", `${action} ${button.dataset.sectionLabel}`);
+			button.title = `${action} ${button.dataset.sectionLabel}`;
+			button.innerHTML = `${visibilityIcon(panel.hidden)}<span>${action.toLowerCase()} ${button.dataset.sectionLabel}</span>`;
 		}
 		function addDetailToggles(root = document) {
 			root.querySelectorAll(".subheading, .sample-card > h3").forEach((heading) => {
@@ -852,6 +855,7 @@
 		}
 		addMissingFieldSpecNotes();
 		useSpreadsheetInBlueNotes();
+		addDetailToggles();
 		document.querySelectorAll("[data-sample]").forEach(bindSampleType);
 		document.querySelectorAll("[data-sample]").forEach(bindParameterSelection);
 		bindBooleanSwitches(document);
@@ -861,6 +865,7 @@
 			sample.querySelectorAll("select").forEach((field) => { field.selectedIndex = 0; });
 			sample.querySelectorAll("select[multiple]").forEach((field) => [...field.options].forEach((option) => { option.selected = false; }));
 			sample.querySelector("h3 span").textContent = "Sampling Item " + (document.querySelectorAll("[data-sample]").length + 1);
+			addDetailToggles(sample);
 			bindSampleType(sample);
 			bindParameterSelection(sample);
 			bindBooleanSwitches(sample);
