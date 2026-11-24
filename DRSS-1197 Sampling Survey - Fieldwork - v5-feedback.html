@@ -170,6 +170,7 @@
 							<div class="field"><label>Cloud Cover</label><select><option value="">[Not Entered]</option><option>0/8</option><option>1/8</option><option>2/8</option><option>3/8</option><option>4/8</option><option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option></select></div>
 							<div class="field"><label>Rainfall</label><select><option value="">[Not Entered]</option><option>Heavy</option><option>Light</option><option>Medium</option></select></div>
 							<div class="field"><label>Wind Direction</label><select><option value="">[Not Entered]</option><option>E</option><option>N</option><option>NE</option><option>NW</option><option>S</option><option>SE</option><option>SW</option><option>W</option></select></div>
+							<div class="field"><label>Wind Strength</label><select><option value="">[Not Entered]</option><option>Medium</option><option>Light</option><option>Strong</option></select></div>
 							<div class="field"><label>Other Weather Conditions</label><select><option value="">[Not Entered]</option><option>Fog</option><option>High Humidity (&gt;90%)</option><option>Inversion Layer</option></select></div>
 						</div>
 					</section>
@@ -361,6 +362,7 @@
 			"Cloud Cover": "Existing field type: Select (single).",
 			"Rainfall": "Existing field type: Select (single).",
 			"Wind Direction": "Existing field type: Select (single).",
+			"Wind Strength": "Existing field type: Select (single).",
 			"Other Weather Conditions": "Existing field type: Select (single).",
 			"Reinspection Required": "Spreadsheet type: Boolean (Yes/No).",
 			"Reinspection Date": "Spreadsheet type: Date.",
@@ -556,6 +558,7 @@
 			"Cloud Cover": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Rainfall": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
+			"Wind Strength": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the existing weather field and options." },
 			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Sample Location": { status: "Existing", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
 			"Site Name": { status: "New", detail: "Provisional per-sample free-text fallback; the spreadsheet row is crossed out and Engineering must confirm whether the location name can be reused." },
