@@ -136,6 +136,7 @@
 		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
 		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
 		<p>RSHL has updated the master Surveys sheet to include SLUS, Environmental Monitoring and Biodiversity Fieldwork job types. Confirm their availability in Fieldwork during implementation.</p>
+		<p><strong>Engineering:</strong> Remove both Customer Signature and Officer Signature from the Sampling booking. DRSS-1727 and report signatures are out of scope.</p>
 		<p>DRSS-1727 and Lab Submission Form report mapping are out of scope for this delivery. <a href="DRSS-1197%20Sampling%20Survey%20-%20Fieldwork%20-%20v4-warrant.html">See the earlier mapping discussion in v4.</a></p>
 	</aside>
 	<div class="stage">
@@ -346,7 +347,6 @@
 		};
 		const fieldTypeNotes = {
 			"Actual Start Date": "Spreadsheet type: Date.",
-			"Officer Signature": "Existing field type: Signature.",
 			"Other": "Spreadsheet type: Text.",
 			"Actual Start Time": "Spreadsheet type: Time.",
 			"Add Asset": "Spreadsheet type not specified: existing action button.",
@@ -603,7 +603,6 @@
 			"Actual End Time": { status: "New", rows: "141", detail: "Standard booking time added to this survey." },
 			"Reason": { status: "New", rows: "142", detail: "Standard booking reason added to this survey." },
 			"Completion Behaviour": { status: "New", rows: "143-145", detail: "Standard completion choice added to this survey, including the spreadsheet's Complete and Send option." },
-			"Officer Signature": { status: "New", rows: "146", detail: "Standard booking signature retained by Datacom clarification; it is not present on the linked Sampling form." }
 		};
 		function fieldSpecSummary(field, name) {
 			const change = fieldChangeNotes[name];
