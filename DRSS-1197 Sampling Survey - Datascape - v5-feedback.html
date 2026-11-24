@@ -113,9 +113,9 @@
 		.chip-new { background:#e4d4ff; color:#4c1d95; }
 		.chip-wording { background:#ffe9d6; color:#8a4b00; }
 		.chip-existing { background:#e7e9ef; color:#4a5160; }
-		.chip-update { background:#dff1f6; color:#0a5a6e; }
 		.spec.warn { background:#fff0e6; border-left:3px solid #e07b39; color:#8a3b00; }
 		.spec.blocked { background:#fdecef; border-left:3px solid #e60060; color:#8c1035; }
+		.open-question { margin:5px 0 0; padding:7px; border-left:3px solid #e60060; background:#fdecef; color:#8c1035; font-size:11px; line-height:1.4; }
 		.field-tag { display:inline-block; margin-left:5px; padding:1px 5px; border-radius:8px; background:#e9e9eb; color:#515a64; font-size:9px; vertical-align:1px; }
 		.multiple { display:flex; flex-wrap:wrap; align-items:center; gap:4px; min-height:29px; padding:4px; border:1px solid #e3e3e3; border-bottom-color:#9c9c9c; background:#fff; }
 		.multiple input { flex:1 1 180px; width:auto; min-width:140px; border:0; }
@@ -182,6 +182,7 @@
 	</div>
 	<aside class="entry-route" aria-label="How to enter Sampling Survey">
 		<strong>How to enter Sampling Survey</strong>
+		<p>Field labels: New, Wording edit, or Existing. Existing means the field and its wording already exist; see the comparison notes for any changes to order, conditions or data type.</p>
 		<p>Default: SLUS Monitoring / Sampling; Environmental Monitoring / Monitoring / Sampling.</p>
 		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
 		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
@@ -301,7 +302,7 @@
 						<h4 class="subheading">Chain of Custody</h4>
 						<div class="form-grid">
 							<div class="field"><label>Chain of Custody Declaration</label><select><option value="" selected>[Not Entered]</option><option>True</option><option>False</option></select><p class="help">The spreadsheet does not specify a default.</p></div>
-							<div class="field wide"><label>Name of Sampler</label><input type="text" aria-label="Name of Sampler" placeholder="Enter sampler names" /><p class="field-guidance">Enter the names of everyone who collected the samples, separated by commas.</p><p class="spec">Officer lookup is not currently supported. Confirm whether the primary booking officer's name can default into this text field.</p></div>
+							<div class="field wide"><label>Name of Sampler</label><input type="text" aria-label="Name of Sampler" placeholder="Enter sampler names" /><p class="field-guidance">Enter the names of everyone who collected the samples, separated by commas.</p><p class="open-question"><strong>Open question for RSHL:</strong> The primary officer is inferred from the booking and cannot be defaulted into this survey field. If a sampler is different from the primary officer, we recommend keeping this as free text. Would you prefer to keep the free-text field for sampler names or remove it completely?</p><p class="spec">Officer lookup and defaulting the primary booking officer into this field are not supported.</p></div>
 						</div>
 					</section>
 					<div class="add-row"><button type="button" class="add" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
@@ -493,7 +494,7 @@
 			"Other": "Capture once per Sampling Detail under Field Measurement.",
 			"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering. Do not combine a set with individual Parameter Types.",
 			"Parameter Type": "Spreadsheet supplies 23 Parameter Types. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.",
-			"Name of Sampler": "Use free text for all sampler names; officer lookup is not currently supported. Confirm whether the primary booking officer can default into this field.",
+			"Name of Sampler": "Use free text for sampler names pending RSHL's decision; officer lookup and defaulting the primary booking officer are not supported.",
 			"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
 			"Sample type": "Spreadsheet supplies groundwater-specific sample types; show only for Groundwater.",
 			"Sampled from": "Spreadsheet lists From tank, After filter, Through hose, Spring and Other. Tap, Outlet tap, Bore Pipe and Portable Pump are struck out.",
@@ -712,24 +713,24 @@
 			"Warrant Shown to Name": { status: "New", rows: "11", detail: "Conditional contact lookup added to this survey." },
 			"Warrant Shown to Name (enter a name if contact is not found)": { status: "New", rows: "12", detail: "Shown when Warrant Shown is Yes." },
 			"Warrant Shown to Relationship": { status: "New", rows: "13", detail: "Conditional relationship field added to this survey." },
-			"Capture Weather?": { status: "Update required", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
+			"Capture Weather?": { status: "Existing", currentType: "Boolean (Yes/No)", rows: "14", detail: "Keep the existing Boolean and move Weather after Authority." },
 			"Air Temperature": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Cloud Cover": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Rainfall": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
-			"Sample Location": { status: "Update required", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
+			"Sample Location": { status: "Existing", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
 			"Sample Type": { status: "Wording edit", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
 			"Sample Type Other": { status: "Wording edit", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
 			"Rain Affect on Sample": { status: "Wording edit", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; spreadsheet option wording is struck out." },
-			"Sample Date": { status: "Update required", currentType: "Date", rows: "32", detail: "Ordering only: move before Sample Time and Sample ID; retain the existing Date type." },
-			"Sample Time": { status: "Update required", currentType: "Time", rows: "33", detail: "Ordering only: place after Sample Date and before Sample ID; retain the existing Time type." },
-			"Sample ID": { status: "Update required", currentType: "Text", rows: "34", detail: "Ordering only: place after Sample Date and Sample Time; retain Text." },
+			"Sample Date": { status: "Existing", currentType: "Date", rows: "32", detail: "Ordering only: move before Sample Time and Sample ID; retain the existing Date type." },
+			"Sample Time": { status: "Existing", currentType: "Time", rows: "33", detail: "Ordering only: place after Sample Date and before Sample ID; retain the existing Time type." },
+			"Sample ID": { status: "Existing", currentType: "Text", rows: "34", detail: "Ordering only: place after Sample Date and Sample Time; retain Text." },
 			"Method of Collection": { status: "Wording edit", currentType: "Select single", rows: "36-38", detail: "Add Composite to the existing Grab/Other choices and apply the non-groundwater condition; retain default Grab." },
 			"Method of Collection Other": { status: "New", rows: "39", detail: "New conditional text detail for Method of Collection = Other." },
 			"Sample Appearance": { status: "Wording edit", currentType: "Select single", rows: "40-45, 71-77", detail: "Add Coloured and Humic to the non-groundwater list and use separate groundwater and non-groundwater option lists." },
-			"Odour": { status: "Update required", currentType: "Select single", rows: "46-47", detail: "Keep the existing Odour/Odourless choices and add the non-groundwater condition." },
-			"Odour Type": { status: "Update required", currentType: "Select single", rows: "48-52", detail: "Keep the existing choices; show only for non-groundwater samples when Odour = Odour." },
+			"Odour": { status: "Existing", currentType: "Select single", rows: "46-47", detail: "Keep the existing Odour/Odourless choices and add the non-groundwater condition." },
+			"Odour Type": { status: "Existing", currentType: "Select single", rows: "48-52", detail: "Keep the existing choices; show only for non-groundwater samples when Odour = Odour." },
 			"Sample type": { status: "New", rows: "53-56", detail: "New groundwater subtype choice, distinct from the existing main Sample Type field." },
 			"Sampled from": { status: "Wording edit", currentType: "Select single (export)", rows: "57-64", detail: "Existing exported field: replace struck Tap/Bore Pipe/Portable Pump options, retain Other, and apply the groundwater condition." },
 			"Sample collection method": { status: "New", rows: "65-70", detail: "New groundwater collection-method choice." },
@@ -737,11 +738,11 @@
 			"Sample filtered": { status: "New", rows: "79", detail: "New groundwater Boolean field." },
 			"Sample Comments": { status: "Wording edit", currentType: "Text", rows: "80", detail: "Rename the existing Comments field to Sample Comments; retain Text." },
 			"Sample Photos": { status: "Existing", currentType: "Media", rows: "81", detail: "Existing per-sample photo field retained." },
-			"Meter Number": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "82", detail: "Spreadsheet changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open spreadsheet question." },
-			"Dissolved Oxygen (% Sat)": { status: "Update required", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "83", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
+			"Meter Number": { status: "Existing", currentType: "Number (integer, 0 decimal places)", rows: "82", detail: "Spreadsheet changes the numeric identifier to alpha-numeric; whether to retain Meter Number remains an open spreadsheet question." },
+			"Dissolved Oxygen (% Sat)": { status: "Wording edit", currentType: "Number (integer, 0 decimal places), labelled Dissolved Oxygen", rows: "83", detail: "Replace the unsuffixed reading with a unit-specific percentage reading at two decimal places; field-ID reuse is not confirmed." },
 			"Dissolved Oxygen (mg/L)": { status: "New", rows: "84", detail: "Additional unit-specific dissolved-oxygen reading at two decimal places." },
-			"Temperature (°C)": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow two decimal places instead of the current integer precision." },
-			"pH": { status: "Update required", currentType: "Number (integer, 0 decimal places)", rows: "86", detail: "Allow decimals and enforce the spreadsheet range 0-14." },
+			"Temperature (°C)": { status: "Existing", currentType: "Number (integer, 0 decimal places)", rows: "85", detail: "Allow two decimal places instead of the current integer precision." },
+			"pH": { status: "Existing", currentType: "Number (integer, 0 decimal places)", rows: "86", detail: "Allow decimals and enforce the spreadsheet range 0-14." },
 			"Conductivity (μS/cm)": { status: "New", rows: "87", detail: "New field measurement at two decimal places." },
 			"Turbidity (NTU)": { status: "New", rows: "88", detail: "New numeric field measurement; distinct from Turbidity in the legacy Tests list." },
 			"Black disk (m)": { status: "New", rows: "89", detail: "New field measurement at two decimal places." },
@@ -750,7 +751,7 @@
 			"Parameter Set Name": { status: "New", rows: "92", detail: "New parameter-set selector; do not combine a set with individual Parameter Types." },
 			"Parameter Type": { status: "New", rows: "93", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
 			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "122", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to spreadsheet True/False." },
-			"Name of Sampler": { status: "Update required", currentType: "Text", rows: "123", detail: "Retain free text for sampler names. Confirm whether it can default to the primary booking officer." },
+			"Name of Sampler": { status: "Existing", currentType: "Text", rows: "123", detail: "Existing free-text field; RSHL to decide whether to retain or remove it." },
 			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "129-132", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
 			"Reinspection Required": { status: "New", rows: "136", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
 			"Reinspection Date": { status: "New", rows: "137", detail: "Standard conditional booking date added to this survey." },
@@ -775,7 +776,7 @@
 			const condition = fieldConditionText(field, name);
 			if (condition) parts.push(`Condition: ${condition}`);
 			parts.push(`Mandatory: ${fieldMandatoryText(field, name)}`);
-			if (change?.status === "Update required") parts.push(`Change: ${change.detail}`);
+			if (change?.detail) parts.push(`Comparison: ${change.detail}`);
 			if (change?.rows) parts.push(`Spreadsheet rows: ${change.rows}`);
 			return parts.join(" · ");
 		}
@@ -797,7 +798,7 @@
 					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim().replace(/\s*\*$/, "");
 				const change = fieldChangeNotes[name];
 				if (label && change && !label.querySelector(".field-status")) {
-					const statusClass = ({ "New": "new", "Wording edit": "wording", "Existing": "existing", "Update required": "update" })[change.status] || "update";
+					const statusClass = ({ "New": "new", "Wording edit": "wording", "Existing": "existing" })[change.status];
 					const statusBadge = document.createElement("span");
 					statusBadge.className = `field-status chip-${statusClass}`;
 					statusBadge.textContent = change.status;
