@@ -130,6 +130,7 @@
 		.chip { padding:3px 7px; border-radius:10px; background:#e8e4f4; color:#43306c; font-size:10px; }
 		.contact-options label { display:flex; align-items:center; gap:8px; min-height:30px; }
 		.contact-options label[hidden] { display:none; }
+		[data-contact-lookup] summary::after { content:"⌄"; margin-left:auto; }
 		.contact-options input[type="checkbox"] { width:14px; min-height:14px; }
 		.parameter-menu .contact-search { width:100%; min-height:29px; }
 		.contact-selected { display:flex; flex-wrap:wrap; gap:5px; padding:4px 0; }
@@ -229,7 +230,7 @@
 				<h2 class="group-heading"><span>Survey Detail</span><button class="section-toggle" type="button" aria-expanded="true" aria-controls="survey-detail" data-collapse="survey-detail" data-section-label="Survey Detail" aria-label="Hide Survey Detail" title="Hide Survey Detail"><svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg><span>hide Survey Detail</span></button></h2>
 				<div id="survey-detail" class="group-content">
 					<h3 class="subheading">Sampling · Officer</h3>
-					<div class="field"><label>In Attendance</label><details class="parameter-dropdown" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary class="parameter-trigger">Choose contacts</summary><div class="parameter-menu"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><p class="spec">RSHL answered on 8 Oct 2026: select one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
+					<div class="field"><label>In Attendance</label><details class="parameter-dropdown" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary class="parameter-trigger" aria-label="Select contacts in attendance"></summary><div class="parameter-menu"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><p class="spec">RSHL answered on 8 Oct 2026: select one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
 					<h3 class="subheading">Authority</h3>
 					<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><button class="ds-switch on" type="button" role="switch" aria-label="Warrant Shown" aria-required="true" aria-checked="true" data-default="Yes" data-conditional-toggle="warrant-fields"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button></div>
 					<div id="warrant-fields" class="form-grid">
@@ -453,7 +454,8 @@
 			const summary = lookup.querySelector("summary");
 			const update = () => {
 				const chosen = options.filter((option) => option.checked);
-				summary.textContent = chosen.length ? `${chosen.length} selected` : "Choose contacts";
+				summary.textContent = chosen.length ? `${chosen.length} selected` : "";
+				summary.setAttribute("aria-label", chosen.length ? `In Attendance: ${chosen.length} selected` : "Select contacts in attendance");
 				selected.replaceChildren();
 				chosen.forEach((option) => {
 					const chip = document.createElement("span");

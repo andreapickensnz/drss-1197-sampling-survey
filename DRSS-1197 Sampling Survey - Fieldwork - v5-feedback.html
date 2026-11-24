@@ -102,6 +102,8 @@
 		.chip { padding:4px 8px; border-radius:12px; background:#e8e4f4; color:#43306c; font-size:11px; }
 		.contact-options label { display:flex; align-items:center; gap:9px; min-height:36px; }
 		.contact-options label[hidden] { display:none; }
+		[data-contact-lookup] summary { display:flex; justify-content:space-between; }
+		[data-contact-lookup] summary::after { content:"⌄"; margin-left:auto; }
 		.contact-options input[type="checkbox"] { width:18px; height:18px; min-height:0; }
 		.options .contact-search { width:100%; height:40px; min-height:40px; padding:7px 10px; }
 		.contact-selected { display:flex; flex-wrap:wrap; gap:5px; padding:4px 9px; }
@@ -149,7 +151,7 @@
 					<div class="record-meta"><span><strong>SMPLNG.8469</strong><br />Sampling survey</span><span>Completed<br /><strong>Sample 1 of 1</strong></span></div>
 					<section id="officer-section">
 						<h2 class="group-title">Sampling · Officer</h2>
-						<div class="field"><label>In Attendance</label><details class="multiselect" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary>Choose contacts</summary><div class="options"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><p class="spec">RSHL confirmed this is a one-or-more-contact lookup for this survey only; it must not update the record's contacts.</p></div>
+						<div class="field"><label>In Attendance</label><details class="multiselect" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary aria-label="Select contacts in attendance"></summary><div class="options"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><p class="spec">RSHL confirmed this is a one-or-more-contact lookup for this survey only; it must not update the record's contacts.</p></div>
 					</section>
 					<section id="authority-section">
 						<h2 class="group-title">Sampling · Authority</h2>
@@ -261,7 +263,8 @@
 			const summary = lookup.querySelector("summary");
 			const update = () => {
 				const chosen = options.filter((option) => option.checked);
-				summary.textContent = chosen.length ? `${chosen.length} selected` : "Choose contacts";
+				summary.textContent = chosen.length ? `${chosen.length} selected` : "";
+				summary.setAttribute("aria-label", chosen.length ? `In Attendance: ${chosen.length} selected` : "Select contacts in attendance");
 				selected.replaceChildren();
 				chosen.forEach((option) => {
 					const chip = document.createElement("span");
