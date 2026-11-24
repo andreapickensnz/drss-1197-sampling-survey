@@ -188,7 +188,7 @@
 	</div>
 	<aside class="entry-route" aria-label="How to enter Sampling Survey">
 		<strong>How to enter Sampling Survey</strong>
-		<p>Field labels: New, Wording edit, or Existing. Existing means the field and its wording already exist; see the comparison notes for any changes to order, conditions or data type.</p>
+		<p>Field labels: New identifies a new field. Existing identifies a field already present; Wording edit appears alongside Existing when wording changes. See comparison notes for changes to order, conditions or data type.</p>
 		<p>Default: SLUS Monitoring / Sampling; Environmental Monitoring / Monitoring / Sampling.</p>
 		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
 		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
@@ -814,11 +814,14 @@
 					.replace("Sample site - Point", "").replace(/^\+\s*/, "").replace(/\s+/g, " ").trim().replace(/\s*\*$/, "");
 				const change = fieldChangeNotes[name];
 				if (label && change && !label.querySelector(".field-status")) {
-					const statusClass = ({ "New": "new", "Wording edit": "wording", "Existing": "existing" })[change.status];
-					const statusBadge = document.createElement("span");
-					statusBadge.className = `field-status chip-${statusClass}`;
-					statusBadge.textContent = change.status;
-					label.appendChild(statusBadge);
+					const statuses = change.status === "Wording edit" ? ["Existing", "Wording edit"] : [change.status];
+					statuses.forEach((status) => {
+						const statusClass = ({ "New": "new", "Wording edit": "wording", "Existing": "existing" })[status];
+						const statusBadge = document.createElement("span");
+						statusBadge.className = `field-status chip-${statusClass}`;
+						statusBadge.textContent = status;
+						label.appendChild(statusBadge);
+					});
 				}
 				let note = field.querySelector(":scope > .spec");
 				if (!note) {
