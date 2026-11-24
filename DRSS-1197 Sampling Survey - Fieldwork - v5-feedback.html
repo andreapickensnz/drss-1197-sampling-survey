@@ -110,13 +110,8 @@
 		.index-list button { width:100%; min-height:46px; padding:10px 16px; text-align:left; border:0; border-bottom:1px solid #e0e1e2; background:#fff; color:#39444f; }
 		.index-list button.indent { padding-left:30px; }
 		.index-list button.add-new { color:var(--purple); font-weight:700; }
-		.mapping-guide { margin:16px 0 8px; border-top:1px solid var(--line); padding-top:10px; }
-		.mapping-guide summary { color:var(--blue); font-weight:700; cursor:pointer; }
-		.mapping-row { padding:8px 0; border-bottom:1px solid #e0e1e2; line-height:1.4; }
-		.mapping-row strong { display:block; color:var(--blue); }
-		.mapping-issue { display:block; margin:6px 0; padding:7px 9px; border-left:3px solid #e60060; border-radius:3px; background:#fdecef; color:#8c1035; font-size:12px; line-height:1.45; }
 		.hidden { display:none !important; }
-		body.spec-off .notice,body.spec-off .blocked,body.spec-off .help,body.spec-off .spec,body.spec-off .field-spec,body.spec-off .mapping-guide,body.spec-off .entry-route { display:none !important; }
+		body.spec-off .notice,body.spec-off .blocked,body.spec-off .help,body.spec-off .spec,body.spec-off .field-spec,body.spec-off .entry-route { display:none !important; }
 		@media(max-width:620px) { .prototype-bar { height:30px; min-height:30px; flex-wrap:nowrap; white-space:nowrap; overflow:hidden; } .prototype-bar strong { overflow:hidden; text-overflow:ellipsis; } .prototype-bar .links { margin-left:auto; } .stage { padding:8px 0 24px; } .phone { padding:0; border-radius:0; width:100%; box-shadow:none; background:#fafafa; } .notch { display:none; } .screen { height:calc(100vh - 62px); min-height:520px; border-radius:0; } }
 	</style>
 </head>
@@ -132,6 +127,7 @@
 		<p>Add Part: SLUS Inspection; Compliance Monitoring / Site Visit Compliance Inspection / Compliance Inspection Condition Assessment; RMA incident / Incident Inspection / Environmental; Biodiversity / Monitoring / Sampling (with Species observation).</p>
 		<p>Ad hoc: The Surveys sheet marks Sampling available for ad hoc use on Incident jobs.</p>
 		<p>RSHL has updated the master Surveys sheet to include SLUS, Environmental Monitoring and Biodiversity Fieldwork job types. Confirm their availability in Fieldwork during implementation.</p>
+		<p>DRSS-1727 and Lab Submission Form report mapping are out of scope for this delivery. <a href="DRSS-1197%20Sampling%20Survey%20-%20Fieldwork%20-%20v4-warrant.html">See the earlier mapping discussion in v4.</a></p>
 	</aside>
 	<div class="stage">
 		<div class="phone">
@@ -193,9 +189,7 @@
 									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.<small>The spreadsheet's Sample Site Name / Label row is crossed out.</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div>
 										<p class="blocked spec"><strong>To confirm with Datacom:</strong><br />
 											<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
-										<strong>Site Name for the Lab Submission Form:</strong> Each sample row on the Lab Submission Form needs a site name. DRSS-1727 says to take it from the location's name (Label), but the spreadsheet's separate Site Name question is crossed out.<br />
-											<strong>Open question for Datacom Engineering:</strong> Can the report read the sample location's name (Label)?<br />
-											<strong>RSHL response:</strong> Prefer the location's name to avoid errors. If the report cannot obtain it, a free-text Site Name is needed for each sample; it must exactly match the Location Name, WQ database and authorisation. An incorrect name could be critical for enforcement. The fallback is not shown until Engineering confirms it is needed.<br />
+											<strong>RSHL response:</strong> Prefer reusing the location's name to avoid errors. Site names must match the Location Name, WQ database and authorisation; an incorrect name could be critical for enforcement.<br />
 											<strong>Fieldwork:</strong> Will the correct site location and saved details appear on the officer's phone after the survey is sent to Fieldwork?<br />
 											<strong>Why check?</strong> The configuration files use a different sampling-site category and do not show Fieldwork enabled for it. These files alone do not prove a fault in the live survey; Datacom needs to confirm the live setup.
 										</p>
@@ -236,17 +230,17 @@
 									<div class="field"><label>Parameter Type</label>
 										<details class="multiselect"><summary>Choose test types</summary><div class="options"><input class="test-search" type="search" placeholder="Search test types" aria-label="Search Parameter Types" />
 											<label><input type="checkbox" data-parameter-type /> Biochemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Total Suspended Solids</label><label><input type="checkbox" data-parameter-type /> pH</label><label><input type="checkbox" data-parameter-type /> Total Ammoniacal Nitrogen</label><label><input type="checkbox" data-parameter-type /> Nitrate Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Dissolved Nitrogen</label><label><input type="checkbox" data-parameter-type /> Total Phosphorus</label><label><input type="checkbox" data-parameter-type /> Dissolved Reactive Phosphorus</label><label><input type="checkbox" data-parameter-type /> Total Kjeldahl Nitrogen</label><label><input type="checkbox" data-parameter-type /> Escherichia coli</label><label><input type="checkbox" data-parameter-type /> Chemical Oxygen Demand</label><label><input type="checkbox" data-parameter-type /> Grease and Oil</label><label><input type="checkbox" data-parameter-type /> Combined Metals</label><label><input type="checkbox" data-parameter-type /> Turbidity</label><label><input type="checkbox" data-parameter-type /> Total Hardness</label><label><input type="checkbox" data-parameter-type /> Total Petroleum Hydrocarbons</label><label><input type="checkbox" data-parameter-type /> Polycyclic Aromatic Hydrocarbon</label><label><input type="checkbox" data-parameter-type /> BTEX</label><label><input type="checkbox" data-parameter-type /> Semi volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Volatile organic compounds</label><label><input type="checkbox" data-parameter-type /> Total Alkalinity</label><label><input type="checkbox" data-parameter-type /> Organochlorine Pesticides</label><label><input type="checkbox" data-parameter-type /> Organophosphorus Phosphatases</label>
-										</div><div class="selected-tests" data-selected-tests></div></details><p class="spec">The spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text in the report. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.</p></div>
+										</div><div class="selected-tests" data-selected-tests></div></details><p class="spec">The spreadsheet supplies 23 Parameter Types. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.</p></div>
 									<h3 class="section-title" id="chain-of-custody-section" data-index-section="chain-of-custody-section">Chain of Custody</h3>
 									<div class="field"><label>Chain of Custody Declaration</label><div class="choice-row" data-choice-group><button class="choice" type="button" data-value="True" aria-pressed="false">True</button><button class="choice" type="button" data-value="False" aria-pressed="false">False</button></div><p class="help">The spreadsheet does not specify a default.</p></div>
-									<div class="field"><label>Name of Sampler</label><input type="text" aria-label="Name of Sampler" placeholder="Enter sampler names" /><p class="field-guidance">Enter the names of everyone who collected the samples, separated by commas.</p><p class="spec">Officer lookup is not currently supported. Confirm whether the primary booking officer's name can default into this text field; the Lab Submission Form uses the primary booking officer's signature.</p></div>
+									<div class="field"><label>Name of Sampler</label><input type="text" aria-label="Name of Sampler" placeholder="Enter sampler names" /><p class="field-guidance">Enter the names of everyone who collected the samples, separated by commas.</p><p class="spec">Officer lookup is not currently supported. Confirm whether the primary booking officer's name can default into this text field.</p></div>
 							</article>
 						</div>
 						<button class="add-button" type="button" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button>
 						<div id="general-section">
 							<h3 class="section-title">General</h3>
 							<div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent; no default. Configure and extend the list at implementation. Jira calls this “General &gt; Laboratory”.</p></div>
-							<div class="spec warn">Spreadsheet revision 3 strikes out the old Analysis Request Laboratory label, Purchase Order Number, and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label. DRSS-1727 calls its report output “Lab Name”; confirm the report team maps from this field.</div>
+							<div class="spec warn">The spreadsheet strikes out the old Analysis Request Laboratory label, Purchase Order Number and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label.</div>
 						</div>
 					</section>
 					<section id="reinspection-section">
@@ -271,19 +265,6 @@
 						<div class="field"><label>Officer Signature</label><div class="signature-pad" role="img" aria-label="Officer signature capture area">Signature capture</div></div>
 						<p class="notice">Datacom development confirmed Customer Signature can be removed for this survey. Officer Signature remains.</p>
 					</section>
-					<details class="mapping-guide">
-						<summary>Future Lab Submission Form mapping guide</summary>
-						<div class="mapping-row"><strong>Lab Name</strong>General: Laboratory. The spreadsheet strikes the old field label but leaves the values; Jira uses “General &gt; Laboratory”. Confirm the report maps this field by ID.</div>
-						<div class="mapping-row"><strong>PO Number</strong>No active survey field in spreadsheet revision 3. Prior Jira review says the officer enters the PO manually; confirm the entry point because the survey field is struck out.</div>
-						<div class="mapping-row"><strong>Full name</strong>RSHL wants the primary booking officer's name used and all samplers listed when there is more than one. Names are entered as free text in this preview. <span class="mapping-issue"><strong>Confirm with Engineering:</strong> Can the report include the booking officer and all sampler names from the repeating items?</span></div>
-						<div class="mapping-row"><strong>Signature</strong>RSHL wants only the primary booking officer's signature, including when there are multiple samplers. Confirm report mapping with Engineering.</div>
-						<div class="mapping-row"><strong>Sample Information header</strong>RSHL prefers the first sample's Date and Rain Affected; these should be the same for all samples. For Appearance, Odour, Sample Type and Collection Method, list different values when they vary. <span class="mapping-issue"><strong>Confirm with Engineering:</strong> Can the report extract the first sample and list distinct values from repeating items? Existing advice says the single box cannot pull these values automatically. <strong>Open question for RSHL:</strong> How should Sample Comments be handled when they differ?</span></div>
-						<div class="mapping-row"><strong>One output row per Sampling Item</strong>Sample ID, Sample Time and selected tests. Selected tests are listed in one cell, separated by commas; a column per test with ticks isn't possible from a repeating section. <span class="mapping-issue"><strong>Open question for Datacom Engineering:</strong> If staff choose a Parameter Set, can the report list the individual tests in that set? If not, should staff always select each test from the Parameter Type list instead of choosing a set?</span> RSHL approved the Sample Time help text shown on each sample.</div>
-						<div class="mapping-row"><strong>Site Name</strong>RSHL prefers the location name to avoid errors. If it cannot be obtained, use a free-text Site Name per sample that exactly matches the Location Name, WQ database and authorisation. Incorrect names could be critical for enforcement. <span class="mapping-issue"><strong>Open question for Datacom Engineering:</strong> Can the report read the location name? The fallback field remains conditional on that answer.</span></div>
-						<div class="mapping-row"><strong>Site GPS Coordinates (NZTM)</strong>Location layer information. <span class="mapping-issue"><strong>Open question for Datacom Engineering:</strong> Coordinates are location data too, so they may not be readable by the report either. Can the report read the sample point's Easting and Northing? If not, where should they come from?</span></div>
-						<div class="mapping-row"><strong>Quote number, Tamper tag ID, Tracking number</strong>No current survey source; ticket says officer completes these after generation.</div>
-						<p class="prototype-note"><strong>Scope:</strong> This page prototypes the survey only. The Lab Submission Form itself is for another team to build.</p>
-					</details>
 				</div>
 				<div class="index-panel" id="index-panel" aria-label="Form Index">
 					<div class="index-head"><span>Form Index</span><button type="button" id="close-index" aria-label="Close Form Index" title="Close Form Index"><svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg></button></div>
@@ -313,20 +294,19 @@
 		const panel = document.getElementById("index-panel");
 		const fieldSpecNotes = {
 					"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
-			"Purchase Order Number": "Enter the PO manually when it is unavailable in Datascape Financials; include it in the Lab Submission Form.",
 			"Sample Type": "Spreadsheet options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Staff choose a type for new sites.",
 			"Sample Type Other": "Spreadsheet asks for free-text detail when Sample Type is Other.",
-			"Sample Location": "The Sample Site Name / Label row is crossed out in the spreadsheet. DRSS-1727 maps Site Name from the location Label, but comments say location attributes are not part of the visual report template. Confirm whether the report can read Label through Sample Location or needs another source.",
-			"Sample ID": "Spreadsheet asks for a Sample ID on each Sampling Detail; the lab report has one output row per sample.",
-			"Sample Time": "Spreadsheet asks for the collection time on each Sampling Detail; include it in that sample's report row.",
-			"Sample Date": "Spreadsheet asks for the collection date on each Sampling Detail; it also appears in the report's sample information.",
+			"Sample Location": "The separate Sample Site Name / Label row is crossed out in the spreadsheet. RSHL prefers reusing the location's name to avoid errors.",
+			"Sample ID": "Spreadsheet asks for a Sample ID on each Sampling Detail.",
+			"Sample Time": "Spreadsheet asks for the collection time on each Sampling Detail.",
+			"Sample Date": "Spreadsheet asks for the collection date on each Sampling Detail.",
 			"Method of Collection": "Spreadsheet includes this per-sample field with Grab, Composite and Other choices. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
 			"Method of Collection Other": "Spreadsheet asks for a description when Method of Collection is Other.",
 			"Sample Appearance": "Spreadsheet specifies separate appearance choices for general and groundwater samples; show the list appropriate to Sample Type.",
 			"Odour": "Spreadsheet includes Odour for applicable non-groundwater samples, with Odour or Odourless choices.",
 			"Odour Type": "Spreadsheet includes an Odour Type choice for applicable non-groundwater samples.",
 			"Rain Affect on Sample": "Spreadsheet retains a Boolean field and the non-groundwater condition, but strikes out the old True/False Yes/No option wording. Confirm option labels; no default is specified.",
-			"Sample Comments": "Spreadsheet renames Comments to Sample Comments; capture it per sample. How differing comments appear in the report remains to be confirmed.",
+			"Sample Comments": "Spreadsheet renames Comments to Sample Comments; capture it per sample.",
 			"Sample Photos": "Spreadsheet includes photos with each Sampling Detail.",
 			"Meter Number": "Spreadsheet lists Meter Number as alpha-numeric and asks whether it is redundant; confirm before build.",
 			"Temperature (°C)": "Capture once per Sampling Detail under Field Measurement.",
@@ -339,7 +319,7 @@
 			"Secchi disk (m)": "Capture once per Sampling Detail under Field Measurement.",
 			"Other": "Capture once per Sampling Detail under Field Measurement.",
 					"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering. Do not combine a set with individual Parameter Types.",
-					"Parameter Type": "Spreadsheet supplies 23 Parameter Types. DRSS-1727 maps selected tests as comma-separated text. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.",
+					"Parameter Type": "Spreadsheet supplies 23 Parameter Types. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.",
 					"Name of Sampler": "Use free text for all sampler names; officer lookup is not currently supported. Confirm whether the primary booking officer can default into this field.",
 			"Groundwater sample type": "Spreadsheet supplies groundwater-specific sample types; show only for Groundwater. RSHL wants saved-site values filled from the Activity/Register; confirm this setup.",
 			"Sampled from": "Spreadsheet lists From tank, After filter, Through hose, Spring and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Struck Tap, Outlet tap, Bore Pipe and Portable Pump are omitted.",
@@ -651,11 +631,6 @@
 				}
 			});
 		}
-		const fieldOpenQuestions = {
-			"Sample Date": "Open question for Datacom Engineering: Can the report use the first sample's Date and Rain Affected and list differing Appearance, Odour, Sample Type and Collection Method values? The current report cannot pull repeating values into the single box automatically.",
-			"Parameter Set Name": "Open question for Datacom Engineering: If staff choose a Parameter Set, can the Lab Submission Form list the individual tests in that set? If not, should staff always select each test from the Parameter Type list instead of choosing a set?",
-			"Name of Sampler": "Open question for Datacom Engineering: Can the report include the primary booking officer's name and all sampler names and use only the primary booking officer's signature?"
-		};
 		function addMissingFieldSpecNotes(root = document) {
 			root.querySelectorAll(".field").forEach((field) => {
 				const label = field.querySelector("label");
@@ -698,15 +673,6 @@
 					}
 				}
 				field.insertBefore(fieldSpec, note);
-				if (fieldOpenQuestions[name]) {
-					const question = document.createElement("p");
-					question.className = "spec blocked";
-					const [, lead, rest] = fieldOpenQuestions[name].match(/^([^:]+:)\s*(.*)$/);
-					const strong = document.createElement("strong");
-					strong.textContent = lead;
-					question.append(strong, ` ${rest}`);
-					field.appendChild(question);
-				}
 			});
 		}
 		addMissingFieldSpecNotes();
