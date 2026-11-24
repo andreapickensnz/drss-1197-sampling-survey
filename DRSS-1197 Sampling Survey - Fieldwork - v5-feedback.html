@@ -100,6 +100,12 @@
 		.options .test-search { width:100%; height:40px; min-height:40px; margin-bottom:6px; padding:7px 10px; border:1px solid var(--field-border); border-radius:8px; background:#fff; }
 		.selected-tests { display:flex; flex-wrap:wrap; gap:5px; padding:0 9px 9px; }
 		.chip { padding:4px 8px; border-radius:12px; background:#e8e4f4; color:#43306c; font-size:11px; }
+		.contact-options label { display:flex; align-items:center; gap:9px; min-height:36px; }
+		.contact-options label[hidden] { display:none; }
+		.contact-options input[type="checkbox"] { width:18px; height:18px; min-height:0; }
+		.options .contact-search { width:100%; height:40px; min-height:40px; padding:7px 10px; }
+		.contact-selected { display:flex; flex-wrap:wrap; gap:5px; padding:4px 9px; }
+		.contact-selected button { border:0; background:transparent; color:inherit; cursor:pointer; }
 		.add-button { display:inline-flex; align-items:center; gap:7px; width:auto; min-height:32px; padding:0 12px; border:1px solid #c9c9c9; border-radius:4px; background:linear-gradient(#fbfbfc,#f0f0f2); color:#5c5f5c; font-size:12px; font-weight:700; cursor:pointer; }
 		.add-icon { font-size:16px; line-height:1; font-weight:400; }
 		.index-panel { position:absolute; inset:0; z-index:4; display:none; flex-direction:column; background:#fff; }
@@ -141,25 +147,9 @@
 				</header>
 				<div class="scroll" id="form-scroll">
 					<div class="record-meta"><span><strong>SMPLNG.8469</strong><br />Sampling survey</span><span>Completed<br /><strong>Sample 1 of 1</strong></span></div>
-					<section id="timesheet-start-section">
-						<h2 class="group-title">Timesheet Start Date</h2>
-						<div class="field"><label>Actual Start Date</label><input type="date" value="2026-09-28" /></div>
-						<div class="field"><label>Actual Start Time</label><input type="time" value="08:20" /></div>
-					</section>
-					<section id="assets-section">
-						<h2 class="group-title">Assets and Inventory</h2>
-						<div class="field"><button class="add-button" type="button"><span class="add-icon" aria-hidden="true">+</span>Add Asset</button></div>
-						<div class="field"><button class="add-button" type="button"><span class="add-icon" aria-hidden="true">+</span>Add Inventory</button></div>
-					</section>
-					<section id="evidence-section">
-						<h2 class="group-title">General Visual Evidence</h2>
-						<div class="field"><label>Photos</label><input type="file" accept="image/*" multiple /></div>
-						<div class="field"><label>Videos</label><input type="file" accept="video/*" multiple /></div>
-						<div class="field"><button class="add-button" type="button">Capture Track Log</button></div>
-					</section>
 					<section id="officer-section">
 						<h2 class="group-title">Sampling · Officer</h2>
-						<div class="field"><label for="in-attendance">In Attendance</label><input id="in-attendance" type="search" data-lookup-multiple placeholder="Search and add contacts" /><p class="spec">RSHL confirmed this is a one-or-more-contact lookup for this survey only; it must not update the record's contacts.</p></div>
+						<div class="field"><label>In Attendance</label><details class="multiselect" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary>Choose contacts</summary><div class="options"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><p class="spec">RSHL confirmed this is a one-or-more-contact lookup for this survey only; it must not update the record's contacts.</p></div>
 					</section>
 					<section id="authority-section">
 						<h2 class="group-title">Sampling · Authority</h2>
@@ -180,6 +170,11 @@
 							<div class="field"><label>Wind Direction</label><select><option value="">[Not Entered]</option><option>E</option><option>N</option><option>NE</option><option>NW</option><option>S</option><option>SE</option><option>SW</option><option>W</option></select></div>
 							<div class="field"><label>Other Weather Conditions</label><select><option value="">[Not Entered]</option><option>Fog</option><option>High Humidity (&gt;90%)</option><option>Inversion Layer</option></select></div>
 						</div>
+					</section>
+					<section id="general-section">
+						<h2 class="group-title">General</h2>
+						<div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="field-guidance">The default laboratory is council-specific and selected at implementation; no council default is configured in this preview.</p><p class="spec">RSHL confirmed on 8 Oct 2026: configure the council-dependent default and extend the list at implementation. Jira calls this “General &gt; Laboratory”.</p></div>
+						<div class="spec warn">The spreadsheet strikes out the old Analysis Request Laboratory label, Purchase Order Number and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label.</div>
 					</section>
 					<section id="sampling-section">
 						<h2 class="group-title">Add Sampling Detail</h2>
@@ -239,53 +234,19 @@
 							</article>
 						</div>
 						<button class="add-button" type="button" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button>
-						<div id="general-section">
-							<h3 class="section-title">General</h3>
-							<div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent; no default. Configure and extend the list at implementation. Jira calls this “General &gt; Laboratory”.</p></div>
-							<div class="spec warn">The spreadsheet strikes out the old Analysis Request Laboratory label, Purchase Order Number and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label.</div>
-						</div>
-					</section>
-					<section id="reinspection-section">
-						<h2 class="group-title">Reinspection</h2>
-						<div class="field"><label>Reinspection Required</label><div class="choice-row" data-choice-group data-conditional-choice="reinspection-date"><button class="choice" type="button" data-value="Yes" aria-pressed="false">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="true">No</button></div></div>
-						<div class="field hidden" id="reinspection-date"><label>Reinspection Date</label><input type="date" /></div>
-					</section>
-					<section id="notice-section">
-						<h2 class="group-title">Notice of Inspection</h2>
-						<div class="field"><label>Notice of Inspection Left?</label><div class="choice-row" data-choice-group data-conditional-choice="notice-photo"><button class="choice" type="button" data-value="Yes" aria-pressed="false">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="true">No</button></div></div>
-						<div class="field hidden" id="notice-photo"><label>Image of Inspection Notice Left</label><input type="file" accept="image/*" /></div>
-					</section>
-					<section id="timesheet-end-section">
-						<h2 class="group-title">Timesheet End Date</h2>
-						<div class="field"><label>Actual End Date</label><input type="date" value="2026-09-28" /></div>
-						<div class="field"><label>Actual End Time</label><input type="time" value="12:05" /></div>
-						<div class="field"><label>Reason</label><input placeholder="Reason" /></div>
-						<div class="field"><label>Completion Behaviour</label><select><option>Pending Completion</option><option>Complete</option><option>Complete and Send</option></select></div>
-					</section>
-					<section id="signature-section">
-						<h2 class="group-title">Signatures</h2>
-						<div class="field"><label>Officer Signature</label><div class="signature-pad" role="img" aria-label="Officer signature capture area">Signature capture</div></div>
-						<p class="notice">Datacom development confirmed Customer Signature can be removed for this survey. Officer Signature remains.</p>
 					</section>
 				</div>
 				<div class="index-panel" id="index-panel" aria-label="Form Index">
 					<div class="index-head"><span>Form Index</span><button type="button" id="close-index" aria-label="Close Form Index" title="Close Form Index"><svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg></button></div>
 					<div class="index-list">
-						<button data-target="timesheet-start-section">Timesheet Start Date</button>
-						<button data-target="assets-section">Assets and Inventory</button>
-						<button data-target="evidence-section">General Visual Evidence</button>
 						<button data-target="officer-section">Sampling · Officer</button>
 						<button data-target="authority-section">Sampling · Authority</button>
 						<button data-target="weather-section">Weather</button>
+						<button data-target="general-section">General</button>
 						<button data-target="sampling-section">Add Sampling Detail</button>
 						<button class="indent" data-target="field-measurement-section">Field Measurement</button>
 						<button class="indent" data-target="sample-tests-section">Sample Tests</button>
 						<button class="indent" data-target="chain-of-custody-section">Chain of Custody</button>
-						<button class="indent" data-target="general-section">General</button>
-						<button data-target="reinspection-section">Reinspection</button>
-						<button data-target="notice-section">Notice of Inspection</button>
-						<button data-target="timesheet-end-section">Timesheet End Date</button>
-						<button data-target="signature-section">Signatures</button>
 						<button class="add-new" type="button">+ Add New Part</button>
 					</div>
 				</div>
@@ -293,9 +254,40 @@
 		</div>
 	</div>
 	<script>
+		function bindContactLookup(lookup) {
+			const search = lookup.querySelector(".contact-search");
+			const options = [...lookup.querySelectorAll(".contact-options input")];
+			const selected = lookup.querySelector(".contact-selected");
+			const summary = lookup.querySelector("summary");
+			const update = () => {
+				const chosen = options.filter((option) => option.checked);
+				summary.textContent = chosen.length ? `${chosen.length} selected` : "Choose contacts";
+				selected.replaceChildren();
+				chosen.forEach((option) => {
+					const chip = document.createElement("span");
+					chip.className = "chip";
+					chip.append(document.createTextNode(option.value + " "));
+					const remove = document.createElement("button");
+					remove.type = "button";
+					remove.textContent = "×";
+					remove.setAttribute("aria-label", `Remove ${option.value}`);
+					remove.addEventListener("click", () => { option.checked = false; update(); });
+					chip.appendChild(remove);
+					selected.appendChild(chip);
+				});
+			};
+			search.addEventListener("input", () => {
+				const query = search.value.trim().toLowerCase();
+				options.forEach((option) => { option.closest("label").hidden = !option.value.toLowerCase().includes(query); });
+				lookup.querySelector("[data-no-contacts]").hidden = options.some((option) => !option.closest("label").hidden);
+			});
+			options.forEach((option) => option.addEventListener("change", update));
+			update();
+		}
+		document.querySelectorAll("[data-contact-lookup]").forEach(bindContactLookup);
 		const panel = document.getElementById("index-panel");
 		const fieldSpecNotes = {
-					"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
+					"Laboratory": "RSHL confirmed on 8 Oct 2026: select the council-dependent default and configure the option list at implementation.",
 			"Sample Type": "Spreadsheet options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other. RSHL wants saved-site values filled from the Activity/Register; confirm this setup. Staff choose a type for new sites.",
 			"Sample Type Other": "Spreadsheet asks for free-text detail when Sample Type is Other.",
 			"Sample Location": "The separate Sample Site Name / Label row is crossed out in the spreadsheet. RSHL prefers reusing the location's name to avoid errors.",
@@ -358,7 +350,7 @@
 			"Photos": "Spreadsheet type: Media (Photo).",
 			"Videos": "Spreadsheet type: Media (Video).",
 			"Capture Track Log": "Spreadsheet type: Spatial (Track Log).",
-					"Laboratory": "Jira-confirmed Select (single); council-dependent, no default.",
+					"Laboratory": "Jira-confirmed Select (single); council-specific default selected at implementation.",
 			"Purchase Order Number": "Spreadsheet type: Text.",
 			"Work Order Number": "Spreadsheet type: Text.",
 			"Capture Weather?": "Existing field type: Boolean (Yes/No).",
@@ -371,7 +363,7 @@
 			"Reinspection Date": "Spreadsheet type: Date.",
 			"Notice of Inspection Left?": "Spreadsheet type: Boolean (Yes/No).",
 			"Image of Inspection Notice Left": "Spreadsheet type: Media (Photo).",
-			"In Attendance": "Spreadsheet type: Text. RSHL clarification requests a multi-contact lookup.",
+			"In Attendance": "Contact lookup (multi); the spreadsheet originally specified Text.",
 			"Warrant Shown": "Spreadsheet type: Boolean (Yes/No).",
 			"Warrant Shown to Name": "Spreadsheet type: Contact lookup (Look-up, Select); Text fallback if no match.",
 			"Warrant Shown to Name (enter a name if contact is not found)": "Spreadsheet type: Text.",
@@ -427,7 +419,7 @@
 		function fieldSpecTypeText(field, name) {
 			const source = fieldTypeNotes[name] || "";
 			let type;
-			if (name === "In Attendance") type = "Text";
+			if (name === "In Attendance") type = "Contact lookup · multi";
 			else if (!source && field.querySelector('[role="switch"], .choice-row')) type = "Boolean";
 			else if (source.startsWith("Spreadsheet type not specified:")) {
 				type = `Type not specified · ${source.replace(/^Spreadsheet type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
@@ -596,7 +588,7 @@
 			"Parameter Type": { status: "New", rows: "93", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
 			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "122", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to spreadsheet True/False." },
 			"Name of Sampler": { status: "Existing", currentType: "Text", rows: "123", detail: "Existing free-text field; RSHL to decide whether to retain or remove it." },
-			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "129-132", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
+			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "129-132", detail: "Rename the existing lab selector, retain its three lab choices, and configure the council-specific default at implementation. Fieldwork repeaters appear after non-repeating sections." },
 			"Reinspection Required": { status: "New", rows: "136", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
 			"Reinspection Date": { status: "New", rows: "137", detail: "Standard conditional booking date added to this survey." },
 			"Notice of Inspection Left?": { status: "New", rows: "138", detail: "Notice field added to this survey." },

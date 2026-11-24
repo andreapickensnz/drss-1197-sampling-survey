@@ -128,6 +128,12 @@
 		.parameter-menu .add { margin:2px 0 8px; }
 		.parameter-dropdown > .multiple { border:0; border-top:1px solid #e3e3e3; }
 		.chip { padding:3px 7px; border-radius:10px; background:#e8e4f4; color:#43306c; font-size:10px; }
+		.contact-options label { display:flex; align-items:center; gap:8px; min-height:30px; }
+		.contact-options label[hidden] { display:none; }
+		.contact-options input[type="checkbox"] { width:14px; min-height:14px; }
+		.parameter-menu .contact-search { width:100%; min-height:29px; }
+		.contact-selected { display:flex; flex-wrap:wrap; gap:5px; padding:4px 0; }
+		.contact-selected button { border:0; background:transparent; color:inherit; cursor:pointer; }
 		.subtle { color:var(--muted); font-size:10px; line-height:1.45; }
 			.action-row { display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; }
 			.mapped-action { display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
@@ -222,14 +228,8 @@
 			<div class="form">
 				<h2 class="group-heading"><span>Survey Detail</span><button class="section-toggle" type="button" aria-expanded="true" aria-controls="survey-detail" data-collapse="survey-detail" data-section-label="Survey Detail" aria-label="Hide Survey Detail" title="Hide Survey Detail"><svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg><span>hide Survey Detail</span></button></h2>
 				<div id="survey-detail" class="group-content">
-					<h3 class="subheading">Timesheet Start Date</h3>
-					<div class="form-grid"><div class="field"><label>Actual Start Date</label><input type="date" value="2026-09-28" /></div><div class="field"><label>Actual Start Time</label><input type="time" value="08:20" /></div></div>
-					<h3 class="subheading">Assets and Inventory</h3>
-					<div class="action-row"><button type="button" class="add">Add Asset</button><button type="button" class="add">Add Inventory</button></div>
-					<h3 class="subheading">General Visual Evidence</h3>
-					<div class="form-grid"><div class="field"><label>Photos</label><input type="file" accept="image/*" multiple /></div><div class="field"><label>Videos</label><input type="file" accept="video/*" multiple /></div><div class="field wide"><label>Track Log</label><div class="map-card"><div class="map" aria-label="Track log preview"></div><div class="map-meta"><strong>Capture path</strong><small>Track Log</small></div></div></div></div>
 					<h3 class="subheading">Sampling · Officer</h3>
-					<div class="field"><label for="in-attendance">In Attendance</label><input id="in-attendance" type="search" data-lookup-multiple placeholder="Search and add contacts" /><p class="spec">RSHL answered on 8 Oct 2026: select one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
+					<div class="field"><label>In Attendance</label><details class="parameter-dropdown" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary class="parameter-trigger">Choose contacts</summary><div class="parameter-menu"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><p class="spec">RSHL answered on 8 Oct 2026: select one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
 					<h3 class="subheading">Authority</h3>
 					<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><button class="ds-switch on" type="button" role="switch" aria-label="Warrant Shown" aria-required="true" aria-checked="true" data-default="Yes" data-conditional-toggle="warrant-fields"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button></div>
 					<div id="warrant-fields" class="form-grid">
@@ -308,28 +308,10 @@
 					</section>
 					<div class="add-row"><button type="button" class="add" id="add-sample"><span class="add-icon" aria-hidden="true">+</span>Sampling Detail</button><span class="subtle">Each location-backed sample is a separate repeating item.</span></div>
 					<h4 class="subheading">General</h4>
-					<div class="form-grid"><div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: Council-dependent, with no default. Configure and extend the list at implementation. The spreadsheet strikes the old “Analysis Request Laboratory” label but leaves these values; Jira refers to this as “General &gt; Laboratory”.</p></div></div>
+					<div class="form-grid"><div class="field"><label>Laboratory</label><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="field-guidance">The default laboratory is council-specific and selected at implementation; no council default is configured in this preview.</p><p class="spec">RSHL confirmed on 8 Oct 2026: configure the council-dependent default and extend the list at implementation. The spreadsheet strikes the old “Analysis Request Laboratory” label but leaves these values; Jira refers to this as “General &gt; Laboratory”.</p></div></div>
 					<div class="spec warn">The spreadsheet strikes out Purchase Order Number and Work Order Number.</div>
 					</section>
 				</div>
-				<h3 class="subheading">Reinspection</h3>
-				<div class="field"><label>Reinspection Required</label><button class="ds-switch" type="button" role="switch" aria-label="Reinspection Required" aria-checked="false" data-default="No" data-conditional-toggle="reinspection-date"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
-				<div class="field hidden" id="reinspection-date"><label>Reinspection Date</label><input type="date" /></div>
-				<h3 class="subheading">Notice of Inspection</h3>
-				<div class="field"><label>Notice of Inspection Left?</label><button class="ds-switch" type="button" role="switch" aria-label="Notice of Inspection Left?" aria-checked="false" data-default="No" data-conditional-toggle="notice-image"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
-				<div class="field hidden" id="notice-image"><label>Image of Inspection Notice Left</label><input type="file" accept="image/*" /></div>
-				<h3 class="subheading">Timesheet End Date</h3>
-				<div class="form-grid">
-					<div class="field"><label>Actual End Date</label><input type="date" value="2026-09-28" /></div>
-					<div class="field"><label>Actual End Time</label><input type="time" value="12:05" /></div>
-					<div class="field"><label>Reason</label><input placeholder="Reason" /></div>
-					<div class="field"><label>Completion Behaviour</label><select><option>Pending Completion</option><option>Complete</option><option>Complete and Send</option></select></div>
-				</div>
-				<h3 class="subheading">Signatures</h3>
-				<div class="form-grid">
-					<div class="field"><label>Officer Signature</label><div class="signature-pad" role="img" aria-label="Officer signature capture area">Signature capture</div></div>
-				</div>
-								<p class="spec">Datacom development confirmed Customer Signature can be removed for this survey. Officer Signature remains.</p>
 			</div>
 		</main>
 	</div>
@@ -464,6 +446,37 @@
 				button.addEventListener("click", () => paint(button.dataset.value === "Yes" ? "No" : "Yes"));
 			});
 		}
+		function bindContactLookup(lookup) {
+			const search = lookup.querySelector(".contact-search");
+			const options = [...lookup.querySelectorAll(".contact-options input")];
+			const selected = lookup.querySelector(".contact-selected");
+			const summary = lookup.querySelector("summary");
+			const update = () => {
+				const chosen = options.filter((option) => option.checked);
+				summary.textContent = chosen.length ? `${chosen.length} selected` : "Choose contacts";
+				selected.replaceChildren();
+				chosen.forEach((option) => {
+					const chip = document.createElement("span");
+					chip.className = "chip";
+					chip.append(document.createTextNode(option.value + " "));
+					const remove = document.createElement("button");
+					remove.type = "button";
+					remove.textContent = "×";
+					remove.setAttribute("aria-label", `Remove ${option.value}`);
+					remove.addEventListener("click", () => { option.checked = false; update(); });
+					chip.appendChild(remove);
+					selected.appendChild(chip);
+				});
+			};
+			search.addEventListener("input", () => {
+				const query = search.value.trim().toLowerCase();
+				options.forEach((option) => { option.closest("label").hidden = !option.value.toLowerCase().includes(query); });
+				lookup.querySelector("[data-no-contacts]").hidden = options.some((option) => !option.closest("label").hidden);
+			});
+			options.forEach((option) => option.addEventListener("change", update));
+			update();
+		}
+		document.querySelectorAll("[data-contact-lookup]").forEach(bindContactLookup);
 		const fieldSpecNotes = {
 			"Sample Type": "Spreadsheet options: Groundwater, Surfacewater, Saline, Final Effluent, Leachate, Sludge, Soil, Petrochemical and Other.",
 			"Sample Type Other": "Spreadsheet asks for free-text detail when Sample Type is Other.",
@@ -496,7 +509,7 @@
 			"Parameter Set Name": "Spreadsheet supplies ten named Parameter Sets. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering. Do not combine a set with individual Parameter Types.",
 			"Parameter Type": "Spreadsheet supplies 23 Parameter Types. Automatically selecting a known site's consent tests is still to be confirmed by Datacom Engineering.",
 			"Name of Sampler": "Use free text for sampler names pending RSHL's decision; officer lookup and defaulting the primary booking officer are not supported.",
-			"Laboratory": "RSHL confirmed on 8 Oct 2026: council-dependent, no default; configure and extend the option list at implementation.",
+			"Laboratory": "RSHL confirmed on 8 Oct 2026: select the council-dependent default and configure the option list at implementation.",
 			"Sample type": "Spreadsheet supplies groundwater-specific sample types; show only for Groundwater.",
 			"Sampled from": "Spreadsheet lists From tank, After filter, Through hose, Spring and Other. Tap, Outlet tap, Bore Pipe and Portable Pump are struck out.",
 			"Sample collection method": "Spreadsheet includes this collection method for groundwater samples.",
@@ -516,7 +529,7 @@
 			"Photos": "Spreadsheet type: Media (Photo).",
 			"Videos": "Spreadsheet type: Media (Video).",
 			"Track Log": "Spreadsheet type: Spatial (Location).",
-			"In Attendance": "Spreadsheet type: Text. RSHL clarification requests a multi-contact lookup.",
+			"In Attendance": "Contact lookup (multi); the spreadsheet originally specified Text.",
 			"Warrant Shown": "Spreadsheet type: Boolean (Yes/No).",
 			"Warrant Shown to Name": "Spreadsheet type: Contact lookup (Look-up, Select); Text fallback if no match.",
 			"Warrant Shown to Name (enter a name if contact is not found)": "Spreadsheet type: Text.",
@@ -551,7 +564,7 @@
 			"Parameter Set Name": "Spreadsheet type: Select (single).",
 			"Parameter Type": "Spreadsheet type: Look up-select multi.",
 			"Name of Sampler": "Spreadsheet type: Text.",
-			"Laboratory": "Jira-confirmed Select (single); council-dependent, no default.",
+			"Laboratory": "Jira-confirmed Select (single); council-specific default selected at implementation.",
 			"Sample type": "Spreadsheet type: Select (single).",
 			"Sampled from": "Spreadsheet type: Select (single).",
 			"Sample collection method": "Spreadsheet type: Select (single).",
@@ -586,7 +599,7 @@
 		function fieldSpecTypeText(field, name) {
 			const source = fieldTypeNotes[name] || "";
 			let type;
-			if (name === "In Attendance") type = "Text";
+			if (name === "In Attendance") type = "Contact lookup · multi";
 			else if (source.startsWith("Spreadsheet type not specified:")) {
 				type = `Type not specified · ${source.replace(/^Spreadsheet type not specified: (?:existing |retained as )?/, "").replace(/\.$/, "")}`;
 			} else if (source.startsWith("Existing field type:")) {
@@ -755,7 +768,7 @@
 			"Parameter Type": { status: "New", rows: "93", detail: "New lookup/select multi field replacing the struck legacy Tests list; no field-ID reuse is assumed." },
 			"Chain of Custody Declaration": { status: "Wording edit", currentType: "Boolean (Yes/No), labelled Chain of Custody Decleration", rows: "122", detail: "Retain the Boolean and declaration text; correct the label and align answer wording to spreadsheet True/False." },
 			"Name of Sampler": { status: "Existing", currentType: "Text", rows: "123", detail: "Existing free-text field; RSHL to decide whether to retain or remove it." },
-			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "129-132", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and keep council-dependent configuration with no default." },
+			"Laboratory": { status: "Wording edit", currentType: "Select single, labelled Analysis Request", rows: "129-132", detail: "Rename the existing lab selector, retain its three lab choices, move General after custody and configure the council-specific default at implementation." },
 			"Reinspection Required": { status: "New", rows: "136", detail: "Standard booking field added to this survey; not present on the linked Sampling form." },
 			"Reinspection Date": { status: "New", rows: "137", detail: "Standard conditional booking date added to this survey." },
 			"Notice of Inspection Left?": { status: "New", rows: "138", detail: "Notice field added to this survey." },
