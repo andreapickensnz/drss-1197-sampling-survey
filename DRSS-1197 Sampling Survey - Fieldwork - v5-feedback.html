@@ -187,7 +187,7 @@
 							<article class="item" data-sample>
 								<div class="item-head"><span>Sampling Item 1</span><button type="button" data-remove aria-label="Remove Sampling Item">×</button></div>
 								<h3 class="section-title">Sample Detail</h3>
-									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Known site prefilled from the activity/register. New or unknown sites start without a location and can be created as a point.<small>The spreadsheet's Sample Site Name / Label row is crossed out.</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div>
+									<div class="field"><label>Sample Location <span class="chip">Sample site - Point</span></label><div class="location"><div class="map" aria-label="Map location preview"><i class="pin"></i></div><div class="location-info"><strong>Kaikorai Stream, Green Island</strong>Illustrative site only; known-site prefill and location linking need Engineering confirmation.<small>The spreadsheet's Sample Site Name / Label row is crossed out.</small></div></div><div class="choice-row"><button type="button" class="choice">Use existing location</button><button type="button" class="choice">Add Location: Single Point</button></div>
 										<p class="blocked spec"><strong>To confirm with Datacom:</strong><br />
 											<strong>Known sites:</strong> Does the survey use the site already linked to the job and automatically fill in its saved map location, sample type and collection method?<br />
 											<strong>RSHL response:</strong> Prefer reusing the location's name to avoid errors. Site names must match the Location Name, WQ database and authorisation; an incorrect name could be critical for enforcement.<br />
@@ -195,6 +195,7 @@
 											<strong>Why check?</strong> The configuration files use a different sampling-site category and do not show Fieldwork enabled for it. These files alone do not prove a fault in the live survey; Datacom needs to confirm the live setup.
 										</p>
 									</div>
+								<div class="field"><label>Site Name</label><input type="text" aria-label="Site Name" placeholder="Enter site name" /><p class="field-guidance">Enter the name exactly as it appears in the Location Name, WQ database and Sample Location Name against the authorisation.</p><p class="open-question"><strong>Provisional fallback:</strong> RSHL prefers using the location name to avoid errors. This free-text field is shown for each sample while Engineering confirms whether the location name can be linked and reused. The spreadsheet crosses out the separate Site Name row; whether this field is needed remains to be confirmed.</p></div>
 								<div class="field"><label>Sample Type</label><select data-sample-type><option value="" selected>[Not Entered]</option><option>Groundwater</option><option>Surfacewater</option><option>Saline</option><option>Final Effluent</option><option>Leachate</option><option>Sludge</option><option>Soil</option><option>Petrochemical</option><option>Other</option></select></div>
 								<div class="field conditional-other"><label>Sample Type Other</label><input placeholder="Describe sample type" /></div>
 								<div class="field conditional-general"><label>Rain Affect on Sample</label><div class="choice-row" data-choice-group><button class="choice" type="button" aria-pressed="false">Yes</button><button class="choice" type="button" aria-pressed="false">No</button></div><p class="help">Show when Sample Type is not Groundwater. Is rain likely to have affected the sample? The spreadsheet strikes out the old option wording and gives no default; confirm the option labels.</p></div>
@@ -383,6 +384,7 @@
 			"Sample Type": "Spreadsheet type: Select (single).",
 			"Sample Type Other": "Spreadsheet type: Text.",
 			"Sample Location": "Spreadsheet type: Spatial (Single Point).",
+			"Site Name": "Text (provisional free-text fallback).",
 			"Sample ID": "Spreadsheet type: Text.",
 			"Sample Time": "Spreadsheet type: Time.",
 			"Sample Date": "Spreadsheet type: Date.",
@@ -561,6 +563,7 @@
 			"Wind Direction": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Other Weather Conditions": { status: "Existing", currentType: "Select single (standard weather export)", rows: "14", detail: "Retain the exported standard weather options; conditional details were not returned while Capture Weather was No." },
 			"Sample Location": { status: "Existing", currentType: "Spatial location lookup (existing DSCREGSampleLocation type)", rows: "16-17", detail: "Move before Sample Type. Confirm automatic site details for known sites, map-pin creation for new sites, and that the site information reaches Fieldwork." },
+			"Site Name": { status: "New", detail: "Provisional per-sample free-text fallback; the spreadsheet row is crossed out and Engineering must confirm whether the location name can be reused." },
 			"Sample Type": { status: "Wording edit", currentType: "Select single", rows: "20-29", detail: "Replace Wastewater with Saline, Final Effluent, Leachate and Sludge; expand six options to nine." },
 			"Sample Type Other": { status: "Wording edit", currentType: "Text (export)", rows: "30", detail: "The export already defines Other Sample Type conditional on Other; rename it to Sample Type Other and verify its field ID in the composed form." },
 			"Rain Affect on Sample": { status: "Wording edit", currentType: "Boolean (Yes/No)", rows: "31", detail: "Keep the Boolean field and add the non-groundwater condition; spreadsheet option wording is struck out." },
