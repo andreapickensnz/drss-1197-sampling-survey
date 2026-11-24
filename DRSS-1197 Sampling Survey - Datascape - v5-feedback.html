@@ -230,16 +230,17 @@
 			<div class="form">
 				<h2 class="group-heading"><span>Survey Detail</span><button class="section-toggle" type="button" aria-expanded="true" aria-controls="survey-detail" data-collapse="survey-detail" data-section-label="Survey Detail" aria-label="Hide Survey Detail" title="Hide Survey Detail"><svg class="visibility-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.585 10.585a2 2 0 0 0 2.83 2.83"/><path d="M16.681 16.673A10.946 10.946 0 0 1 12 18c-5.523 0-10-6-10-6a18.65 18.65 0 0 1 5.1-4.09"/><path d="M22 12s-2.2-3.5-5.1-5.3A10.946 10.946 0 0 0 12 6"/><path d="m2 2 20 20"/></svg><span>hide Survey Detail</span></button></h2>
 				<div id="survey-detail" class="group-content">
-					<h3 class="subheading">Sampling · Officer</h3>
+					<h3 class="subheading section-heading">Sampling</h3>
+					<h4 class="subheading">Officer</h4>
 					<div class="field"><label>In Attendance</label><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><details class="parameter-dropdown" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary class="parameter-trigger" aria-label="Select contacts in attendance"></summary><div class="parameter-menu"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="spec">RSHL answered on 8 Oct 2026: select one or more contacts for information on this survey only. This does not update the record’s contact list.</p></div>
-					<h3 class="subheading">Authority</h3>
+					<h4 class="subheading">Authority</h4>
 					<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><button class="ds-switch on" type="button" role="switch" aria-label="Warrant Shown" aria-required="true" aria-checked="true" data-default="Yes" data-conditional-toggle="warrant-fields"><i aria-hidden="true"></i><span class="ds-toggle-val">Yes</span></button></div>
 					<div id="warrant-fields" class="form-grid">
 						<div class="field" data-field-id="samplingWarrantContact" data-lookup-proxy><label>Warrant Shown to Name</label><input type="search" placeholder="Search contacts" list="warrant-contact-options" /><datalist id="warrant-contact-options"><option value="Aroha Ngatai"></option></datalist></div>
 						<div class="field" data-field-id="warrantNameFree"><label>Warrant Shown to Name (enter a name if contact is not found)</label><input type="text" placeholder="Warrant Shown to Name" /></div>
 						<div class="field"><label>Warrant Shown to Relationship</label><input type="text" placeholder="Relationship" /></div>
 					</div>
-					<h3 class="subheading">Weather</h3>
+					<h4 class="subheading">Weather</h4>
 					<div class="field"><label>Capture Weather?</label><button class="ds-switch" type="button" role="switch" aria-label="Capture Weather?" aria-checked="false" data-default="No" data-conditional-toggle="weather-details"><i aria-hidden="true"></i><span class="ds-toggle-val">No</span></button></div>
 					<div id="weather-details" class="weather-details hidden">
 						<div class="field"><label>Air Temperature</label><select><option value="">[Not Entered]</option><option>Cold (0-10 degrees)</option><option>Cool (10-15 degrees)</option><option>Freezing (&lt;0 degrees)</option><option>Hot (above 28 degrees)</option><option>Warm (15-28 degrees)</option></select></div>
@@ -250,7 +251,7 @@
 						<div class="field wide"><label>Other Weather Conditions</label><select><option value="">[Not Entered]</option><option>Fog</option><option>High Humidity (&gt;90%)</option><option>Inversion Layer</option></select></div>
 					</div>
 					<section id="sampling-section">
-					<h3 class="subheading">Add Sampling Detail</h3>
+					<h3 class="subheading section-heading">Add Sampling Detail</h3>
 					<section class="sample-card" data-sample>
 						<h3><span>Sampling Item</span><span class="field-tag">location-backed repeater</span><button type="button" data-remove-sample aria-label="Remove sample">Remove</button></h3>
 						<h4 class="subheading">Sample Detail</h4>
@@ -333,7 +334,7 @@
 			button.innerHTML = `${visibilityIcon(panel.hidden)}<span>${action.toLowerCase()} ${button.dataset.sectionLabel}</span>`;
 		}
 		function addDetailToggles(root = document) {
-			root.querySelectorAll(".subheading, .sample-card > h3").forEach((heading) => {
+			root.querySelectorAll(".section-heading").forEach((heading) => {
 				let button = heading.querySelector(":scope > [data-detail-toggle]");
 				let panel;
 				const label = heading.querySelector(":scope > span")?.textContent.trim()
@@ -889,7 +890,6 @@
 			sample.querySelectorAll("select").forEach((field) => { field.selectedIndex = 0; });
 			sample.querySelectorAll("select[multiple]").forEach((field) => [...field.options].forEach((option) => { option.selected = false; }));
 			sample.querySelector("h3 span").textContent = "Sampling Item " + (document.querySelectorAll("[data-sample]").length + 1);
-			addDetailToggles(sample);
 			bindSampleType(sample);
 			bindParameterSelection(sample);
 			bindBooleanSwitches(sample);

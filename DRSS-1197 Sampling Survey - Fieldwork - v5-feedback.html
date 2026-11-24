@@ -150,12 +150,14 @@
 				</header>
 				<div class="scroll" id="form-scroll">
 					<div class="record-meta"><span><strong>SMPLNG.8469</strong><br />Sampling survey</span><span>Completed<br /><strong>Sample 1 of 1</strong></span></div>
+					<section id="sampling-overview-section">
+						<h2 class="group-title">Sampling</h2>
 					<section id="officer-section">
-						<h2 class="group-title">Sampling · Officer</h2>
+						<h3 class="section-title">Officer</h3>
 						<div class="field"><label>In Attendance</label><p class="field-guidance">Example contacts only; selections are not connected to live records.</p><details class="multiselect" aria-label="In Attendance" data-contact-lookup data-lookup-multiple><summary aria-label="Select contacts in attendance"></summary><div class="options"><input class="contact-search" type="search" aria-label="Search contacts in attendance" placeholder="Search contacts" /><div class="contact-options"><label><input type="checkbox" value="Aroha Ngatai" /> Aroha Ngatai</label><label><input type="checkbox" value="Example Contact 2" /> Example Contact 2</label><label><input type="checkbox" value="Example Contact 3" /> Example Contact 3</label></div><p data-no-contacts hidden>No matching contacts.</p></div><div class="contact-selected" aria-live="polite"></div></details><p class="spec">RSHL confirmed this is a one-or-more-contact lookup for this survey only; it must not update the record's contacts.</p></div>
 					</section>
 					<section id="authority-section">
-						<h2 class="group-title">Sampling · Authority</h2>
+						<h3 class="section-title">Authority</h3>
 						<div class="field"><label>Warrant Shown <span aria-hidden="true">*</span></label><div class="choice-row" role="group" aria-label="Warrant Shown" aria-required="true" data-choice-group data-conditional-choice="warrant-fields"><button class="choice" type="button" data-value="Yes" aria-pressed="true">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="false">No</button></div></div>
 						<div id="warrant-fields">
 							<div class="field" data-field-id="samplingWarrantContact" data-lookup-proxy><label>Warrant Shown to Name</label><input type="search" placeholder="Search contacts" list="warrant-contact-options" /><datalist id="warrant-contact-options"><option value="Aroha Ngatai"></option></datalist></div>
@@ -164,7 +166,7 @@
 						</div>
 					</section>
 					<section id="weather-section">
-						<h2 class="group-title">Weather</h2>
+						<h3 class="section-title">Weather</h3>
 						<div class="field"><label>Capture Weather?</label><div class="choice-row" data-choice-group data-conditional-choice="weather-details"><button class="choice" type="button" data-value="Yes" aria-pressed="false">Yes</button><button class="choice" type="button" data-value="No" aria-pressed="true">No</button></div></div>
 						<div id="weather-details" class="hidden">
 							<div class="field"><label>Air Temperature</label><select><option value="">[Not Entered]</option><option>Cold (0-10 degrees)</option><option>Cool (10-15 degrees)</option><option>Freezing (&lt;0 degrees)</option><option>Hot (above 28 degrees)</option><option>Warm (15-28 degrees)</option></select></div>
@@ -175,8 +177,9 @@
 							<div class="field"><label>Other Weather Conditions</label><select><option value="">[Not Entered]</option><option>Fog</option><option>High Humidity (&gt;90%)</option><option>Inversion Layer</option></select></div>
 						</div>
 					</section>
+					</section>
 					<section id="general-section">
-						<h2 class="group-title">General</h2>
+						<h3 class="section-title">General</h3>
 						<div class="field"><label>Laboratory</label><p class="field-guidance">The default laboratory is council-specific and selected at implementation; no council default is configured in this preview.</p><select><option value="" selected>[Not Entered]</option><option>RJ Hill Laboratories Limited Hamilton</option><option>RJ Hill Laboratories Limited Christchurch</option><option>Eurofins ELS Limited Dunedin</option></select><p class="spec">RSHL confirmed on 8 Oct 2026: configure the council-dependent default and extend the list at implementation. Jira calls this “General &gt; Laboratory”.</p></div>
 						<div class="spec warn">The spreadsheet strikes out the old Analysis Request Laboratory label, Purchase Order Number and Work Order Number. It leaves the lab options unstruck; this prototype uses the Jira-confirmed Laboratory label.</div>
 					</section>
@@ -243,8 +246,8 @@
 				<div class="index-panel" id="index-panel" aria-label="Form Index">
 					<div class="index-head"><span>Form Index</span><button type="button" id="close-index" aria-label="Close Form Index" title="Close Form Index"><svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg></button></div>
 					<div class="index-list">
-						<button data-target="officer-section">Sampling · Officer</button>
-						<button data-target="authority-section">Sampling · Authority</button>
+						<button data-target="officer-section">Officer</button>
+						<button data-target="authority-section">Authority</button>
 						<button data-target="weather-section">Weather</button>
 						<button data-target="general-section">General</button>
 						<button data-target="sampling-section">Add Sampling Detail</button>
